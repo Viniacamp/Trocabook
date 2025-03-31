@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <title>Criar novo anuncio | TrocaBook</title>
+</head>
+<body>
+  <header>
+    <div class="wrapper">  
+        <table class="cabecalho"><tr>
+            <th id="cabecalhoelementos">
+            <a href="/"><img src="img/Design sem nome (7).svg"></a>
+            <input type="text" style="width: 50%; height: 35px; margin-left: 5px;" id="pesquisa" placeholder="Pesquisar">
+                <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 5px;">
+                  <option selected>Categoria...</option>
+                  <option>Ação</option>
+                  <option>Romance</option>
+                  <option>Literatura</option>
+                  <option>Lógica de Programação</option>
+                  <option>Direito</option>
+                  <option>Suspense</option>
+                  <option>Ficção Científica</option>
+                </select>
+            <a class="anunciar-livro4" href="/AnunciarLivro">Anunciar Livro</a>
+            	<a class="meus-livros4" href="/MeusLivros">Meus Livros</a>
+            	<form th:action="@{/deslogar}" method="post">
+    				<button type="submit" id="deslogar">Sair</button>
+				</form>
+		</th>
+        </tr>
+        </table>
+  </header>
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+  <div class="paganunciar">
+    <div class="anuncio">
+    <h1>Crie o seu anuncio</h1>
+    <form method="post" enctype="multipart/form-data" th:object="${livro}">
+      <input type="text" style="width: 470px; height: 33px;" id="titulo" name="nm_livro" placeholder="Titulo do livro"><br>
+      <input type="text" style="width: 470px; height: 33px;" id="ano" name="ano_publicacao" placeholder="Ano de publicação"><br>
+      <input type="text" style="width: 470px; height: 200px;" placeholder="Descreva o livro, estado de conservação e outros detalhes que queira incluir">
+      <p>Carregue as imagens do seu livro aqui:</p>
+      <input type="file" id="capaLivro" name="capaLivro" accept="image/*" style="width: 470px; height: 140px; border-style: dotted; padding-top: 10px;"><br>
+      <button type="submit">Anunciar</button>
+    </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="rodapenovo">
+        <img src="img/Design sem nome.svg">
+        <a href="/sobreNos"><p>Conheça nosso incrível projeto <br>de incentivo a reutilização</p></a>
+        <a href=""><p>Central de ajuda</p></a>
+        <small>© 2024 Sistema Trocabook<br>Todos os direitos reservados</small>
+    </div>
+</footer> 
+  
+</body>
+</html>

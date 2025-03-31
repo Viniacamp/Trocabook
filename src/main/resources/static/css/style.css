@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+body {
+    margin: 0 auto;
+    font-family: manrope;
+}
+
+/*estilo da pagina (geral)*/
+p{
+    text-align: center;
+}
+table th, td {
+    border-collapse: collapse;
+    text-align: center;  
+}
+
+/*estilo do cabeçalho*/
+.cabecalho{
+    width: 100%;
+    background: linear-gradient(267deg, rgb(229, 178, 254) 27.55%, rgb(104, 158, 254) 100.00%);
+    border: none;
+    box-shadow: 0 4px 6px -3px rgba(0, 0, 0, 0.4);
+    padding-left: 13px;
+}
+
+.cabecalho table, th, td{
+    height: 100%;
+}
+
+.cabecalho img{
+    width: 220px; 
+    margin-left: -40px;
+    vertical-align: middle;
+}
+
+.cadbutton{
+    float: right;
+}
+
+.cabecalho input{
+    border: none;
+    border-radius: 6px;
+    font-family: manrope;
+    font-size: 14px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.cabecalho select{
+    border: none;
+    border-radius: 6px;
+    font-family: manrope;
+    padding-left: 5px;
+    margin-right: 5px;
+}
+
+.cabecalho select::after{
+    background-color: rgb(230, 230, 230);
+}
+
+.cabecalho button{
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: manrope;
+    font-size: 14px;
+}
+
+.cabecalho button:hover{
+    background-color: rgb(230, 230, 230);
+}
+
+.banner img{
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+/*CSS dos controles do ambiente logado (meus livros e anunciar)*/
+.meus-livros4 {
+    text-decoration: none;
+    position: relative;
+    line-height: 20px;
+    font-weight: 600;
+    color: inherit;
+    display: inline-block;
+    min-width: 100px;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.anunciar-livro4 {
+    text-decoration: none;
+    position: relative;
+    line-height: 20px;
+    font-weight: 600;
+    color: inherit;
+    display: inline-block;
+    min-width: 113px;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+/*estilo da seção negociadores em destaque (home)*/
+.negociadores{
+    width: 100%;
+    height: 150px;
+    border: white;
+    padding-bottom: 30px;
+}
+
+.negociadores img{
+    padding-left: 22px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+/*estilo da seção de listagem de livros (home)*/
+.livros{
+    width: 100%;
+}
+
+.livros table, .livros th, .livros td {
+    border-collapse: collapse;
+    border: 1px solid  rgb(151, 150, 240) ; 
+    padding: 50px; 
+    text-align: center;  
+}
+
+.livros img{
+    width: 125px;
+    height: 150px;
+}
+
+.livros button{
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    background-color: #007BFF;
+    font-family: manrope;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.livros button:hover{
+    background-color: rgb(6, 96, 148);
+}
+
+.livros h2{
+    margin-left: 18px;
+}
+
+/*estilo da pagina de cadastro*/
+.cadastro h1{
+      text-shadow: 1px 1px 1px #000000;
+      text-align: right;
+      vertical-align: middle;
+      border-collapse: collapse;
+      size: 25px;
+      }
+
+.cadastro table th, td {
+    border-radius: 12px ;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid rgb(151, 150, 240) ; 
+    padding: 40px;
+    text-align: center;  
+}
+
+/*estilo da página de login*/
+.login{
+    margin: 0 auto;
+    margin-top: 60px;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 20px;
+    width: 350px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+}
+
+.login label{
+    color: black;
+}
+
+.login h1{
+    padding-bottom: 20px;
+    text-align: center;
+    color: black;
+}
+
+.login small{
+    font-size: 14px;
+    margin-top: 5px;
+    float: right;
+}
+
+.login small:hover{
+    text-decoration: underline;
+}
+
+.loginlogo{
+    text-align: center;
+}
+
+.loginlogo img{
+    width: 250px;
+    height: 300px;
+    margin-bottom: -140px;
+    margin-top: -60px;
+}
+
+/*pagina de criação de anuncio*/
+.paganunciar{
+    margin: 0 auto;
+    margin-bottom: 40px;
+    margin-right: 50px;
+    padding-left: 60px; 
+    padding-right: 60px; 
+}
+
+.paganunciar h1{
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.paganunciar p{
+    margin-bottom: -8px;
+    text-align: left;
+}
+
+.paganunciar input{
+    margin-top: 15px;
+    padding-left: 12px;
+    font-family: manrope;
+    border-radius: 8px;
+    border-width: 0.2em;
+    border-color: #b8b8b8;
+}
+
+.paganunciar button{
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    background: linear-gradient(267deg, rgb(229, 178, 254) 27.55%, rgb(104, 158, 254) 100.00%);
+    font-family: manrope;
+    font-size: 16px;
+    text-shadow: black 0.1em 0.1em 0.7em;
+    cursor: pointer;
+    padding: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/*estilo da página sobre nós*/
+.sobrenos{
+    text-align: center;
+    padding-left: 200px;
+    padding-right: 200px;
+    padding-top: 20px;
+}
+
+.sobrenos img{
+    width: 500px;
+    height: 500px;
+}
+
+/*estilo do rodapé*/
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rodapenovo{
+    width: 100%; 
+    height: 100px;
+    background-color: white;
+    box-shadow: 0 -4px 6px -5px rgba(0, 0, 0, 0.4);
+}
+
+.rodapenovo img{
+    width: 180px; 
+    margin-left: -5px;
+    float: left;
+    margin-right: 5px;
+}
+
+.rodapenovo p{
+    float: left;
+    text-align: left;
+    margin: 0 auto;
+    padding-top: 28px;
+    padding-right: 37px;
+    color: #007BFF;
+}
+
+.rodapenovo p:hover{
+    color: rgb(6, 96, 148);
+}
+
+.rodapenovo small{
+    float: right;
+    font-size: 16px;
+    padding-top: 28px;
+    padding-right: 30px;
+}
+
+.meus-livros4 {
+    text-decoration: none;
+    position: relative;
+    line-height: 20px;
+    font-weight: 600;
+    color: white;
+    text-shadow: black 0.1em 0.1em 0.7em;
+    display: inline-block;
+    min-width: 113px;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.anunciar-livro4 {
+    text-decoration: none;
+    position: relative;
+    line-height: 20px;
+    font-weight: 600;
+    color: white;
+    text-shadow: black 0.1em 0.1em 0.7em;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.PerfilFoto {
+    width: 100px; /* Define a largura do círculo */
+    height: 100px; /* Define a altura do círculo */
+    border-radius: 50%; /* Garante o formato circular */
+    object-fit: cover; /* Ajusta a imagem para preencher o círculo */
+    border: 2px solid #fff; /* Adiciona uma borda branca ao redor */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Adiciona uma leve sombra para destacar */
+    overflow: hidden; /* Garante que a imagem não ultrapasse o círculo */
+}
+#exibirLivros {
+    display: flex;
+    flex-direction: row; /* Organiza os itens em coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    text-align: center; /* Garante que o texto "Meus Livros" esteja centralizado */
+    padding-top: 20px; /* Espaçamento superior para separar o título dos livros */
+}
+
+.titulo{
+    width: 100%;
+    text-align: center; /* Centraliza o título */
+    margin-bottom: 20px; /* Espaço abaixo do título */
+}
+
+.capa-livro {
+    width: 150px; /* Define a largura */
+    margin: 10px; /* Define o espaçamento */
+    border: 2px solid #ddd; /* Opcional: borda ao redor */
+    border-radius: 8px; /* Opcional: cantos arredondados */
+    transition: transform 0.2s; /* Efeito de transição suave */
+}
+
+/* Adiciona um efeito ao passar o mouse */
+.capa-livro:hover {
+    transform: scale(1.1); /* Aumenta a escala da imagem */
+    border-color: #007bff; /* Muda a cor da borda */
+}
+
+.nenhumLivro {
+    font-size: 18px; 
+    color: #808080; 
+    text-align: center; 
+    margin-top: 20px; 
+    font-family: Arial, sans-serif; 
+}
+
+#deslogar {
+	width: 100px;
+	height: 38px;
+}
+
