@@ -13,10 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileStorageServiceUsuario {
 	
 
-	private String uploadsUsuario = Paths.get("C:/uploads/usuario").toAbsolutePath().toString();;
+	private final String uploadsUsuario = Paths.get("C:/uploads/usuario").toAbsolutePath().toString();
 
 	
-	private String uploadsLivro = Paths.get("C:/uploads/livro").toAbsolutePath().toString();;
+	private final String uploadsLivro = Paths.get("C:/uploads/livro").toAbsolutePath().toString();
 	
 	
 	public String armazenarArquivo(MultipartFile arquivo, String diretorio, String tipo) throws IOException{
@@ -42,7 +42,6 @@ public class FileStorageServiceUsuario {
 	}
 	
 	public void excluirArquivo(String caminhoArquivo) {
-		System.out.println("a");
         File arquivo = new File(caminhoArquivo);
         if (arquivo.exists()) {
             boolean deletado = arquivo.delete();

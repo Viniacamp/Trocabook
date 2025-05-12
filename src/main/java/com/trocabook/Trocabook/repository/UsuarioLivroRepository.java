@@ -11,4 +11,7 @@ import com.trocabook.Trocabook.model.UsuarioLivro;
 @Repository
 public interface UsuarioLivroRepository extends CrudRepository<UsuarioLivro, Integer> {
 	List<UsuarioLivro> findByUsuario(Usuario usuario);
+	List<UsuarioLivro> findByUsuarioAndTipoNegociacao(Usuario usuario, UsuarioLivro.TipoNegociacao tipoNegociacao);
+	Iterable<UsuarioLivro> findByTipoNegociacao(UsuarioLivro.TipoNegociacao tipoNegociacao);
+	UsuarioLivro findByCdUsuarioLivro(int cd);
 }

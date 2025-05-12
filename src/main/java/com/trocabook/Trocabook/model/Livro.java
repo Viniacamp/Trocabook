@@ -24,24 +24,25 @@ public class Livro {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cd_livro;
+	private int cdLivro;
 	
-	@NotBlank
+	@NotBlank(message = "Preencha o Título")
 	@Column(nullable = false)
-	private String nm_livro;
+	private String nmLivro;
 	
-	@NotNull
+	@NotNull(message = "Preencha o Ano de Publicação")
 	@Column(nullable = false)
-	private int ano_publicacao;
-	
-	@NotBlank
+	private Integer anoPublicacao;
+
 	@Column(nullable = false)
 	private String capa;
 	
 	@OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+	// @JsonIgnore
 	private List<UsuarioLivro> usuarioLivros;
 	
 	@OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+	// @JsonIgnore
 	private List<Negociacao> negociacoes;
 	
 	public List<UsuarioLivro> getUsuarioLivros() {
@@ -60,23 +61,23 @@ public class Livro {
 		this.negociacoes = negociacoes;
 	}
 	
-	public int getCd_livro() {
-		return cd_livro;
+	public int getCdLivro() {
+		return cdLivro;
 	}
-	public void setCd_livro(int cd_livro) {
-		this.cd_livro = cd_livro;
+	public void setCdLivro(int cdLivro) {
+		this.cdLivro = cdLivro;
 	}
-	public String getNm_livro() {
-		return nm_livro;
+	public String getNmLivro() {
+		return nmLivro;
 	}
-	public void setNm_livro(String nm_livro) {
-		this.nm_livro = nm_livro;
+	public void setNmLivro(String nmLivro) {
+		this.nmLivro = nmLivro;
 	}
-	public int getAno_publicacao() {
-		return ano_publicacao;
+	public Integer getAnoPublicacao() {
+		return anoPublicacao;
 	}
-	public void setAno_publicacao(int ano_publicacao) {
-		this.ano_publicacao = ano_publicacao;
+	public void setAnoPublicacao(Integer anoPublicacao) {
+		this.anoPublicacao = anoPublicacao;
 	}
 	public String getCapa() {
 		return capa;

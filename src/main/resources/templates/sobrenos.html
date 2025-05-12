@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <title>Sobre nós | TrocaBook</title>
+    <title>Sobre nós | Trocabook</title>
 </head>
 <body>
     <header>
@@ -34,8 +34,10 @@
     				</th:block>
     				<th:block th:if="${usuario == null}">
                 		<a href="/login" id="loginbotao"><button type="submit" style="width: 150px; height:37px;">Fazer login</button></a>
+                	<th:block>
             </th></tr>
             <tr>
+            	<th:block th:if="${usuario == null}">
                 <th>
                     <a class="cadbutton" href="/cadastro" id="cadastrobotao">Cadastre-se</a> <!--botão provisório só pra levar pro cadastro-->
                 </th>
@@ -60,10 +62,10 @@
     </div>
     <footer>
         <div class="rodapenovo">
-            <img src="img/Design sem nome.svg">
+            <a href="/"><img src="/img/Design sem nome.svg"></a>
             <a href="/sobreNos"><p>Conheça nosso incrível projeto <br>de incentivo a reutilização</p></a>
-            <a href=""><p>Central de ajuda</p></a>
-            <small>© 2024 Sistema Trocabook<br>Todos os direitos reservados</small>
+            <a href="/ajuda"><p>Central de ajuda</p></a>
+            <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
         </div>
     </footer>  
 </body>

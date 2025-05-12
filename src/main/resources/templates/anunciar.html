@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="css/style.css"/>
-  <title>Criar novo anuncio | TrocaBook</title>
+  <title>Criar novo anuncio | Trocabook</title>
 </head>
 <body>
   <header>
@@ -47,11 +47,22 @@
     <div class="anuncio">
     <h1>Crie o seu anuncio</h1>
     <form method="post" enctype="multipart/form-data" th:object="${livro}">
-      <input type="text" style="width: 470px; height: 33px;" id="titulo" name="nm_livro" placeholder="Titulo do livro"><br>
-      <input type="text" style="width: 470px; height: 33px;" id="ano" name="ano_publicacao" placeholder="Ano de publicação"><br>
-      <input type="text" style="width: 470px; height: 200px;" placeholder="Descreva o livro, estado de conservação e outros detalhes que queira incluir">
-      <p>Carregue as imagens do seu livro aqui:</p>
+      <input type="text" th:field="*{nmLivro}" style="width: 48%; height: 33px;" id="titulo" name="nmLivro" placeholder="Titulo do livro"><br>
+        <div th:if="${#fields.hasErrors('nmLivro')}" th:errors="*{nmLivro}"></div>
+      <input type="text" th:field="*{anoPublicacao}" style="width: 48%; height: 33px;" id="ano" name="anoPublicacao" placeholder="Ano de publicação"><br>
+        <div th:if="${#fields.hasErrors('anoPublicacao')}" th:errors="*{anoPublicacao}"></div>
+      <input type="text" style="width: 48%; height: 200px;" placeholder="Descreva o livro, estado de conservação e outros detalhes que queira incluir"><br><br>
+       <p>Selecione o tipo de anúncio:</p><br>
+        <select name="tipoNegociacao" class="categoriaNegociacao">
+            <option value="">-- Selecione --</option>
+            <option value="TROCA">Troca</option>
+            <option value="VENDA">Venda</option>
+            <option value="AMBOS">Ambos</option>
+        </select>
+        <div th:if="${tipoErro != null}" th:text="${tipoErro}"></div>
+      <p>Carregue a capa do seu livro aqui:</p>
       <input type="file" id="capaLivro" name="capaLivro" accept="image/*" style="width: 470px; height: 140px; border-style: dotted; padding-top: 10px;"><br>
+        <div th:if="${capaErro != null}" th:text="${capaErro}"></div>
       <button type="submit">Anunciar</button>
     </form>
     </div>
@@ -59,10 +70,10 @@
 
   <footer>
     <div class="rodapenovo">
-        <img src="img/Design sem nome.svg">
+        <a href="/"><img src="/img/Design sem nome.svg"></a>
         <a href="/sobreNos"><p>Conheça nosso incrível projeto <br>de incentivo a reutilização</p></a>
-        <a href=""><p>Central de ajuda</p></a>
-        <small>© 2024 Sistema Trocabook<br>Todos os direitos reservados</small>
+        <a href="/ajuda"><p>Central de ajuda</p></a>
+        <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
     </div>
 </footer> 
   

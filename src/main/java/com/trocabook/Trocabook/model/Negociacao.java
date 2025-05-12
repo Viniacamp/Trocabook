@@ -2,17 +2,11 @@ package com.trocabook.Trocabook.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Negociacao {
@@ -32,15 +26,17 @@ public class Negociacao {
 	
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
-	private LocalDateTime dt_negociacao;
+	private LocalDateTime dtNegociacao;
 	
 	@ManyToOne
 	@JoinColumn(name = "cd_livro", nullable = false)
 	private Livro livro;
 	
-	@NotBlank
+
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private char tipo_negociacao;
+	@NotNull(message = "Selecione o Tipo da Resolução da Negociação")
+	private Tipo tipo;
 	
 	public int getCd_negociacao() {
 		return cd_negociacao;
@@ -66,12 +62,12 @@ public class Negociacao {
 		this.usuarioInteressado = usuarioInteressado;
 	}
 
-	public LocalDateTime getDt_negociacao() {
-		return dt_negociacao;
+	public LocalDateTime getDtNegociacao() {
+		return dtNegociacao;
 	}
 
-	public void setDt_negociacao(LocalDateTime dt_negociacao) {
-		this.dt_negociacao = dt_negociacao;
+	public void setDtNegociacao(LocalDateTime dtNegociacao) {
+		this.dtNegociacao = dtNegociacao;
 	}
 
 	public Livro getLivro() {
@@ -82,13 +78,18 @@ public class Negociacao {
 		this.livro = livro;
 	}
 
-	public char getTipo_negociacao() {
-		return tipo_negociacao;
+	public Tipo getTipo() {
+		return tipo;
 	}
 
-	public void setTipo_negociacao(char tipo_negociacao) {
-		this.tipo_negociacao = tipo_negociacao;
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
 	}
+
+	public enum Tipo{
+		TROCA, VENDA, AMBOS
+	}
+
 
 	
 	

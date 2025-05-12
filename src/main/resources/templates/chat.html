@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Chat | Trocabook</title>
+</head>
+<body>
+<header>
+    <div class="wrapper">
+        <table class="cabecalho">
+            <tr>
+                <th id="cabecalhoelementos">
+                    <a href="/"><img src="/img/Design sem nome (7).svg"></a>
+                    <input type="text" style="width: 50%; height: 35px; margin-left: 5px;" id="pesquisa" placeholder="Pesquisar">
+                    <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 5px;">
+                        <option selected>Categoria...</option>
+                        <option>Ação</option>
+                        <option>Romance</option>
+                        <option>Literatura</option>
+                        <option>Lógica de Programação</option>
+                        <option>Direito</option>
+                        <option>Suspense</option>
+                        <option>Ficção Científica</option>
+                    </select>
+                    <a class="anunciar-livro4" href="/AnunciarLivro">Anunciar Livro</a>
+                    <a class="meus-livros4" href="/MeusLivros">Meus Livros</a>
+                    <form th:action="@{/deslogar}" method="post">
+                        <button type="submit" id="deslogar">Sair</button>
+                    </form>
+                </th>
+            </tr>
+        </table>
+</header>
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+<main class="main-container">
+    <aside class="chat-sidebar">
+        <h2>Chat</h2>
+        <input type="text" placeholder="Pesquisar conversas">
+        <ul class="chat-list">
+            <li class="active"><img th:src="${usuarioNegociante.foto}" alt="User"><span th:text="${usuarioNegociante.nmUsuario}"></span></li>
+        </ul>
+    </aside>
+
+    <section class="chat-window">
+        <div class="chat-info">
+            <p style="text-align: center; color: #888; margin-bottom: 20px;">Lembre-se de trocar mensagens com respeito e cordialidade.<br>Desejamos uma excelente negociação :D</p>
+        </div>
+
+        <div class="messages">
+            <div class="message user">
+                <p>Olá, estou interessado no seu livro. Qual é o preço e o estado de conservação?</p>
+            </div>
+            <div class="message negociador">
+                <img th:src="${usuarioNegociante.foto}" alt="Negociante">
+                <p>Oi! O livro está em ótimo estado, quase novo, e estou pedindo R$ 30,00. Se precisar de fotos ou mais informações, só avisar!</p>
+            </div>
+        </div>
+
+        <form id="chatForm" class="message-input">
+            <input type="text" placeholder="Mensagem">
+            <button type="submit">
+                <img src="/img/aviao.png" alt="Enviar">
+            </button>
+        </form>
+    </section>
+
+
+    <aside class="book-info">
+        <img th:src="${livro.capa}" alt="Capa O Pequeno Príncipe">
+        <p><strong>Título da obra:</strong><br><b><span th:text="${livro.nmLivro}"></span></b></p>
+        <p><strong>Data de publicação:</strong><br>15 de novembro de 2024</p>
+        <p>Livro em ótimo estado, disponibilizo para vendas</p>
+    </aside>
+</main>
+
+<script>
+    document.querySelector('#chatForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const input = document.querySelector('.message-input input');
+        const texto = input.value.trim();
+        if (!texto) return;
+
+        const container = document.querySelector('.messages');
+        container.innerHTML += `<div class="message user"><p>${texto}</p></div>`;
+        input.value = '';
+
+        setTimeout(() => {
+            container.innerHTML += `<div class="message negociador"><img src=[[${usuarioNegociante.foto}]]><p>Obrigado pela mensagem! Vou ver e meia noite eu te aviso.</p></div>`;
+        }, 1000);
+    });
+</script>
+
+<footer>
+    <div class="rodapenovo">
+        <a href="/"><img src="/img/Design sem nome.svg"></a>
+        <a href="/sobreNos"><p>Conheça nosso incrível projeto <br>de incentivo a reutilização</p></a>
+        <a href="/ajuda"><p>Central de ajuda</p></a>
+        <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
+    </div>
+</footer> 
+</body>
+</html>

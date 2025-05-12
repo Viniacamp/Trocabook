@@ -1,12 +1,8 @@
 package com.trocabook.Trocabook.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class UsuarioLivro {
@@ -14,7 +10,14 @@ public class UsuarioLivro {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cd_usuariolivro;
+	private int cdUsuarioLivro;
+
+
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	@NotNull(message = "Selecione o tipo de negociação")
+	private TipoNegociacao tipoNegociacao;
 	
 	@ManyToOne
 	@JoinColumn(name = "cd_usuario", nullable = false)
@@ -23,9 +26,10 @@ public class UsuarioLivro {
 	@ManyToOne
 	@JoinColumn(name = "cd_livro", nullable = false)
 	private Livro livro;
-	
-	public int getCd_usuariolivro() {
-		return cd_usuariolivro;
+
+
+	public int getCdUsuarioLivro() {
+		return cdUsuarioLivro;
 	}
 	public Usuario getUsuario() {
 		return usuario;
@@ -39,7 +43,17 @@ public class UsuarioLivro {
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
-	public void setCd_usuariolivro(int cd_usuariolivro) {
-		this.cd_usuariolivro = cd_usuariolivro;
+	public void setCdUsuarioLivro(int cdUsuarioLivro) {
+		this.cdUsuarioLivro = cdUsuarioLivro;
+	}
+	public enum TipoNegociacao {
+		TROCA, VENDA, AMBOS
+	}
+	public TipoNegociacao getTipoNegociacao() {
+		return tipoNegociacao;
+	}
+
+	public void setTipoNegociacao(TipoNegociacao tipoNegociacao) {
+		this.tipoNegociacao = tipoNegociacao;
 	}
 }

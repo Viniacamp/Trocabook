@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import com.trocabook.Trocabook.repository.LivroRepository;
 import com.trocabook.Trocabook.repository.UsuarioLivroRepository;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class AnunciarLivroController {
@@ -25,6 +27,9 @@ public class AnunciarLivroController {
 	
 	@Autowired
 	private UsuarioLivroRepository ulr;
+
+
+
 	
 	@GetMapping("/AnunciarLivro")
 	public String anunciarLivro(Model model, HttpSession sessao) {
@@ -32,22 +37,38 @@ public class AnunciarLivroController {
 		if (usuario == null) {
 			return "redirect:/";
 		}
+		model.addAttribute("livro", new Livro());
 		return "anunciar";
 	}
 	
 	@PostMapping("/AnunciarLivro")
-	public String anunciar(@RequestParam("capaLivro") MultipartFile capa, Livro livro, HttpSession sessao) throws IOException{
+	public String anunciar(@RequestParam("capaLivro") MultipartFile capa, @Valid Livro livro, BindingResult result,@RequestParam("tipoNegociacao") String tipoNegociacao, HttpSession sessao, Model model) throws IOException{
 		Usuario usuario = (Usuario) sessao.getAttribute("usuarioLogado");
 		if (usuario == null) {
 			return "redirect:/";
 		}
-		if (capa != null) {
-			livro.setCapa(capa);
+		if (capa.isEmpty()) {
+			model.addAttribute("capaErro", "Coloque a capa do livro");
+			result.reject("capa");
 		}
+
+		if (tipoNegociacao == null || tipoNegociacao.isBlank()) {
+			model.addAttribute("tipoErro", "Selecione o tipo de anúncio");
+			result.reject("tipoNegociacao");
+		}
+
+
+		if (result.hasErrors()){
+			System.out.println(result.getAllErrors());
+			model.addAttribute("livro", livro);
+			return "anunciar";
+		}
+		livro.setCapa(capa);
 		lr.save(livro);
 		UsuarioLivro usuarioLivro = new UsuarioLivro();
 		usuarioLivro.setUsuario(usuario);
 		usuarioLivro.setLivro(livro);
+		usuarioLivro.setTipoNegociacao(UsuarioLivro.TipoNegociacao.valueOf(tipoNegociacao));
 		ulr.save(usuarioLivro);
 		return "redirect:/MeusLivros";
 	}

@@ -4,21 +4,13 @@ package com.trocabook.Trocabook.model;
 import java.io.IOException;
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.trocabook.Trocabook.service.FileStorageServiceUsuario;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Usuario {
@@ -26,30 +18,36 @@ public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cd_usuario;
+	private int cdUsuario;
 	
-	@NotBlank
+	@NotBlank(message = "Preencha o Nome")
 	@Column(nullable = false)
-	private String nm_usuario;
+	private String nmUsuario;
 	
-	@NotBlank
+	@NotBlank(message = "Preencha o CPF")
 	@Column(nullable = false, unique = true, updatable = false)
 	private String CPF;
-	
-	@Email
+
+	@NotBlank(message = "Preencha o E-mail")
+	@Email(message = "Preencha com um E-mail válido")
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	@NotBlank
+	@NotBlank(message = "Preencha a Senha")
 	@Column(nullable = false)
 	private String senha;
-	
-	@NotBlank
+
 	private String foto;
 	
 	@NotNull
 	@Column(nullable = false)
 	private char status;
+
+
+
+	@Max(5)
+	@Column(nullable = false)
+	private double avaliacao;
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<UsuarioLivro> usuarioLivros;
@@ -83,11 +81,11 @@ public class Usuario {
 	public void setUsuarioLivros(List<UsuarioLivro> usuarioLivros) {
 		this.usuarioLivros = usuarioLivros;
 	}
-	public String getNm_usuario() {
-		return nm_usuario;
+	public String getNmUsuario() {
+		return nmUsuario;
 	}
-	public void setNm_usuario(String nm_usuario) {
-		this.nm_usuario = nm_usuario;
+	public void setNmUsuario(String nmUsuario) {
+		this.nmUsuario = nmUsuario;
 	}
 	public String getCPF() {
 		return CPF;
@@ -116,7 +114,7 @@ public class Usuario {
             this.foto = fs.armazenarArquivoUsuario(foto);
         }
     }
-	
+
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
@@ -126,11 +124,18 @@ public class Usuario {
 	public void setStatus(char status) {
 		this.status = status;
 	}
-	public int getCd_usuario() {
-		return cd_usuario;
+	public int getCdUsuario() {
+		return cdUsuario;
 	}
-	public void setCd_usuario(int cd_usuario) {
-		this.cd_usuario = cd_usuario;
+	public void setCdUsuario(int cdUsuario) {
+		this.cdUsuario = cdUsuario;
+	}
+	public double getAvaliacao() {
+		return avaliacao;
+	}
+
+	public void setAvaliacao(double avaliacao) {
+		this.avaliacao = avaliacao;
 	}
 	
 }

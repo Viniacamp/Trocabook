@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-    <title>Home | TrocaBook</title>
+    <title>Home | Trocabook</title>
     </head>
 <body>   
 <header>
@@ -13,7 +13,8 @@
     <table class="cabecalho"><tr>
         <th id="cabecalhoelementos">
         <a href="/"><img src="/img/Design sem nome (7).svg"></a>
-        <input type="text" style="width: 50%; height: 35px; margin-left: 5px;" id="pesquisa" placeholder="Pesquisar">
+            <input type="text" style="width: 50%; height: 35px; margin-left: 5px;" id="pesquisa" placeholder="Pesquisar">
+            <!-- <div id="resultadosPesquisa"></div> -->
             <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 5px;">
               <option selected>Categoria...</option>
               <option>Ação</option>
@@ -34,8 +35,10 @@
     		</th:block>
             <th:block th:if="${usuario == null}">
         		<a href="/login" id="loginbotao"><button type="submit" style="width: 150px; height:37px;">Fazer login</button></a>
+        	 </th:block>
     </th></tr>
     <tr>
+    	<th:block th:if="${usuario == null}">
         <th>
             <a class="cadbutton" href="/cadastro" id="cadastrobotao">Cadastre-se</a> <!--botão provisório só pra levar pro cadastro-->
         </th>
@@ -59,13 +62,13 @@
     </div>  
         <table class="negociadores">
             <tr>
+
             <th><h1>Negociantes em Destaque</h1>
-                <a href=""><img src="/img/vendedor1.svg" width="100px"></a>
-                <a href=""><img src="/img/vendedor2.svg" width="100px"></a>
-                <a href=""><img src="/img/vendedor3.svg" width="100px"></a>
-                <a href=""><img src="/img/vendedor4.svg" width="100px"></a>
-                <a href=""><img src="/img/vendedor5.svg" width="100px"></a>
-                <a href=""><img src="/img/vendedor6.svg" width="100px"></a>
+                <div class="responsive-destaques">
+                    <div th:each="destaque : ${destaques}">
+                        <a th:href="@{'destaque/' + ${destaque.cdUsuario}}"><img th:src="${destaque.foto}" alt="Usuário em destaque"></a>
+                    </div>
+                </div>
             </th>
         <table class="livros">
             <div class="livros">
@@ -73,48 +76,87 @@
             </div>
             <tr>
                 <th><img src="/img/61460909.jpg"><br>Livro Senhor dos Aneis<br>A Sociedade do Anel<br><br>
-                    <button>Negociar</button>
+                    <a href="/chat/10"><button type="submit">Negociar</button></a>
                 </th>
                 <th><img src="/img/IALIVRO.png"><br>A Era da IA: e nosso futuro como humanos <br><br>
-                    <button>Negociar</button>
+                    <a href="/chat/1"><button type="submit">Negociar</button></a>
                 </th>
-                <th><img src="/img/livro2.jfif"><br>A Floresta Sombria<br><br>
-                    <button>Negociar</button>
+                <th><img src="/img/livro2.png"><br>A Floresta Sombria<br><br>
+                    <a href="/chat/2"><button type="submit">Negociar</button></a>
                 </th>
                 <th><img src="/img/culpa.jpg"><br>A Culpa é das Estrelas<br><br>
-                    <button>Negociar</button>
+                    <a href="/chat/3"><button type="submit">Negociar</button></a>
                 </th>
-                <th><img src="/img/livro4.jfif"><br>O Pequeno Príncipe<br><br>
-                    <button>Negociar</button>
+                <th><img src="/img/livro4.png"><br>O Pequeno Príncipe<br><br>
+                    <a href="/chat/4"><button type="submit">Negociar</button></a>
                 </th>
                 </tr>
                 <tr>
-                <th><img src="/img/livro6.jfif"><br>365 Reflexões Estóicas<br><br>
-                    <button>Negociar</button>
+                <th><img src="/img/livro6.png"><br>365 Reflexões Estóicas<br><br>
+                    <a href="/chat/5"><button type="submit">Negociar</button></a>
                 </th>
                 <th><img src="/img/dom casmurro.jpg"><br>Dom Casmurro<br><br>
-                    <button>Negociar</button>
+                    <a href="/chat/6"><button type="submit">Negociar</button></a>
                 </th>
                 <th><img src="/img/harry.jpg"><br>Coletânea Harry Potter<br><br>
-                    <button>Negociar</button>
+                    <a href="/chat/7"><button type="submit">Negociar</button></a>
                  </th>
                 <th><img src="/img/capa-ampliada-9788575224380.jpg"><br>Fundamentos de html5 e css3<br><br>
-                    <button>Negociar</button>
+                    <a href="/chat/8"><button type="submit">Negociar</button></a>
                 </th>
                 <th><img src="/img/engenharia de software.jpg"><br>Sommerville - Engenharia de Software<br><br>
-                    <button>Negociar</button>
+                    <a href="/chat/9"><button type="submit">Negociar</button></a>
                 </th>
             </tr>
         </table>
+        <a style="text-decoration: none" href="/livros"><p style="text-align: right; text-decoration: none; color:#007BFF">> Ver todos os anúncios</p></a>
         <br><br><br>
     <footer>
         <div class="rodapenovo">
-            <img src="/img/Design sem nome.svg">
+            <a href="/"><img src="/img/Design sem nome.svg"></a>
             <a href="/sobreNos"><p>Conheça nosso incrível projeto <br>de incentivo a reutilização</p></a>
-            <a href=""><p>Central de ajuda</p></a>
-            <small>© 2024 Sistema Trocabook<br>Todos os direitos reservados</small>
+            <a href="/ajuda"><p>Central de ajuda</p></a>
+            <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
         </div>
     </footer>  
 </div>   
 </body>
+<script>
+    /* document.getElementById("pesquisa").addEventListener("input", function(){
+        const titulo = this.value;
+        let div = document.getElementById("resultadosPesquisa");
+        div.innerHTML = "";
+        if (titulo.length > 1){
+            fetch(`/pesquisar?titulo=${encodeURIComponent(titulo)}`)
+                .then(res => {
+                    if (!res.ok){
+                        throw new Error("Falha ao encontrar livro");
+                    }
+                    return res.json();
+                })
+                .then(livros => {
+                    if (livros.length === 0){
+                        div.innerHTML += "<p>Nenhum Livro encontrado</p>"
+                    }
+                    else {
+                        livros.forEach(livro => {
+                            const divFilha = document.createElement("div");
+                            const capa = document.createElement("img");
+                            capa.src = livro.capa;
+
+                            const texto = document.createElement("p");
+                            texto.innerHTML = livro.nmLivro;
+
+                            divFilha.appendChild(capa);
+                            divFilha.appendChild(texto);
+                            div.appendChild(divFilha);
+                        })
+                    }
+                })
+                .catch(erro => {
+                    div.innerHTML += `<p>Ocorreu um erro ao buscar o livro=${erro.message}</p>`
+                })
+        }
+    })*/
+</script>
 </html>
