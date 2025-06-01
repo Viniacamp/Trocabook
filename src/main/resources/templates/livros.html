@@ -72,7 +72,9 @@
             <div class="info-usuario">
                 <img th:src="${vetorUsuarioLivro[2]}" class="PerfilFoto">
                 <p th:text="${vetorUsuarioLivro[3]}"></p>
+                <p></p>
             </div>
+            <a th:href="@{'/chat/' + ${vetorUsuarioLivro[4]}}"><button type="submit">Negociar</button></a>
         </div>
     </section>
 </div>

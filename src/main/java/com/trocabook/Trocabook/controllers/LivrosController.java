@@ -35,11 +35,12 @@ public class LivrosController {
         }
         LinkedList<String[]> listaUsuariosLivros = new LinkedList<>();
         for (UsuarioLivro usuarioLivro : usuarioLivros){
-            String[] usuariosLivrosInfo = new String[4];
+            String[] usuariosLivrosInfo = new String[5];
             usuariosLivrosInfo[0] = usuarioLivro.getLivro().getCapa();
             usuariosLivrosInfo[1] = usuarioLivro.getLivro().getNmLivro();
             usuariosLivrosInfo[2] = usuarioLivro.getUsuario().getFoto();
             usuariosLivrosInfo[3] = usuarioLivro.getUsuario().getNmUsuario();
+            usuariosLivrosInfo[4] = Integer.toString(usuarioLivro.getCdUsuarioLivro());
             listaUsuariosLivros.add(usuariosLivrosInfo);
 
         }

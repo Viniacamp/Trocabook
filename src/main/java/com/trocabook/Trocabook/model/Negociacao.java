@@ -14,7 +14,7 @@ public class Negociacao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cd_negociacao;
+	private int cdNegociacao;
 	
 	@ManyToOne
 	@JoinColumn(name = "cd_usuarioAnunciante", nullable = false)
@@ -38,12 +38,12 @@ public class Negociacao {
 	@NotNull(message = "Selecione o Tipo da Resolução da Negociação")
 	private Tipo tipo;
 	
-	public int getCd_negociacao() {
-		return cd_negociacao;
+	public int getCdNegociacao() {
+		return cdNegociacao;
 	}
 
-	public void setCd_negociacao(int cd_negociacao) {
-		this.cd_negociacao = cd_negociacao;
+	public void setCdNegociacao(int cd_negociacao) {
+		this.cdNegociacao = cd_negociacao;
 	}
 
 	public Usuario getUsuarioAnunciante() {
