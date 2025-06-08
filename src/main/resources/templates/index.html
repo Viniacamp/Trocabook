@@ -13,9 +13,11 @@
         <table class="cabecalho"><tr>
             <th id="cabecalhoelementos">
                 <a href="/"><img src="/img/Design sem nome (7).svg"></a>
-                <input type="text" style="width: 50%; height: 35px; margin-left: 5px;" id="pesquisa" placeholder="Pesquisar">
-                <!-- <div id="resultadosPesquisa"></div> -->
-                <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 5px;">
+                <div class="autocomplete-wrapper">
+                    <input type="text" style="width: 100%; height: 35px;" id="pesquisa" placeholder="Pesquisar">
+                    <div id="resultadosPesquisa" class="sugestoes-autocomplete"></div>
+                </div>
+                <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 15px;">
                     <option selected>Categoria...</option>
                     <option>Ação</option>
                     <option>Romance</option>
@@ -139,42 +141,5 @@
 </div>
 </div>
 </body>
-<script>
-    /* document.getElementById("pesquisa").addEventListener("input", function(){
-        const titulo = this.value;
-        let div = document.getElementById("resultadosPesquisa");
-        div.innerHTML = "";
-        if (titulo.length > 1){
-            fetch(`/pesquisar?titulo=${encodeURIComponent(titulo)}`)
-                .then(res => {
-                    if (!res.ok){
-                        throw new Error("Falha ao encontrar livro");
-                    }
-                    return res.json();
-                })
-                .then(livros => {
-                    if (livros.length === 0){
-                        div.innerHTML += "<p>Nenhum Livro encontrado</p>"
-                    }
-                    else {
-                        livros.forEach(livro => {
-                            const divFilha = document.createElement("div");
-                            const capa = document.createElement("img");
-                            capa.src = livro.capa;
-
-                            const texto = document.createElement("p");
-                            texto.innerHTML = livro.nmLivro;
-
-                            divFilha.appendChild(capa);
-                            divFilha.appendChild(texto);
-                            div.appendChild(divFilha);
-                        })
-                    }
-                })
-                .catch(erro => {
-                    div.innerHTML += `<p>Ocorreu um erro ao buscar o livro=${erro.message}</p>`
-                })
-        }
-    })*/
-</script>
+<script src="/js/fetch.js"></script>
 </html>

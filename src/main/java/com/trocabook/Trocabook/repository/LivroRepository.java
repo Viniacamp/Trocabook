@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface LivroRepository extends CrudRepository<Livro, Integer> {
-    // List<Livro> findByNmLivroContainingIgnoreCase(String nm_livro);
+     List<Livro> findByNmLivroContainingIgnoreCase(String nm_livro);
 }

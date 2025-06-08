@@ -2,6 +2,7 @@ package com.trocabook.Trocabook.repository;
 
 import java.util.List;
 
+import com.trocabook.Trocabook.model.Livro;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,5 @@ public interface UsuarioLivroRepository extends CrudRepository<UsuarioLivro, Int
 	List<UsuarioLivro> findByUsuarioAndTipoNegociacao(Usuario usuario, UsuarioLivro.TipoNegociacao tipoNegociacao);
 	Iterable<UsuarioLivro> findByTipoNegociacao(UsuarioLivro.TipoNegociacao tipoNegociacao);
 	UsuarioLivro findByCdUsuarioLivro(int cd);
+	List<UsuarioLivro> findByLivroIn(List<Livro> livros);
 }
