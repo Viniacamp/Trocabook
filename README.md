@@ -17,7 +17,6 @@ O desperdício de livros ainda é uma realidade no Brasil. Acreditamos que, por 
 
 
 ## Equipe  
-- Alexandre Castellano Santos  
 - Pedro Amaral Machado  
 - Pedro Lucas de Faria Cardoso  
 - Rafaela Lima Rodrigues  
@@ -26,5 +25,4 @@ O desperdício de livros ainda é uma realidade no Brasil. Acreditamos que, por 
 ## Auxiliadores  
 - Bruno Zolotareff dos Santos  
 - Marcos Vasconcelos de Oliveira  
-- Patricia Gallo de França  
-- Vinicius Heltai Pacheco
+- Patricia Gallo de França
