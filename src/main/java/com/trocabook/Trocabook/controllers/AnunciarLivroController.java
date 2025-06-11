@@ -70,6 +70,6 @@ public class AnunciarLivroController {
 		usuarioLivro.setLivro(livro);
 		usuarioLivro.setTipoNegociacao(UsuarioLivro.TipoNegociacao.valueOf(tipoNegociacao));
 		ulr.save(usuarioLivro);
-		return "redirect:/MeusLivros";
+		return "anuncioSucesso";
 	}
 }
