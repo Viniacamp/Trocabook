@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <title>Login | Trocabook</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <title>Login | Trocabook</title>
 </head>
 <body>
+<div class="container">
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
@@ -19,53 +20,54 @@
   <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
-    <style>
-        body {
-            background-color:rgb(236, 236, 236);
-            background-size: cover;
-        }
-    </style>
-<div class="wrapper">
+  <style>
+    body {
+      background-color:rgb(236, 236, 236);
+      background-size: cover;
+    }
+  </style>
+  <div class="wrapper">
     <div class="loginlogo">
       <a href="/"><img src="/img/Design sem nome (4).svg"></a>
     </div>
-  <form class="login" id="loginForm" method="post" th:action="@{/login}">
-    <h1><b>Login</b></h1>
-    <div class="row mb-3">
-      <label for="email" class="col-sm-2 col-form-label">Email:</label>
-      <div class="col-sm-10">
-        <input type="email" class="form-control" id="email" name = "email" th:value="*{email}">
-      </div>
-    </div>
-    <div class="row mb-3">
-      <label for="senha" class="col-sm-2 col-form-label">Senha:</label>
-      <div class="col-sm-10">
-        <input type="password" class="form-control" id="senha" name="senha">
-        <a href=""><small>esqueceu a senha?</small></a>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-sm-10 offset-sm-2">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="gridCheck1">
-          <label class="form-check-label" for="gridCheck1">
-            Lembre-se de mim
-          </label>
-          <label>Ainda não tem cadastro? <br><a href="/cadastro">cadastre-se agora!</a></label>
+    <form class="login" id="loginForm" method="post" th:action="@{/login}">
+      <h1><b>Login</b></h1>
+      <div class="row mb-3">
+        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" id="email" name = "email" th:value="*{email}">
         </div>
       </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Fazer login</button>
-  </form>
-  <br><br><br>
-<footer>
-    <div class="rodapenovo">
-      <a href="/"><img src="/img/Design sem nome.svg"></a>
-      <a href="/sobreNos"><p>Conheça nosso incrível projeto <br>de incentivo a reutilização</p></a>
-      <a href="/ajuda"><p>Central de ajuda</p></a>
-      <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
-    </div>
-</footer> 
+      <div class="row mb-3">
+        <label for="senha" class="col-sm-2 col-form-label">Senha:</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="senha" name="senha">
+          <a href=""><small>esqueceu a senha?</small></a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-10 offset-sm-2">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck1">
+            <label class="form-check-label" for="gridCheck1">
+              Lembre-se de mim
+            </label>
+            <label>Ainda não tem cadastro? <br><a href="/cadastro">cadastre-se agora!</a></label>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Fazer login</button>
+    </form>
+    <br><br><br>
+    <footer>
+      <div class="rodapenovo">
+        <a href="/"><img src="/img/Design sem nome.svg"></a>
+        <a href="/sobreNos"><p>Conheça nosso incrível projeto <br>de incentivo a reutilização</p></a>
+        <a href="/ajuda"><p>Central de ajuda</p></a>
+        <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
+      </div>
+    </footer>
+  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

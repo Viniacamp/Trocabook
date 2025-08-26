@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,56 +8,54 @@
     <title>Sobre nós | Trocabook</title>
 </head>
 <body>
+<div class="container">
     <header>
-        <div class="wrapper">  
+        <div class="wrapper">
             <table class="cabecalho"><tr>
                 <th id="cabecalhoelementos">
-                <a href="/"><img src="img/Design sem nome (7).svg"></a>
-                    <div class="autocomplete-wrapper">
-                        <input type="text" style="width: 100%; height: 35px;" id="pesquisa" placeholder="Pesquisar">
-                        <div id="resultadosPesquisa" class="sugestoes-autocomplete"></div>
-                    </div>
-                    <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 15px;">
-                      <option selected>Categoria...</option>
-                      <option>Ação</option>
-                      <option>Romance</option>
-                      <option>Literatura</option>
-                      <option>Lógica de Programação</option>
-                      <option>Direito</option>
-                      <option>Suspense</option>
-                      <option>Ficção Científica</option>
+                    <a href="/"><img src="img/Design sem nome (7).svg"></a>
+                    <input type="text" style="width: 50%; height: 35px; margin-left: 5px;" id="pesquisa" placeholder="Pesquisar">
+                    <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 5px;">
+                        <option selected>Categoria...</option>
+                        <option>Ação</option>
+                        <option>Romance</option>
+                        <option>Literatura</option>
+                        <option>Lógica de Programação</option>
+                        <option>Direito</option>
+                        <option>Suspense</option>
+                        <option>Ficção Científica</option>
                     </select>
                     <th:block th:if="${usuario != null}">
-		            	<a class="anunciar-livro4" href="/AnunciarLivro">Anunciar Livro</a>
-		            	<a class="meus-livros4" href="/MeusLivros">Meus Livros</a>
-		            	<form th:action="@{/deslogar}" method="post">
-		    				<button type="submit" id="deslogar">Sair</button>
-						</form>
-						<!--/* <span th:text="'Olá ' + ${usuario.nm_usuario}"></span>  */-->
-    				</th:block>
-    				<th:block th:if="${usuario == null}">
-                		<a href="/login" id="loginbotao"><button type="submit" style="width: 150px; height:37px;">Fazer login</button></a>
-                	<th:block>
-            </th></tr>
-            <tr>
-            	<th:block th:if="${usuario == null}">
-                <th>
-                    <a class="cadbutton" href="/cadastro" id="cadastrobotao">Cadastre-se</a> <!--botão provisório só pra levar pro cadastro-->
-                </th>
-                <th:block>
-            </tr>
+                        <a class="anunciar-livro4" href="/AnunciarLivro">Anunciar Livro</a>
+                        <a class="meus-livros4" href="/MeusLivros">Meus Livros</a>
+                        <form th:action="@{/deslogar}" method="post">
+                            <button type="submit" id="deslogar">Sair</button>
+                        </form>
+                        <!--/* <span th:text="'Olá ' + ${usuario.nm_usuario}"></span>  */-->
+                    </th:block>
+                    <th:block th:if="${usuario == null}">
+                        <a href="/login" id="loginbotao"><button type="submit" style="width: 150px; height:37px;">Fazer login</button></a>
+                        <th:block>
+                </th></tr>
+                <tr>
+                    <th:block th:if="${usuario == null}">
+                        <th>
+                            <a class="cadbutton" href="/cadastro" id="cadastrobotao">Cadastre-se</a> <!--botão provisório só pra levar pro cadastro-->
+                        </th>
+                        <th:block>
+                </tr>
             </table>
     </header>
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
-          <div class="vw-plugin-top-wrapper"></div>
+            <div class="vw-plugin-top-wrapper"></div>
         </div>
-      </div>
-      <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-      <script>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
         new window.VLibras.Widget('https://vlibras.gov.br/app');
-      </script>
+    </script>
     <div class="sobrenos">
         <h1>Quem Somos Nós</h1>
         <p>Somos alunos da Fatec Diadema e desenvolvemos um site inovador para venda e troca de livros. Nossa plataforma é onde os usuários não apenas negociam, mas também se envolvem em uma comunidade ativa. Aqui, cada transação é uma oportunidade de promover a reutilização de livros e economizar recursos. Junte-se a nós para fazer parte dessa missão de conscientização e eficiência.</p>
@@ -70,7 +68,8 @@
             <a href="/ajuda"><p>Central de ajuda</p></a>
             <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
         </div>
-    </footer>  
+    </footer>
+</div>
 </body>
 <script src="/js/fetch.js"></script>
 </html>

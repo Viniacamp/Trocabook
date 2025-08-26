@@ -6,11 +6,10 @@ body {
     box-sizing: border-box;
 }
 
-/*.container {
-  max-width: 1700px;
-  margin: 0 auto;
-  padding: 20px
-}*/
+.container {
+    max-width: 1700px;
+    margin: 0 auto;
+}
 
 /*estilo da pagina (geral)*/
 p{
@@ -181,7 +180,7 @@ table th, td {
 
 .capaLivros {
     width: 100%;
-    height: 220px;
+    height: 190px;
     object-fit: contain;
     margin-bottom: 10px;
 }
@@ -372,15 +371,7 @@ table th, td {
     z-index: 1;
 }
 
-.PerfilFoto {
-    width: 100px; /* Define a largura do círculo */
-    height: 100px; /* Define a altura do círculo */
-    border-radius: 50%; /* Garante o formato circular */
-    object-fit: cover; /* Ajusta a imagem para preencher o círculo */
-    border: 2px solid #fff; /* Adiciona uma borda branca ao redor */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Adiciona uma leve sombra para destacar */
-    overflow: hidden; /* Garante que a imagem não ultrapasse o círculo */
-}
+
 #exibirLivros {
     display: flex;
     flex-direction: row; /* Organiza os itens em coluna */
@@ -421,6 +412,8 @@ table th, td {
     width: 100px;
     height: 38px;
 }
+
+/*estilo da página de negociadores em destaque*/
 
 .responsive-destaques {
     display: flex;
@@ -540,22 +533,12 @@ table th, td {
     box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2), 0 2px 6px 0 rgba(0, 0, 0, 0.19);
 }
 
-
-
 .categoriaNegociacao{
     border-radius: 6px;
     font-family: manrope;
     padding-left: 5px;
     margin-right: 5px;
 }
-
-/*
-.container-livros {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-}
-*/
 
 .filtro-lateral {
     width: 200px;
@@ -569,11 +552,21 @@ table th, td {
     margin-top: auto;
 }
 
-.PerfilFoto {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
+
+.PerfilIcon {
+    width: 30px;
+    height: 30px;
+    margin-top: -30px;
+}
+
+.PerfilFotoDestaque {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Garante o formato circular */
+    object-fit: cover; /* Ajusta a imagem para preencher o círculo */
+    border: 2px solid #fff; /* Adiciona uma borda branca ao redor */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Adiciona uma leve sombra para destacar */
+    overflow: hidden; /* Garante que a imagem não ultrapasse o círculo */
 }
 
 .info-usuario p {
@@ -792,67 +785,4 @@ table th, td {
     margin: 0;
     font-size: 14px;
     color: #333;
-}
-
-.sugestoes-autocomplete {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    border-radius: 6px;
-    z-index: 999;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.sugestoes-autocomplete a {
-    display: flex;
-    align-items: center;
-    padding: 10px 16px;
-    text-decoration: none;
-    color: black;
-    border-bottom: 1px solid #eee;
-    background-color: white;
-}
-
-.sugestoes-autocomplete a:hover {
-    background-color: #f9f9f9;
-}
-
-.sugestoes-autocomplete img.livro-capa {
-    height: 60px;
-    width: 40px;
-    object-fit: contain;
-    border-radius: 4px;
-    margin-right: 12px;
-    margin-left: 12px;
-}
-
-.sugestoes-autocomplete p {
-    flex: 1;
-    margin: 0;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.sugestoes-autocomplete img.perfil-foto {
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-left: 12px;
-}
-
-
-.autocomplete-wrapper {
-    position: relative;
-    display: inline-block;
-    width: 50%;
-    margin-left: 5px;
 }

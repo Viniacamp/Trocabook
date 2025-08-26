@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,8 @@
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <title>Cadastro | Trocabook</title>
 </head>
-<body>  
+<body>
+<div class="container">
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
@@ -19,49 +20,48 @@
   <script>
     new window.VLibras.Widget('https://vlibras.gov.br/app');
   </script>
-  <div class="container">
-    <div class="cadastro"><br><br><br><br><table><tr>
-      <th style="width: 2000px; height: 10px;border: white; background: linear-gradient(132deg, rgb(255, 206, 236) 0.00%, rgb(151, 150, 240) 33.85%);">
+  <div class="cadastro"><br><br><br><br><table><tr>
+    <th style="width: 2000px; height: 10px; border: white; background: linear-gradient(132deg, rgb(255, 206, 236) 0.00%, rgb(151, 150, 240) 33.85%);">
       <a href="/"><img src="/img/Design sem nome (3).svg" style="width: 200px; height:100px; margin-left: 10px;"></a>
       <font size="5" style="margin-left: 50px; color: white;">Cadastro de Usuário</font>
-      </th></tr></table>
-    </div><br>
+    </th></tr></table>
+  </div><br>
 
-    <table><tr>
-      <th style="width: 3500px; height: 10px;border: white;">
-    <form method="post" enctype="multipart/form-data" th:object="${usuario}">
-      <div class="form-group">
-        <label for="nmUsuario">Nome:</label>
-        <input type="text" th:field="*{nmUsuario}" class="form-control" id="nmUsuario" name="nmUsuario" placeholder="Digite seu nome">
-        <div th:if="${#fields.hasErrors('nmUsuario')}" th:errors="*{nmUsuario}"></div>
-      </div>
-      <div class="form-group">
-        <label for="email">E-mail:</label>
-        <input type="email" th:field="*{email}" class="form-control" id="email" name="email" placeholder="Digite seu e-mail">
-        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-      </div>
-      <div class="form-group">
-        <label for="senha">Senha:</label>
-        <input type="password" th:field="*{senha}" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" >
-        <div th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></div>
-      </div>
-      <div class="form-group">
-        <label for="CPF">CPF:</label>
-        <input type="text" th:field="*{CPF}" class="form-control" id="CPF" name="CPF" placeholder="Digite seu cpf">
-        <div th:if="${#fields.hasErrors('CPF')}" th:errors="*{CPF}"></div>
-      </div>
-      <div class="form-group">
-        <label for="fotoA">Foto:</label>
-      	<input type="file" id="fotoA" name="fotoA" accept="image/*" style="width: 470px; height: 140px; border-style: dotted; padding-top: 10px;">
-        <div th:if="${fotoErro != null}" th:text="${fotoErro}"></div>
-      </div>
-      <button type="submit" class="btn btn-primary">Cadastrar</button><br><br>
-    </form>
-      </th></tr>
-    </table>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <table><tr>
+    <th style="width: 3500px; height: 10px;border: white;">
+      <form method="post" enctype="multipart/form-data" th:object="${usuario}">
+        <div class="form-group">
+          <label for="nmUsuario">Nome:</label>
+          <input type="text" th:field="*{nmUsuario}" class="form-control" id="nmUsuario" name="nmUsuario" placeholder="Digite seu nome">
+          <div th:if="${#fields.hasErrors('nmUsuario')}" th:errors="*{nmUsuario}"></div>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input type="email" th:field="*{email}" class="form-control" id="email" name="email" placeholder="Digite seu e-mail">
+          <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+        <div class="form-group">
+          <label for="senha">Senha:</label>
+          <input type="password" th:field="*{senha}" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" >
+          <div th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></div>
+        </div>
+        <div class="form-group">
+          <label for="CPF">CPF:</label>
+          <input type="text" th:field="*{CPF}" class="form-control" id="CPF" name="CPF" placeholder="Digite seu cpf">
+          <div th:if="${#fields.hasErrors('CPF')}" th:errors="*{CPF}"></div>
+        </div>
+        <div class="form-group">
+          <label for="fotoA">Foto:</label>
+          <input type="file" id="fotoA" name="fotoA" accept="image/*" style="width: 470px; height: 140px; border-style: dotted; padding-top: 10px;">
+          <div th:if="${fotoErro != null}" th:text="${fotoErro}"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button><br><br>
+      </form>
+    </th></tr>
+  </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <footer>
   <div class="rodapenovo">
     <a href="/"><img src="/img/Design sem nome.svg"></a>
@@ -70,6 +70,6 @@
     <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
   </div>
 </footer>
-
+</div>
 </body>
 </html>
