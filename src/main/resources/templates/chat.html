@@ -16,8 +16,12 @@
                 <tr>
                     <th id="cabecalhoelementos">
                         <a href="/"><img src="/img/Design sem nome (7).svg"></a>
-                        <input type="text" style="width: 50%; height: 35px; margin-left: 5px;" id="pesquisa" placeholder="Pesquisar">
-                        <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 5px;">
+                        <div class="autocomplete-wrapper">
+                            <input type="text" style="width: 100%; height: 35px;" id="pesquisa" placeholder="Pesquisar">
+                            <div id="resultadosPesquisa" class="sugestoes-autocomplete"></div>
+                        </div>
+
+                        <select id="inputCategoria" class="form-control" style="width: 200px; height:37px; margin-left: 15px;">
                             <option selected>Categoria...</option>
                             <option>Ação</option>
                             <option>Romance</option>
