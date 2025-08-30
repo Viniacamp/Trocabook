@@ -13,15 +13,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.trocabook.Trocabook.model.Usuario;
 import com.trocabook.Trocabook.repository.UsuarioRepository;
+import com.trocabook.Trocabook.service.RecaptchaService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class CadastroController {
 
 	@Autowired
 	private UsuarioRepository ur;
+
+    @Autowired
+    private RecaptchaService recaptchaService;
 	
 	@GetMapping("/cadastro")
 	public String cadastro(Model model, HttpSession sessao) {
@@ -32,9 +37,20 @@ public class CadastroController {
 		model.addAttribute("usuario", new Usuario());
 		return "cadastro";
 	}
-	
-	@PostMapping("/cadastro")
-	public String cadastrar(@RequestParam("fotoA") MultipartFile foto, @Valid Usuario usuario, BindingResult result, Model model) throws IOException{
+
+    @PostMapping("/cadastro")
+    public String cadastrar(@RequestParam("fotoA") MultipartFile foto,
+                            @RequestParam("g-recaptcha-response") String recaptchaToken,
+                            @Valid Usuario usuario,
+                            BindingResult result,
+                            Model model,
+                            RedirectAttributes attributes) throws IOException {
+
+        boolean isRecaptchaValid = recaptchaService.verifyRecaptcha(recaptchaToken);
+        if (!isRecaptchaValid) {
+            attributes.addFlashAttribute("recaptchaError", "Falha na verificação reCAPTCHA. Tente novamente.");
+            return "redirect:/cadastro";
+        }
 
 		if (foto.isEmpty()) {
 			model.addAttribute("fotoErro", "Selecione uma foto válida");

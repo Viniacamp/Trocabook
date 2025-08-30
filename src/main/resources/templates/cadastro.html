@@ -4,9 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <title>Cadastro | Trocabook</title>
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeMJ7MrAAAAANr2DxTYnwXDC_Uayw8Bc_uB4rGd"></script>
 </head>
 <body>
 <div class="container">
@@ -29,7 +31,8 @@
 
   <table><tr>
     <th style="width: 3500px; height: 10px;border: white;">
-      <form method="post" enctype="multipart/form-data" th:object="${usuario}">
+        <form id="cadastroForm" method="post" enctype="multipart/form-data" th:object="${usuario}">
+            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
         <div class="form-group">
           <label for="nmUsuario">Nome:</label>
           <input type="text" th:field="*{nmUsuario}" class="form-control" id="nmUsuario" name="nmUsuario" placeholder="Digite seu nome">
@@ -60,8 +63,8 @@
     </th></tr>
   </table>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 <footer>
   <div class="rodapenovo">
     <a href="/"><img src="/img/Design sem nome.svg"></a>
@@ -71,5 +74,19 @@
   </div>
 </footer>
 </div>
+
+<script>
+    document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Impede o envio imediato do formulário
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LeMJ7MrAAAAANr2DxTYnwXDC_Uayw8Bc_uB4rGd', {action: 'cadastro'}).then(function(token) {
+                // Adiciona o token ao campo oculto
+                document.getElementById('g-recaptcha-response').value = token;
+                // Envia o formulário
+                document.getElementById('cadastroForm').submit();
+            });
+        });
+    });
+</script>
 </body>
 </html>
