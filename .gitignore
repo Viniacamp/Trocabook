@@ -1,3 +1,7 @@
+### Segredos e Configuração Local ###
+# Ignora o arquivo de ambiente local que contém chaves secretas.
+.env
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
