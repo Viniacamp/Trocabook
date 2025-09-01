@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <title>Cadastro | Trocabook</title>
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6LeMJ7MrAAAAANr2DxTYnwXDC_Uayw8Bc_uB4rGd"></script>
+    <script th:src="'https://www.google.com/recaptcha/api.js?render=' + ${recaptchaSiteKey}"></script>
 </head>
 <body>
 <div class="container">
@@ -75,18 +75,21 @@
 </footer>
 </div>
 
-<script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
     document.getElementById('cadastroForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Impede o envio imediato do formulário
+        event.preventDefault();
+
+        const recaptchaSiteKey = /*[[${recaptchaSiteKey}]]*/ 'default_key';
+
         grecaptcha.ready(function() {
-            grecaptcha.execute('6LeMJ7MrAAAAANr2DxTYnwXDC_Uayw8Bc_uB4rGd', {action: 'cadastro'}).then(function(token) {
-                // Adiciona o token ao campo oculto
+            grecaptcha.execute(recaptchaSiteKey, {action: 'cadastro'}).then(function(token) {
                 document.getElementById('g-recaptcha-response').value = token;
-                // Envia o formulário
                 document.getElementById('cadastroForm').submit();
             });
         });
     });
+    /*]]>*/
 </script>
 </body>
 </html>
