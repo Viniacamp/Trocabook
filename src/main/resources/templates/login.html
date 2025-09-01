@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="/css/style.css">
   <title>Login | Trocabook</title>
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6LeMJ7MrAAAAANr2DxTYnwXDC_Uayw8Bc_uB4rGd"></script>
+  <script th:src="'https://www.google.com/recaptcha/api.js?render=' + ${recaptchaSiteKey}"></script>
 </head>
 <body>
 <div class="container">
@@ -80,18 +80,21 @@
   alert([[${mensagem}]])
 </script>
 
-<script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Impede o envio imediato do formulário
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LeMJ7MrAAAAANr2DxTYnwXDC_Uayw8Bc_uB4rGd', {action: 'login'}).then(function(token) {
-                // Adiciona o token ao campo oculto
-                document.getElementById('g-recaptcha-response').value = token;
-                // Envia o formulário
-                document.getElementById('loginForm').submit();
-            });
-        });
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const recaptchaSiteKey = /*[[${recaptchaSiteKey}]]*/ 'default_key';
+
+    grecaptcha.ready(function() {
+      grecaptcha.execute(recaptchaSiteKey, {action: 'login'}).then(function(token) {
+        document.getElementById('g-recaptcha-response').value = token;
+        document.getElementById('loginForm').submit();
+      });
     });
+  });
+  /*]]>*/
 </script>
 </body>
 </html>
