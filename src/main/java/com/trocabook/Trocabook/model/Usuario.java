@@ -11,6 +11,7 @@ import com.trocabook.Trocabook.service.FileStorageServiceUsuario;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 public class Usuario {
@@ -19,14 +20,15 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cdUsuario;
-	
-	@NotBlank(message = "Preencha o Nome")
-	@Column(nullable = false)
-	private String nmUsuario;
-	
-	@NotBlank(message = "Preencha o CPF")
-	@Column(nullable = false, unique = true, updatable = false)
-	private String CPF;
+
+    @NotBlank(message = "Preencha o Nome")
+    @Pattern(regexp = "^[A-Za-záàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ ]+$", message = "O nome deve conter apenas letras e espaços.")
+    @Column(nullable = false)
+    private String nmUsuario;
+
+    @CPF(message = "CPF inválido")
+    @Column(nullable = false, unique = true, updatable = false)
+    private String CPF;
 
 	@NotBlank(message = "Preencha o E-mail")
 	@Email(message = "Preencha com um E-mail válido")
