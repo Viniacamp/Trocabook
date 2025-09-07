@@ -43,11 +43,21 @@
           <input type="email" th:field="*{email}" class="form-control" id="email" name="email" placeholder="Digite seu e-mail">
           <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         </div>
-        <div class="form-group">
-          <label for="senha">Senha:</label>
-          <input type="password" th:field="*{senha}" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" >
-          <div th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></div>
-        </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" th:field="*{senha}" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" aria-describedby="passwordHelpBlock">
+
+                <div id="senha-server-error" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="text-danger"></div>
+                <div id="passwordHelpBlock" class="form-text">
+                    <ul id="password-rules">
+                        <li id="length" class="invalid">Pelo menos 8 caracteres</li>
+                        <li id="lowercase" class="invalid">Pelo menos uma letra minúscula</li>
+                        <li id="uppercase" class="invalid">Pelo menos uma letra maiúscula</li>
+                        <li id="number" class="invalid">Pelo menos um número</li>
+                        <li id="special" class="invalid">Pelo menos um caractere especial (@$!%*?&)</li>
+                    </ul>
+                </div>
+            </div>
         <div class="form-group">
           <label for="CPF">CPF:</label>
           <input type="text" th:field="*{CPF}" class="form-control" id="CPF" name="CPF" placeholder="Digite seu cpf">
@@ -74,7 +84,7 @@
   </div>
 </footer>
 </div>
-
+<script th:src="@{/js/password-validation.js}"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
     document.getElementById('cadastroForm').addEventListener('submit', function(event) {

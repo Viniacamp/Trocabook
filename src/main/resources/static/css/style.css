@@ -854,3 +854,23 @@ table th, td {
     object-fit: cover;
     margin-left: 12px;
 }
+
+/* Esconde o bloco de regras por padrão */
+#passwordHelpBlock {
+    display: none;
+}
+/* Classe que será adicionada via JS para mostrar o bloco */
+#passwordHelpBlock.is-visible {
+    display: block;
+}
+
+/* Estilos visuais das regras (permanecem os mesmos) */
+.form-text ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 5px;
+}
+#password-rules .valid { color: green; }
+#password-rules .valid::before { content: '✓ '; }
+#password-rules .invalid { color: red; }
+#password-rules .invalid::before { content: '✗ '; }
