@@ -1,6 +1,5 @@
 package com.trocabook.Trocabook.config;
 
-
 import com.trocabook.Trocabook.model.Livro;
 import com.trocabook.Trocabook.model.Negociacao;
 import com.trocabook.Trocabook.model.Usuario;
@@ -31,60 +30,62 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private NegociacaoRepository negociacaoRepository;
 
-
-
     @Override
     public void run(String... args) {
         if (usuarioRepository.count() > 0 || livroRepository.count() > 0) {
             return;
         }
+
+        // --- USUÁRIOS COM DADOS CORRIGIDOS ---
         Usuario u1 = new Usuario();
         u1.setNmUsuario("squirtle");
         u1.setEmail("squirtle@gmail.com");
-        u1.setSenha("squirtle");
-        u1.setCPF("83833289029");
+        u1.setSenha("Squirtle@123");
+        u1.setCPF("087.382.730-98");     // <-- CPF COM MÁSCARA
         u1.setFoto("/img/vendedor1.svg");
         u1.setAvaliacao(4.8);
 
         Usuario u2 = new Usuario();
         u2.setNmUsuario("PedroLucas");
         u2.setEmail("pedrol@gmail.com");
-        u2.setSenha("pedro");
-        u2.setCPF("83833289024");
+        u2.setSenha("Pedro@456");
+        u2.setCPF("796.895.940-36");    // <-- CPF COM MÁSCARA
         u2.setFoto("/img/vendedor2.svg");
         u2.setAvaliacao(4.7);
 
         Usuario u3 = new Usuario();
         u3.setNmUsuario("Rafaela");
         u3.setEmail("rafa@gmail.com");
-        u3.setSenha("rafa");
-        u3.setCPF("83833289023");
+        u3.setSenha("Rafaela@789");
+        u3.setCPF("336.443.280-56");   // <-- CPF COM MÁSCARA
         u3.setFoto("/img/vendedor3.svg");
         u3.setAvaliacao(4.9);
 
         Usuario u4 = new Usuario();
         u4.setNmUsuario("Vinicius");
         u4.setEmail("vini@gmail.com");
-        u4.setSenha("vini");
-        u4.setCPF("83833289022");
+        u4.setSenha("Vini@101");
+        u4.setCPF("189.621.590-40");   // <-- CPF COM MÁSCARA
         u4.setFoto("/img/vendedor4.svg");
         u4.setAvaliacao(4.84);
 
         Usuario u5 = new Usuario();
         u5.setNmUsuario("Welligton");
         u5.setEmail("well@gmail.com");
-        u5.setSenha("well");
-        u5.setCPF("83833289021");
+        u5.setSenha("Well@202");
+        u5.setCPF("801.049.840-82");   // <-- CPF COM MÁSCARA
         u5.setFoto("/img/vendedor5.svg");
         u5.setAvaliacao(4.7);
 
         Usuario u6 = new Usuario();
         u6.setNmUsuario("Gpt");
         u6.setEmail("gpt@gmail.com");
-        u6.setSenha("gpt");
-        u6.setCPF("83833289026");
+        u6.setSenha("GptBot@2025!");
+        u6.setCPF("598.833.780-50");     // <-- CPF COM MÁSCARA
         u6.setFoto("/img/vendedor6.svg");
         u6.setAvaliacao(0);
+
+        // --- O RESTANTE DO CÓDIGO PERMANECE O MESMO ---
 
         Livro l1 = new Livro();
         l1.setNmLivro("A Era da IA: e nosso futuro como humanos");
@@ -136,8 +137,8 @@ public class DataInitializer implements CommandLineRunner {
         l10.setAnoPublicacao(1980);
         l10.setCapa("/img/61460909.jpg");
 
-        LinkedList<Livro> livros = new LinkedList<Livro>();
-        LinkedList<Usuario> usuarios = new LinkedList<Usuario>();
+        LinkedList<Livro> livros = new LinkedList<>();
+        LinkedList<Usuario> usuarios = new LinkedList<>();
 
         livros.addAll(Arrays.asList(l1, l2, l3, l4, l5, l6, l7, l8, l9, l10));
         usuarios.addAll(Arrays.asList(u1, u2, u3, u4, u5, u6));
