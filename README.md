@@ -14,7 +14,7 @@ O desperdício de livros ainda é uma realidade no Brasil. Acreditamos que, por 
 
 ## Tecnologias Utilizadas no Projeto
 [![My Skills](https://skillicons.dev/icons?i=spring,mysql,js,html,css&theme=light)](https://skillicons.dev)
-- **Back-end:** Spring Boot 
+- **Back-end:** Java com Spring Boot 
 - **Banco de Dados:** MySQL  
 - **Front-end:** HTML, CSS e JavaScript  
 
@@ -27,6 +27,6 @@ O desperdício de livros ainda é uma realidade no Brasil. Acreditamos que, por 
 - Vinicius Soares de Almeida  
 
 ## Auxiliadores  
-- Bruno Zolotareff dos Santos  
-- Marcos Vasconcelos de Oliveira  
+- Edson Saraiva de Almeida 
+- Leandro Reginaldo  
 - Patricia Gallo de França
