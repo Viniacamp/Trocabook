@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <title>Cadastro | Trocabook</title>
 
@@ -45,7 +46,14 @@
         </div>
             <div class="form-group">
                 <label for="senha">Senha:</label>
-                <input type="password" th:field="*{senha}" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" aria-describedby="passwordHelpBlock">
+                <div class="input-group">
+                    <input type="password" th:field="*{senha}" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" aria-describedby="passwordHelpBlock">
+                    <div class="input-group-append">
+            <span class="input-group-text">
+                <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+            </span>
+                    </div>
+                </div>
 
                 <div id="senha-server-error" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="text-danger"></div>
                 <div id="passwordHelpBlock" class="form-text">
@@ -105,6 +113,23 @@
         });
     });
     /*]]>*/
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#togglePassword').on('click', function() {
+            const passwordField = $('#senha');
+            const fieldType = passwordField.attr('type');
+
+            if (fieldType === 'password') {
+                passwordField.attr('type', 'text');
+                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    });
 </script>
 </body>
 </html>
