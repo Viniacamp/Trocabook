@@ -1,4 +1,4 @@
-package com.trocabook.Trocabook.dto;
+package com.trocabook.Trocabook.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

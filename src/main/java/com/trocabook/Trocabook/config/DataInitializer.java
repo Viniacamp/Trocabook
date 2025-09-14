@@ -44,6 +44,7 @@ public class DataInitializer implements CommandLineRunner {
         u1.setCPF("087.382.730-98");     // <-- CPF COM MÁSCARA
         u1.setFoto("/img/vendedor1.svg");
         u1.setAvaliacao(4.8);
+        u1.setStatus('A');
 
         Usuario u2 = new Usuario();
         u2.setNmUsuario("PedroLucas");
@@ -52,6 +53,7 @@ public class DataInitializer implements CommandLineRunner {
         u2.setCPF("796.895.940-36");    // <-- CPF COM MÁSCARA
         u2.setFoto("/img/vendedor2.svg");
         u2.setAvaliacao(4.7);
+        u2.setStatus('A');
 
         Usuario u3 = new Usuario();
         u3.setNmUsuario("Rafaela");
@@ -60,6 +62,7 @@ public class DataInitializer implements CommandLineRunner {
         u3.setCPF("336.443.280-56");   // <-- CPF COM MÁSCARA
         u3.setFoto("/img/vendedor3.svg");
         u3.setAvaliacao(4.9);
+        u3.setStatus('A');
 
         Usuario u4 = new Usuario();
         u4.setNmUsuario("Vinicius");
@@ -68,6 +71,7 @@ public class DataInitializer implements CommandLineRunner {
         u4.setCPF("189.621.590-40");   // <-- CPF COM MÁSCARA
         u4.setFoto("/img/vendedor4.svg");
         u4.setAvaliacao(4.84);
+        u4.setStatus('A');
 
         Usuario u5 = new Usuario();
         u5.setNmUsuario("Welligton");
@@ -76,6 +80,7 @@ public class DataInitializer implements CommandLineRunner {
         u5.setCPF("801.049.840-82");   // <-- CPF COM MÁSCARA
         u5.setFoto("/img/vendedor5.svg");
         u5.setAvaliacao(4.7);
+        u5.setStatus('A');
 
         Usuario u6 = new Usuario();
         u6.setNmUsuario("Gpt");
@@ -84,7 +89,7 @@ public class DataInitializer implements CommandLineRunner {
         u6.setCPF("598.833.780-50");     // <-- CPF COM MÁSCARA
         u6.setFoto("/img/vendedor6.svg");
         u6.setAvaliacao(0);
-
+        u6.setStatus('A');
         // --- O RESTANTE DO CÓDIGO PERMANECE O MESMO ---
 
         Livro l1 = new Livro();
