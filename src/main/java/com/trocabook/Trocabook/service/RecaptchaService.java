@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.trocabook.Trocabook.dto.RecaptchaResponse;
+import com.trocabook.Trocabook.model.dto.RecaptchaResponse;
 
 @Service
 public class RecaptchaService {

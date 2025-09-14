@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Data</th>
+        <th>Total Usuários</th>
+        <th>Total Livros</th>
+        <th>Total Negociações</th>
+    </tr>
+    </thead>
+    <tbody id="corpoTabela">
+    </tbody>
+</table>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("http://localhost:8181/api/admin/dashboard")
+            .then(res => {
+                if (!res.ok){
+                    throw new Error("Erro ao carregar dashboards")
+                }
+                return res.json()
+            })
+            .then(dashboards => {
+                const corpo = document.querySelector("#corpoTabela");
+                corpo.innerHTML = "";
+                dashboards.forEach(d => {
+                    const linha = document.createElement("tr");
+
+                    const data = document.createElement("td");
+                    data.textContent = d.dataCriacao;
+
+                    const totalUsuarios = document.createElement("td");
+                    totalUsuarios.textContent = d.totalUsuarios;
+
+                    const totalLivros = document.createElement("td");
+                    totalLivros.textContent = d.totalLivros;
+
+                    const totalNegociacoes = document.createElement("td");
+                    totalNegociacoes.textContent = d.totalNegociacao;
+
+                    linha.appendChild(data);
+                    linha.appendChild(totalUsuarios);
+                    linha.appendChild(totalLivros);
+                    linha.appendChild(totalNegociacoes);
+
+                    corpo.appendChild(linha);
+                });
+            })
+            .catch(error => console.error(error));
+    });
+</script>
+</html>

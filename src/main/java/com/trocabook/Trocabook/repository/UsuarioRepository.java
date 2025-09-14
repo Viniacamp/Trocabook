@@ -12,9 +12,6 @@ import java.util.Optional;
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     Usuario findByEmailAndSenha(String email, String senha);
     Usuario findByEmail(String email);
-
-    // ADICIONE ESTE MÉTODO
-    Usuario findByCPF(String cpf);
-
+    Usuario findByCPF(String cpf); // Mantenha esta linha
     List<Usuario> findTop6ByOrderByAvaliacaoDesc();
 }
