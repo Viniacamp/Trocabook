@@ -1,6 +1,6 @@
 package com.trocabook.Trocabook.controllers;
 
-import com.trocabook.Trocabook.dto.UsuarioCadastroDTO; // 1. Importar o DTO
+import com.trocabook.Trocabook.model.dto.UsuarioCadastroDTO; // <--- CORRETO
 import com.trocabook.Trocabook.model.Usuario;
 import com.trocabook.Trocabook.repository.UsuarioRepository;
 import com.trocabook.Trocabook.service.RecaptchaService;
