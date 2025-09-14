@@ -17,8 +17,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-	@Autowired
-	private UsuarioRepository ur;
 
 	@Autowired
 	private RecaptchaService recaptchaService;
@@ -38,34 +36,5 @@ public class LoginController {
 		return "login";
 	}
 
-	@PostMapping("/login")
-	public String logar(@RequestParam("email") String email,
-						@RequestParam("senha") String senha,
-						@RequestParam("g-recaptcha-response") String recaptchaToken,
-						HttpSession sessao,
-						Model model) {
 
-		model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
-
-		boolean isRecaptchaValid = recaptchaService.verifyRecaptcha(recaptchaToken);
-		if (!isRecaptchaValid) {
-			model.addAttribute("recaptchaError", "Falha na verificação reCAPTCHA. Tente novamente.");
-			return "login";
-		}
-
-		model.addAttribute("email", email);
-		if (email.isBlank() || senha.isBlank()) {
-			model.addAttribute("mensagem", "Preencha Todos os Campos");
-			return "login";
-		}
-
-		Usuario usuario = ur.findByEmailAndSenha(email, senha);
-		if (usuario != null) {
-			sessao.setAttribute("usuarioLogado", usuario);
-		} else {
-			model.addAttribute("mensagem", "Usuário não encontrado. Verifique o seu e-mail/senha e tente novamente");
-			return "login";
-		}
-		return "redirect:/";
-	}
 }

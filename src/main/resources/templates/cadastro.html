@@ -32,7 +32,8 @@
 
   <table><tr>
     <th style="width: 3500px; height: 10px;border: white;">
-        <form id="cadastroForm" method="post" enctype="multipart/form-data" th:object="${usuario}">
+        <form th:action="@{/cadastro}" id="cadastroForm" method="post" enctype="multipart/form-data" th:object="${usuarioDTO}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
         <div class="form-group">
           <label for="nmUsuario">Nome:</label>

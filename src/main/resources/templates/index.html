@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
@@ -29,27 +30,35 @@
                         <option>Suspense</option>
                         <option>Ficção Científica</option>
                     </select>
-                    <th:block th:if="${usuario != null}">
+
+                    <th:block sec:authorize="isAuthenticated()">
                         <a class="anunciar-livro4" href="/AnunciarLivro">Anunciar Livro</a>
                         <a class="meus-livros4" href="/MeusLivros">Meus Livros</a>
-                        <form th:action="@{/deslogar}" method="post">
+
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
                             <button type="submit" id="deslogar">Sair</button>
                         </form>
-                        <!--/* <span th:text="'Olá ' + ${usuario.nm_usuario}"></span>  */-->
+
+                        <span style="color: white; margin-left: 15px; font-weight: bold;">
+                            Olá, <span th:text="${#authentication.principal.usuario.nmUsuario}"></span>
+                        </span>
                     </th:block>
-                    <th:block th:if="${usuario == null}">
+
+                    <th:block sec:authorize="!isAuthenticated()">
                         <a href="/login" id="loginbotao"><button type="submit" style="width: 150px; height:37px;">Fazer login</button></a>
                     </th:block>
                 </th></tr>
                 <tr>
-                    <th:block th:if="${usuario == null}">
+                    <th:block sec:authorize="!isAuthenticated()">
                         <th>
-                            <a class="cadbutton" href="/cadastro" id="cadastrobotao">Cadastre-se</a> <!--botão provisório só pra levar pro cadastro-->
+                            <a class="cadbutton" href="/cadastro" id="cadastrobotao">Cadastre-se</a>
                         </th>
                     </th:block>
                 </tr>
             </table>
+        </div>
     </header>
+
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
@@ -139,7 +148,6 @@
             <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
         </div>
     </footer>
-</div>
 </div>
 </body>
 <script src="/js/fetch.js"></script>

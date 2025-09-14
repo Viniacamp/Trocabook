@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <title>Criar novo anuncio | Trocabook</title>
 </head>
 <body>
@@ -13,7 +14,7 @@
         <div class="wrapper">
             <table class="cabecalho"><tr>
                 <th id="cabecalhoelementos">
-                    <a href="/"><img src="img/Design sem nome (7).svg"></a>
+                    <a href="/"><img src="/img/Design sem nome (7).svg"></a>
                     <div class="autocomplete-wrapper">
                         <input type="text" style="width: 100%; height: 35px;" id="pesquisa" placeholder="Pesquisar">
                         <div id="resultadosPesquisa" class="sugestoes-autocomplete"></div>
@@ -29,14 +30,22 @@
                         <option>Suspense</option>
                         <option>Ficção Científica</option>
                     </select>
-                    <a class="anunciar-livro4" href="/AnunciarLivro">Anunciar Livro</a>
-                    <a class="meus-livros4" href="/MeusLivros">Meus Livros</a>
-                    <form th:action="@{/deslogar}" method="post">
-                        <button type="submit" id="deslogar">Sair</button>
-                    </form>
+
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a class="anunciar-livro4" href="/AnunciarLivro">Anunciar Livro</a>
+                        <a class="meus-livros4" href="/MeusLivros">Meus Livros</a>
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
+                            <button type="submit" id="deslogar">Sair</button>
+                        </form>
+                    </th:block>
+
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <a href="/login" id="loginbotao"><button type="submit" style="width: 150px; height:37px;">Fazer login</button></a>
+                    </th:block>
                 </th>
             </tr>
             </table>
+        </div>
     </header>
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
@@ -51,7 +60,10 @@
     <div class="paganunciar">
         <div class="anuncio">
             <h1>Crie o seu anuncio</h1>
-            <form method="post" enctype="multipart/form-data" th:object="${livro}">
+            <form method="post" enctype="multipart/form-data" th:action="@{/AnunciarLivro}" th:object="${livro}">
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
                 <input type="text" th:field="*{nmLivro}" style="width: 45%; height: 33px;" id="titulo" name="nmLivro" placeholder="Titulo do livro"><br>
                 <div th:if="${#fields.hasErrors('nmLivro')}" th:errors="*{nmLivro}"></div>
                 <input type="text" th:field="*{anoPublicacao}" style="width: 45%; height: 33px;" id="ano" name="anoPublicacao" placeholder="Ano de publicação"><br>

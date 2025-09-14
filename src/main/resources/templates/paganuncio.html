@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
@@ -29,6 +30,7 @@
                         <option>Suspense</option>
                         <option>Ficção Científica</option>
                     </select>
+
                     <a class="anunciar-livro4" href="/AnunciarLivro">Anunciar Livro</a>
                     <a class="meus-livros4" href="/MeusLivros">Meus Livros</a>
                     <form th:action="@{/deslogar}" method="post">
