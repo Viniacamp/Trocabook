@@ -43,6 +43,7 @@ public class DadosController {
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable int id){
+        System.out.println(id);
         dadosService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }

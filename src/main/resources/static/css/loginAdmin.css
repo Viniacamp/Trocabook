@@ -1,0 +1,65 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Corpo da página */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(267deg, rgb(229, 178, 254) 27.55%, rgb(104, 158, 254) 100.00%);
+}
+
+/* Formulário */
+form#formLogin {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+/* Inputs */
+form#formLogin input {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form#formLogin input:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 5px rgba(37,117,252,0.5);
+    outline: none;
+}
+
+/* Botão */
+form#formLogin button {
+    padding: 12px 15px;
+    background-color: #2575fc;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+form#formLogin button:hover {
+    background-color: #6a11cb;
+    transform: scale(1.05);
+}
+
+/* Placeholder estilizado */
+form#formLogin input::placeholder {
+    color: #aaa;
+}

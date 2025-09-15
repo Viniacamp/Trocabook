@@ -41,15 +41,9 @@
                         </th:block>
                         <th:block sec:authorize="!isAuthenticated()">
                             <a href="/login" id="loginbotao"><button type="submit" style="width: 150px; height:37px;">Fazer login</button></a>
+                            <a class="cadbutton" href="/cadastro" id="cadastrobotao">Cadastre-se</a>
                         </th:block>
                     </th>
-                </tr>
-                <tr>
-                    <th:block th:if="${usuario == null}">
-                        <th>
-                            <a class="cadbutton" href="/cadastro" id="cadastrobotao">Cadastre-se</a>
-                        </th>
-                    </th:block>
                 </tr>
             </table>
         </div>
@@ -86,9 +80,12 @@
                 <p th:text="${vetorUsuarioLivro[1]}"></p>
                 <p></p>
                 <div class="info-usuario">
+                    <a th:href="@{'/destaque/' + ${vetorUsuarioLivro[5]}}">
                     <img th:src="${vetorUsuarioLivro[2]}" class="PerfilIcon">
                     <p th:text="${vetorUsuarioLivro[3]}"></p>
+                    </a>
                 </div>
+                <a th:href="@{'/chat/' + ${vetorUsuarioLivro[4]}}"><button type="submit">Negociar</button></a>
             </div>
         </section>
     </div>

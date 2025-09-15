@@ -2,8 +2,10 @@ package com.trocabook.Trocabook.service;
 
 import com.trocabook.Trocabook.model.Usuario;
 import com.trocabook.Trocabook.model.dto.DashboardDTO;
+import com.trocabook.Trocabook.model.dto.UsuarioCadastroDTO;
 import com.trocabook.Trocabook.model.dto.UsuarioDTO;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IDadosService {

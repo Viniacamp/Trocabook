@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     Usuario findByEmailAndSenha(String email, String senha);
     Usuario findByEmail(String email);
-    Usuario findByCPF(String cpf); // Mantenha esta linha
+    Usuario findByCPF(String cpf);
     List<Usuario> findTop6ByOrderByAvaliacaoDesc();
+    Iterable<Usuario> findAllByStatus(char status);
 }

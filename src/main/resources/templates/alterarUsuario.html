@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Alterar</title>
+    <link rel="stylesheet" type="text/css" href="/css/listarUsuarios.css">
+    <link rel="stylesheet" type="text/css" href="/css/alterar.css">
 </head>
 <body>
+    <img th:src="${usuario.foto}" class="PerfilIcone">
+    <span th:text="${usuario.nmUsuario}"><p></p></span>
     <form id="alterarForm" th:object="${usuario}">
-        <input th:field="*{avaliacao}" type="number" id="avaliacao" min="0" max="5" placeholder="avaliação">
-        <input th:field="*{status}" type="text" id="status"  maxlength="1" placeholder="status (A/I)">
+        <label for="avaliacao">Avaliação:</label>
+        <input th:field="*{avaliacao}" type="number" id="avaliacao" min="0" max="5" step="any" placeholder="Avaliação">
+
+        <label for="status">Status:</label>
+        <input th:field="*{status}" type="text" id="status" maxlength="1" placeholder="Status (A/I)">
+
         <button type="submit">Alterar</button>
     </form>
 </body>
@@ -39,6 +47,7 @@
                 if (!res.ok){
                     throw new Error("Erro ao alterar usuario")
                 }
+                console.log(res);
                 return res.json()
             })
             .then(Usuario => {

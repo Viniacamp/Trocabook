@@ -21,10 +21,17 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(
+                                "/dados/**"
+                        )
+                )
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(
                                 "/", "/login", "/cadastro", "/sobreNos", "/ajuda",
-                                "/css/**", "/js/**", "/img/**", "/vendor/**"
+                                "/css/**", "/js/**", "/img/**", "/vendor/**", "/adminHome",
+                                "/dashboard-pagina", "/listaUsuarios-pagina", "/alterarUsuario/{id}",
+                                "/cadastroAdmin", "/loginAdmin",  "/dados/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -57,7 +64,7 @@ public class WebSecurityConfig {
                                                 // Adicionado o CDN https://cdn.jsdelivr.net para as imagens do V-Libras
                                                 "img-src 'self' data: https://vlibras.gov.br https://cdn.jsdelivr.net; " +
 
-                                                "connect-src 'self' https://vlibras.gov.br;"
+                                                "connect-src 'self' http://localhost:8181 https://vlibras.gov.br;"
                                 )
                         )
                         .httpStrictTransportSecurity(hsts -> hsts
