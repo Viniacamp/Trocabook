@@ -2,17 +2,19 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Login Admin</title>
+    <title>Login | Área do Administrador</title>
     <link rel="stylesheet" type="text/css" href="/css/loginAdmin.css">
+  
 </head>
 <body>
-    <form id="formLogin">
-        <input placeholder="insira seu email" type="email" name="email" id="emailAdmin">
-        <input placeholder="insira sua senha" type="password" name="senha" id="senhaAdmin">
-        <button id="entrar" type="submit">Entrar</button>
-
-    </form>
-
+    <h1>Área do Administrador | Trocabook<br>Login</h1>
+    <div class="flex">
+        <form id="formLogin">
+            <input placeholder="digite seu email" type="email" name="email" id="emailAdmin">
+            <input placeholder="digite sua senha" type="password" name="senha" id="senhaAdmin">
+            <button id="entrar" type="submit">Entrar</button>
+        </form>
+    </div>
 </body>
 <script>
     document.querySelector("#formLogin").addEventListener("submit", function (e) {
