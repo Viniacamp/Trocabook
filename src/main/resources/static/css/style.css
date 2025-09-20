@@ -874,3 +874,76 @@ table th, td {
 #password-rules .valid::before { content: '✓ '; }
 #password-rules .invalid { color: red; }
 #password-rules .invalid::before { content: '✗ '; }
+
+/* /css/style.css */
+
+/* Estilo para a área de upload (o label principal) */
+.file-upload-label {
+    position: relative; /* Essencial para posicionar o botão 'X' dentro dele */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 470px;
+    height: 150px; /* Aumentei um pouco a altura para acomodar a prévia */
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+    overflow: hidden; /* Garante que a imagem não vaze para fora */
+}
+
+.file-upload-label:hover, .file-upload-label.is-dragover {
+    border-color: #007bff;
+    background-color: #e2f0ff;
+}
+
+/* Estilo para o prompt inicial (ícone de upload + texto) */
+#upload-prompt .fa-upload {
+    color: #007bff;
+    margin-bottom: 5px;
+}
+#upload-prompt #file-name {
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* Estilo para o container da prévia da imagem */
+#preview-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Faz a imagem cobrir a área sem distorcer */
+    border-radius: 6px;
+}
+
+/* Estilo para o botão 'X' de remover */
+#remove-photo-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%; /* Deixa o botão redondo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+#remove-photo-btn:hover {
+    background-color: rgba(220, 53, 69, 0.8); /* Vermelho ao passar o mouse */
+}
