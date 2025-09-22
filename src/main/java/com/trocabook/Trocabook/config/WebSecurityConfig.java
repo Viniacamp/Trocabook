@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -21,6 +23,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Habilita e integra a configuração de CORS definida no WebConfig
+                .cors(withDefaults())
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers(
                                 "/dados/**"
@@ -36,14 +40,14 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // Sua página de login customizada
-                        .loginProcessingUrl("/login") // URL que o Spring vai "escutar" para o POST
-                        .defaultSuccessUrl("/", true) // Para onde ir após login com sucesso
-                        .failureUrl("/login?error=true") // Para onde ir se o login falhar
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout=true") // Para onde ir após logout
+                        .logoutSuccessUrl("/login?logout=true")
                         .permitAll()
                 )
                 .headers(headers -> headers
@@ -51,20 +55,19 @@ public class WebSecurityConfig {
                         .contentSecurityPolicy(csp -> csp
                                 .policyDirectives(
                                         "default-src 'self'; " +
+                                                // --- AJUSTE TEMPORÁRIO ---
+                                                // 'unsafe-inline' foi readicionado para manter a funcionalidade.
+                                                // ATENÇÃO: Isso reintroduz a vulnerabilidade de XSS apontada pelo ZAP.
                                                 "script-src 'self' 'unsafe-inline' https://vlibras.gov.br https://www.google.com https://www.gstatic.com https://code.jquery.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " +
-
-                                                // Adicionado https://vlibras.gov.br e o novo https://fonts.googleapis.com
+                                                // --- AJUSTE TEMPORÁRIO ---
+                                                // 'unsafe-inline' foi readicionado para manter a funcionalidade.
                                                 "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://vlibras.gov.br https://fonts.googleapis.com; " +
-
-                                                // Adicionado https://fonts.gstatic.com para permitir o download das fontes
                                                 "font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +
-
                                                 "frame-src 'self' https://www.google.com; " +
-
-                                                // Adicionado o CDN https://cdn.jsdelivr.net para as imagens do V-Libras
                                                 "img-src 'self' data: https://vlibras.gov.br https://cdn.jsdelivr.net; " +
-
-                                                "connect-src 'self' http://localhost:8181 https://vlibras.gov.br;"
+                                                "connect-src 'self' http://localhost:8181 https://vlibras.gov.br;" +
+                                                "form-action 'self'; " +
+                                                "frame-ancestors 'self';"
                                 )
                         )
                         .httpStrictTransportSecurity(hsts -> hsts
@@ -74,8 +77,10 @@ public class WebSecurityConfig {
                         .referrerPolicy(policy -> policy
                                 .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
                         )
+                        .contentTypeOptions(withDefaults())
                 );
 
         return http.build();
     }
 }
+
