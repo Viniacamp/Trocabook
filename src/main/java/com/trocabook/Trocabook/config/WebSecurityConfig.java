@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                                 "/", "/login", "/cadastro", "/sobreNos", "/ajuda",
                                 "/css/**", "/js/**", "/img/**", "/vendor/**", "/adminHome",
                                 "/dashboard-pagina", "/listaUsuarios-pagina", "/alterarUsuario/{id}",
-                                "/cadastroAdmin", "/loginAdmin",  "/dados/**"
+                                "/cadastroAdmin", "/loginAdmin",  "/dados/**", "/pesquisar"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -55,17 +55,19 @@ public class WebSecurityConfig {
                         .contentSecurityPolicy(csp -> csp
                                 .policyDirectives(
                                         "default-src 'self'; " +
-                                                // --- AJUSTE TEMPORÁRIO ---
-                                                // 'unsafe-inline' foi readicionado para manter a funcionalidade.
-                                                // ATENÇÃO: Isso reintroduz a vulnerabilidade de XSS apontada pelo ZAP.
-                                                "script-src 'self' 'unsafe-inline' https://vlibras.gov.br https://www.google.com https://www.gstatic.com https://code.jquery.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " +
-                                                // --- AJUSTE TEMPORÁRIO ---
-                                                // 'unsafe-inline' foi readicionado para manter a funcionalidade.
+                                                // ▼▼▼ MUDANÇA 1: Adicionado 'unsafe-eval' ▼▼▼
+                                                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vlibras.gov.br https://www.vlibras.gov.br blob: https://www.google.com https://www.gstatic.com https://code.jquery.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " +
+
+                                                "worker-src 'self' blob:; " +
+
                                                 "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://vlibras.gov.br https://fonts.googleapis.com; " +
-                                                "font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +
+
+                                                // ▼▼▼ MUDANÇA 2: Adicionados os domínios do VLibras ▼▼▼
+                                                "font-src 'self' https://vlibras.gov.br https://www.vlibras.gov.br https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +
+
                                                 "frame-src 'self' https://www.google.com; " +
                                                 "img-src 'self' data: https://vlibras.gov.br https://cdn.jsdelivr.net; " +
-                                                "connect-src 'self' http://localhost:8181 https://vlibras.gov.br;" +
+                                                "connect-src 'self' http://localhost:8181 https://vlibras.gov.br https://www.vlibras.gov.br https://cdn.jsdelivr.net; " +
                                                 "form-action 'self'; " +
                                                 "frame-ancestors 'self';"
                                 )
