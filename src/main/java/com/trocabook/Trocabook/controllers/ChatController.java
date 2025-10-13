@@ -1,22 +1,36 @@
 package com.trocabook.Trocabook.controllers;
 
 import com.trocabook.Trocabook.config.UserDetailsImpl; // 1. Importar UserDetailsImpl
+import com.trocabook.Trocabook.controllers.response.ChatResponse;
 import com.trocabook.Trocabook.model.Usuario;
 import com.trocabook.Trocabook.model.UsuarioLivro;
+import com.trocabook.Trocabook.model.dto.MensagemDTO;
 import com.trocabook.Trocabook.repository.UsuarioLivroRepository;
+import com.trocabook.Trocabook.service.IChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal; // 2. Importar a anotação
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
+@RequestMapping("/chat")
 public class ChatController {
-    @Autowired
     private UsuarioLivroRepository usuarioLivroRepository;
 
-    @GetMapping("/chat/{cd}")
+    private IChatService chatService;
+    @Autowired
+    public ChatController(UsuarioLivroRepository usuarioLivroRepository, IChatService chatService) {
+        this.usuarioLivroRepository = usuarioLivroRepository;
+        this.chatService = chatService;
+    }
+
+    @GetMapping("/{cd}")
     // 3. REMOVEMOS HttpSession e ADICIONAMOS @AuthenticationPrincipal
     public String chat(@PathVariable int cd, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
@@ -28,9 +42,13 @@ public class ChatController {
 
         // O resto da sua lógica continua igual
         UsuarioLivro usuarioLivro = usuarioLivroRepository.findByCdUsuarioLivro(cd);
+        ChatResponse<List<MensagemDTO>> mensagens = chatService.listarMensagensEntreUsuarios(usuarioLivro.getUsuario().getCdUsuario(), usuarioLogado.getCdUsuario());
         model.addAttribute("usuarioNegociante", usuarioLivro.getUsuario());
+        model.addAttribute("mensagens", mensagens.getData());
         model.addAttribute("livro", usuarioLivro.getLivro());
 
         return "chat";
     }
+
+    
 }

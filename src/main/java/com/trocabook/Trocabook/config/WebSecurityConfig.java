@@ -27,7 +27,8 @@ public class WebSecurityConfig {
                 .cors(withDefaults())
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers(
-                                "/dados/**"
+                                "/dados/**",
+                                "/pesquisar"
                         )
                 )
                 .authorizeHttpRequests(requests -> requests
