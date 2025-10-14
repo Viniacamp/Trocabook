@@ -11,5 +11,5 @@ public interface IChatService {
 
     ChatResponse<List<MensagemDTO>> listarMensagensEntreUsuarios(int cdUsuarioDestinatario, int cdUsuarioRemetente);
 
-    ChatResponse<List<MensagemDTO>> listarMensagensPorUsuarioDataEnvioDecrescente(int cdUsuarioRemtente);
+    ChatResponse<List<MensagemDTO>> listarMensagensPorUsuarioDataEnvioDecrescente(int cdUsuarioRemetente);
 }

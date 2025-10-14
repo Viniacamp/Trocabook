@@ -38,31 +38,26 @@ public class ChatService implements IChatService {
 
     @Override
     public ChatResponse<List<MensagemDTO>> listarMensagensEntreUsuarios(int cdUsuarioDestinatario, int cdUsuarioRemetente) {
-        HashMap<String, Integer> params = new HashMap<>();
-        params.put("destinatario", cdUsuarioDestinatario);
-        params.put("remetente", cdUsuarioRemetente);
+        String endpoint = String.format("%s/mensagens?remetente=%d&destinatario=%d", url, cdUsuarioRemetente, cdUsuarioDestinatario);
         ResponseEntity<ChatResponse<List<MensagemDTO>>> response = restTemplate.exchange(
-                url + "/mensagens",
+                endpoint,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<ChatResponse<List<MensagemDTO>>>() {
-                },
-                params
+                }
 
         );
         return response.getBody();
     }
 
     @Override
-    public ChatResponse<List<MensagemDTO>> listarMensagensPorUsuarioDataEnvioDecrescente(int cdUsuarioRemtente) {
-        HashMap<String, Integer> params = new HashMap<>();
-        params.put("remetente", cdUsuarioRemtente);
+    public ChatResponse<List<MensagemDTO>> listarMensagensPorUsuarioDataEnvioDecrescente(int cdUsuarioRemetente) {
+        String endpoint = String.format("%s/mensagens?remetente=%d", url, cdUsuarioRemetente);
         ResponseEntity<ChatResponse<List<MensagemDTO>>> response = restTemplate.exchange(
-                url + "/mensagens",
+                endpoint,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<ChatResponse<List<MensagemDTO>>>() {},
-                params
+                new ParameterizedTypeReference<ChatResponse<List<MensagemDTO>>>() {}
         );
         return response.getBody();
     }
