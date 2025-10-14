@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal; // 2. Importar a anotação
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,22 +29,39 @@ public class ChatController {
 
     @GetMapping("/{cd}")
     // 3. REMOVEMOS HttpSession e ADICIONAMOS @AuthenticationPrincipal
-    public String chat(@PathVariable int cd, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public String chat(@PathVariable int cd, Model model, @RequestParam(name = "remetente", required = false) Integer cdUsuarioRemetente, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         // 4. A verificação manual de login foi REMOVIDA. Spring Security já protegeu a rota.
 
         // 5. Pegamos o usuário logado para usar na página (ex: mostrar sua foto de perfil)
         Usuario usuarioLogado = userDetails.getUsuario();
         model.addAttribute("usuarioLogado", usuarioLogado);
+        UsuarioLivro usuarioLivro = usuarioLivroRepository.findByCdUsuarioLivro(cd);
+        int cdUsuarioDestinatario;
+        if (usuarioLivro.getUsuario().getCdUsuario() == usuarioLogado.getCdUsuario()) {
+            cdUsuarioDestinatario = cdUsuarioRemetente;
+        } else {
+            cdUsuarioDestinatario = usuarioLivro.getUsuario().getCdUsuario();
+        }
 
         // O resto da sua lógica continua igual
-        UsuarioLivro usuarioLivro = usuarioLivroRepository.findByCdUsuarioLivro(cd);
-        ChatResponse<List<MensagemDTO>> mensagens = chatService.listarMensagensEntreUsuarios(usuarioLivro.getUsuario().getCdUsuario(), usuarioLogado.getCdUsuario());
+
+        ChatResponse<List<MensagemDTO>> mensagens = chatService.listarMensagensEntreUsuarios(cdUsuarioDestinatario, usuarioLogado.getCdUsuario());
         model.addAttribute("usuarioNegociante", usuarioLivro.getUsuario());
         model.addAttribute("mensagens", mensagens.getData());
         model.addAttribute("livro", usuarioLivro.getLivro());
 
         return "chat";
+    }
+
+    @GetMapping("/list-mensagens")
+    public String listMensagens(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Usuario usuarioLogado = userDetails.getUsuario();
+        ChatResponse<List<MensagemDTO>> mensagens = chatService.listarMensagensPorUsuarioDataEnvioDecrescente(usuarioLogado.getCdUsuario());
+        model.addAttribute("usuarioLogado", usuarioLogado);
+        model.addAttribute("mensagens", mensagens.getData());
+        return "list-mensagens";
+
     }
 
     
