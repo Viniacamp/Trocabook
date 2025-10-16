@@ -10,88 +10,82 @@ import jakarta.validation.Valid;
 
 @Entity
 public class Negociacao {
-	@Valid
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cdNegociacao;
-	
-	@ManyToOne
-	@JoinColumn(name = "cd_usuarioAnunciante", nullable = false)
-	private Usuario usuarioAnunciante;
-	
-	@ManyToOne
-	@JoinColumn(name = "cd_usuarioInteressado", nullable = false)
-	private Usuario usuarioInteressado;
-	
-	@CreationTimestamp
-	@Column(nullable = false, updatable = false)
-	private LocalDateTime dtNegociacao;
-	
-	@ManyToOne
-	@JoinColumn(name = "cd_livro", nullable = false)
-	private Livro livro;
-	
+    @Valid
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	@NotNull(message = "Selecione o Tipo da Resolução da Negociação")
-	private Tipo tipo;
-	
-	public int getCdNegociacao() {
-		return cdNegociacao;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int cdNegociacao;
 
-	public void setCdNegociacao(int cd_negociacao) {
-		this.cdNegociacao = cd_negociacao;
-	}
+    @ManyToOne
+    @JoinColumn(name = "cd_usuarioAnunciante", nullable = false)
+    private Usuario usuarioAnunciante;
 
-	public Usuario getUsuarioAnunciante() {
-		return usuarioAnunciante;
-	}
+    @ManyToOne
+    @JoinColumn(name = "cd_usuarioInteressado", nullable = false)
+    private Usuario usuarioInteressado;
 
-	public void setUsuarioAnunciante(Usuario usuarioAnunciante) {
-		this.usuarioAnunciante = usuarioAnunciante;
-	}
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dtNegociacao;
 
-	public Usuario getUsuarioInteressado() {
-		return usuarioInteressado;
-	}
+    @ManyToOne
+    @JoinColumn(name = "cd_livro", nullable = false)
+    private Livro livro;
 
-	public void setUsuarioInteressado(Usuario usuarioInteressado) {
-		this.usuarioInteressado = usuarioInteressado;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @NotNull(message = "Selecione o Tipo da Resolução da Negociação")
+    private Tipo tipo;
 
-	public LocalDateTime getDtNegociacao() {
-		return dtNegociacao;
-	}
+    public int getCdNegociacao() {
+        return cdNegociacao;
+    }
 
-	public void setDtNegociacao(LocalDateTime dtNegociacao) {
-		this.dtNegociacao = dtNegociacao;
-	}
+    public void setCdNegociacao(int cd_negociacao) {
+        this.cdNegociacao = cd_negociacao;
+    }
 
-	public Livro getLivro() {
-		return livro;
-	}
+    public Usuario getUsuarioAnunciante() {
+        return usuarioAnunciante;
+    }
 
-	public void setLivro(Livro livro) {
-		this.livro = livro;
-	}
+    public void setUsuarioAnunciante(Usuario usuarioAnunciante) {
+        this.usuarioAnunciante = usuarioAnunciante;
+    }
 
-	public Tipo getTipo() {
-		return tipo;
-	}
+    public Usuario getUsuarioInteressado() {
+        return usuarioInteressado;
+    }
 
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
-	}
+    public void setUsuarioInteressado(Usuario usuarioInteressado) {
+        this.usuarioInteressado = usuarioInteressado;
+    }
 
-	public enum Tipo{
-		TROCA, VENDA, AMBOS
-	}
+    public LocalDateTime getDtNegociacao() {
+        return dtNegociacao;
+    }
 
+    public void setDtNegociacao(LocalDateTime dtNegociacao) {
+        this.dtNegociacao = dtNegociacao;
+    }
 
-	
-	
-	
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+
+    public enum Tipo{
+        TROCA, VENDA, AMBOS
+    }
 }
