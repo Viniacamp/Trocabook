@@ -1,6 +1,5 @@
 package com.trocabook.Trocabook.model;
 
-import com.trocabook.Trocabook.service.FileStorageServiceUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -9,8 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
+
+import java.util.ArrayList; // Importação adicionada
 import java.util.List;
 
 @Entity
@@ -35,12 +34,10 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // A MUDANÇA PRINCIPAL ESTÁ AQUI:
-    // Removemos as anotações @NotBlank, @Size e @Pattern da senha.
     @Column(nullable = false)
     private String senha;
 
-    private String foto;
+    private String foto; // O campo foto agora é apenas uma String
 
     @NotNull
     @Column(nullable = false)
@@ -59,14 +56,31 @@ public class Usuario {
     @OneToMany(mappedBy = "usuarioInteressado", cascade = CascadeType.ALL)
     private List<Negociacao> negociacoesInteressado;
 
-    // --- Getters e Setters (permanecem os mesmos) ---
+    // --- Getters e Setters Corrigidos ---
 
-    public List<Negociacao> getNegociacoesAnunciante() { return negociacoesAnunciante; }
-    public void setNegociacoesAnunciante(List<Negociacao> negociacoesAnunciante) { this.negociacoesAnunciante = negociacoesAnunciante; }
-    public List<Negociacao> getNegociacoesInteressado() { return negociacoesInteressado; }
-    public void setNegociacoesInteressado(List<Negociacao> negociacoesInteressado) { this.negociacoesInteressado = negociacoesInteressado; }
-    public List<UsuarioLivro> getUsuarioLivros() { return usuarioLivros; }
-    public void setUsuarioLivros(List<UsuarioLivro> usuarioLivros) { this.usuarioLivros = usuarioLivros; }
+    public List<Negociacao> getNegociacoesAnunciante() {
+        // Retorna uma cópia para proteger a lista original
+        return this.negociacoesAnunciante == null ? null : new ArrayList<>(this.negociacoesAnunciante);
+    }
+    public void setNegociacoesAnunciante(List<Negociacao> negociacoesAnunciante) {
+        // Armazena uma cópia para que alterações externas não afetem a entidade
+        this.negociacoesAnunciante = negociacoesAnunciante == null ? null : new ArrayList<>(negociacoesAnunciante);
+    }
+    public List<Negociacao> getNegociacoesInteressado() {
+        return this.negociacoesInteressado == null ? null : new ArrayList<>(this.negociacoesInteressado);
+    }
+    public void setNegociacoesInteressado(List<Negociacao> negociacoesInteressado) {
+        this.negociacoesInteressado = negociacoesInteressado == null ? null : new ArrayList<>(negociacoesInteressado);
+    }
+    public List<UsuarioLivro> getUsuarioLivros() {
+        return this.usuarioLivros == null ? null : new ArrayList<>(this.usuarioLivros);
+    }
+    public void setUsuarioLivros(List<UsuarioLivro> usuarioLivros) {
+        this.usuarioLivros = usuarioLivros == null ? null : new ArrayList<>(usuarioLivros);
+    }
+
+    // --- Getters e Setters que permanecem os mesmos ---
+
     public String getNmUsuario() { return nmUsuario; }
     public void setNmUsuario(String nmUsuario) { this.nmUsuario = nmUsuario; }
     public String getCPF() { return CPF; }
@@ -76,13 +90,10 @@ public class Usuario {
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
     public String getFoto() { return foto; }
-    public void setFoto(MultipartFile foto) throws IOException {
-        if (foto != null && !foto.isEmpty()) {
-            FileStorageServiceUsuario fs = new FileStorageServiceUsuario();
-            this.foto = fs.armazenarArquivoUsuario(foto);
-        }
-    }
+
+    // O setFoto agora apenas aceita a String com o caminho do arquivo
     public void setFoto(String foto) { this.foto = foto; }
+
     public char getStatus() { return status; }
     public void setStatus(char status) { this.status = status; }
     public int getCdUsuario() { return cdUsuario; }
