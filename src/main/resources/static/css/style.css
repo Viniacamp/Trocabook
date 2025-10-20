@@ -644,6 +644,8 @@ table th, td {
 .main-container {
     display: flex;
     height: calc(100vh - 60px);
+    padding-top: 5px;
+    padding-bottom: 7px;
 }
 
 /*proproedades do menu lateral*/
