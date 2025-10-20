@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList; // Importação adicionada
 import java.util.List;
 
@@ -46,6 +47,12 @@ public class Usuario {
     @Max(5)
     @Column(nullable = false)
     private double avaliacao;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
+    @Column(name = "reset_password_token_expiry_date")
+    private LocalDateTime resetPasswordTokenExpiryDate;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<UsuarioLivro> usuarioLivros;
@@ -100,4 +107,20 @@ public class Usuario {
     public void setCdUsuario(int cdUsuario) { this.cdUsuario = cdUsuario; }
     public double getAvaliacao() { return avaliacao; }
     public void setAvaliacao(double avaliacao) { this.avaliacao = avaliacao; }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public LocalDateTime getResetPasswordTokenExpiryDate() {
+        return resetPasswordTokenExpiryDate;
+    }
+
+    public void setResetPasswordTokenExpiryDate(LocalDateTime resetPasswordTokenExpiryDate) {
+        this.resetPasswordTokenExpiryDate = resetPasswordTokenExpiryDate;
+    }
 }

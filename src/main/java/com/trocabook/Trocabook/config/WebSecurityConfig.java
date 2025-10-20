@@ -36,7 +36,7 @@ public class WebSecurityConfig {
                                 "/", "/login", "/cadastro", "/sobreNos", "/ajuda",
                                 "/css/**", "/js/**", "/img/**", "/vendor/**", "/adminHome",
                                 "/dashboard-pagina", "/listaUsuarios-pagina", "/alterarUsuario/{id}",
-                                "/cadastroAdmin", "/loginAdmin",  "/dados/**"
+                                "/cadastroAdmin", "/loginAdmin",  "/dados/**", "/esqueci-senha", "/redefinir-senha"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
