@@ -639,13 +639,16 @@ table th, td {
     border-radius: 50%;
 }
 
+/*elementos da página do chat*/
+/*propriedades gerais do container*/
 .main-container {
     display: flex;
     height: calc(100vh - 60px);
 }
 
+/*proproedades do menu lateral*/
 .chat-sidebar {
-    width: 20%;
+    width: 25%;
     background-color: white;
     padding: 20px;
     border-right: 1px solid #ddd;
@@ -656,11 +659,15 @@ table th, td {
 }
 
 .chat-sidebar input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    width: 93%;
+    height: 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    border-style:solid;
+    border-color: #E0E0E0;
+    font-family: manrope;
+    font-size: 15px;
+    padding-left: 10px;
 }
 
 .chat-list {
@@ -704,20 +711,31 @@ table th, td {
     margin-bottom: 20px;
 }
 
+/*mensagens chat*/
 .messages {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     overflow-y: auto;
 }
 
 .message {
     max-width: 60%;
-    padding: 10px;
     border-radius: 10px;
     background-color: white;
 }
+
+.message p {
+    word-wrap: break-word;       /* Quebra palavras longas */
+    overflow-wrap: break-word;   /* Alternativa moderna */
+    white-space: pre-wrap;       /* Mantém quebras de linha, mas ainda quebra o texto */
+    padding: 10px;               /* Dá um respiro interno */
+    margin: 0;                   /* Remove margens extras */
+    font-family: manrope;
+    font-size: 15px;
+}
+
 
 .message.user {
     align-self: flex-end;
@@ -727,35 +745,40 @@ table th, td {
 .message.negociador {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
 }
 
 .message.negociador img {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 .message-input {
     display: flex;
     align-items: center;
-    padding-top: 10px;
-    border-top: 1px solid #ccc;
+    border-style: solid;
+    border-color: #E0E0E0;
+    font-family: manrope;
+    border-radius: 8px;
     background-color: white;
 }
 
 .message-input input {
+    font-family: manrope;
+    font-size: 15px;
     flex-grow: 1;
-    padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     margin-right: 10px;
+    padding-left: 10px;
 }
 
 .message-input button {
     background-color: #a385ff;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 10px;
     cursor: pointer;
 }
@@ -764,7 +787,6 @@ table th, td {
     width: 20px;
     height: 20px;
 }
-
 .book-info {
     width: 25%;
     background-color: white;
@@ -786,6 +808,7 @@ table th, td {
     font-size: 14px;
     color: #333;
 }
+
 
 /* Container que mantém input e dropdown alinhados */
 .autocomplete-wrapper {

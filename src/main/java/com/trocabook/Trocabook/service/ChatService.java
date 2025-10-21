@@ -37,8 +37,8 @@ public class ChatService implements IChatService {
     }
 
     @Override
-    public ChatResponse<List<MensagemDTO>> listarMensagensEntreUsuarios(int cdUsuarioDestinatario, int cdUsuarioRemetente) {
-        String endpoint = String.format("%s/mensagens?remetente=%d&destinatario=%d", url, cdUsuarioRemetente, cdUsuarioDestinatario);
+    public ChatResponse<List<MensagemDTO>> listarMensagensEntreUsuarios(int cdUsuarioLivro, int cdUsuarioDestinatario, int cdUsuarioRemetente) {
+        String endpoint = String.format("%s/mensagens?remetente=%d&destinatario=%d&usuarioLivro=%d", url, cdUsuarioRemetente, cdUsuarioDestinatario, cdUsuarioLivro);
         ResponseEntity<ChatResponse<List<MensagemDTO>>> response = restTemplate.exchange(
                 endpoint,
                 HttpMethod.GET,

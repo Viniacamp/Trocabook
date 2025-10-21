@@ -9,7 +9,7 @@ import java.util.List;
 public interface IChatService {
     ChatResponse<MensagemDTO> enviarMensagem(MensagemDTO mensagemDTO);
 
-    ChatResponse<List<MensagemDTO>> listarMensagensEntreUsuarios(int cdUsuarioDestinatario, int cdUsuarioRemetente);
+    ChatResponse<List<MensagemDTO>> listarMensagensEntreUsuarios(int cdUsuarioLivro, int cdUsuarioRemetente, int cdUsuarioDestinatario);
 
     ChatResponse<List<MensagemDTO>> listarMensagensPorUsuarioDataEnvioDecrescente(int cdUsuarioRemetente);
 }

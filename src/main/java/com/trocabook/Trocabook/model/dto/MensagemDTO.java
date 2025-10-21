@@ -6,6 +6,8 @@ public class MensagemDTO {
     private int cdUsuarioLivro;
     private String conteudo;
 
+
+
     public int getCdUsuarioRemetente() {
         return cdUsuarioRemetente;
     }

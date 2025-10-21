@@ -89,57 +89,139 @@
             <div class="livro-card">
                 <img src="/img/61460909.jpg" class="capaLivros">
                 <p>Livro Senhor dos Aneis: A Sociedade do Anel</p>
-                <a href="/chat/10"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=10&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/IALIVRO.png" class="capaLivros">
                 <p>A Era da IA: e nosso futuro como humanos</p>
-                <a href="/chat/1"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=1&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/livro2.png" class="capaLivros">
                 <p>A Floresta Sombria</p>
-                <a href="/chat/2"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=2&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/culpa.jpg" class="capaLivros">
                 <p>A Culpa é das Estrelas</p>
-                <a href="/chat/3"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=3&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/livro4.png" class="capaLivros">
                 <p>O Pequeno Príncipe</p>
-                <a href="/chat/4"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=4&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/livro6.png" class="capaLivros">
                 <p>365 Reflexões Estóicas</p>
-                <a href="/chat/5"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=5&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/dom casmurro.jpg" class="capaLivros">
                 <p>Dom Casmurro</p>
-                <a href="/chat/6"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=6&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/harry.jpg" class="capaLivros">
                 <p>Coletânea Harry Potter</p>
-                <a href="/chat/7"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=7&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/capa-ampliada-9788575224380.jpg" class="capaLivros">
                 <p>Fundamentos de html5 e css3</p>
-                <a href="/chat/8"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=8&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
+
             <div class="livro-card">
                 <img src="/img/engenharia de software.jpg" class="capaLivros">
                 <p>Sommerville - Engenharia de Software</p>
-                <a href="/chat/9"><button type="submit">Negociar</button></a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/chat/conversar?usuarioLivro=9&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                        <button type="button">Negociar</button>
+                    </a>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a href="/login"><button type="button">Negociar</button></a>
+                </th:block>
             </div>
         </section>
-        <a style="text-decoration: none", href="/livros"><p style="text-align: right; text-decoration: none; color:#007BFF">> Ver todos os anúncios</p></a>
+        <a style="text-decoration: none", href="/livros">
+            <p style="text-align: right; text-decoration: none; color:#007BFF">> Ver todos os anúncios</p>
+        </a>
         <br><br><br>
     </div>
+
     <footer>
         <div class="rodapenovo">
             <a href="/"><img src="/img/Design sem nome.svg"></a>
