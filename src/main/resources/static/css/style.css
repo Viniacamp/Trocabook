@@ -728,6 +728,17 @@ table th, td {
     background-color: white;
 }
 
+.message p {
+    word-wrap: break-word;       /* Quebra palavras longas */
+    overflow-wrap: break-word;   /* Alternativa moderna */
+    white-space: pre-wrap;       /* Mantém quebras de linha, mas ainda quebra o texto */
+    padding: 10px;               /* Dá um respiro interno */
+    margin: 0;                   /* Remove margens extras */
+    font-family: manrope;
+    font-size: 15px;
+}
+
+
 .message.user {
     align-self: flex-end;
     background-color: #dcf8c6;
@@ -778,7 +789,6 @@ table th, td {
     width: 20px;
     height: 20px;
 }
-
 .book-info {
     width: 25%;
     background-color: white;
@@ -800,6 +810,7 @@ table th, td {
     font-size: 14px;
     color: #333;
 }
+
 
 /* Container que mantém input e dropdown alinhados */
 .autocomplete-wrapper {

@@ -67,21 +67,23 @@
                 <p style="text-align: center; color: #888; margin-bottom: 20px;">Lembre-se de trocar mensagens com respeito e cordialidade.<br>Desejamos uma excelente negociação :D</p>
             </div>
 
-            <div class="messages">
-                <div class="message user">
-                    <p>Olá, estou interessado no seu livro. Qual é o preço e o estado de conservação?</p>
-                </div>
-                <div class="message negociador">
-                    <img th:src="${usuarioNegociante.foto}" alt="Negociante">
-                    <p>Oi! O livro está em ótimo estado, quase novo, e estou pedindo R$ 30,00. Se precisar de fotos ou mais informações, só avisar!</p>
+            <div class="messages" id="messagesContainer">
+                <div th:each="msg : ${mensagens}"
+                     th:class="'message ' + (${msg.cdUsuarioRemetente == usuarioLogado.cdUsuario} ? 'user' : 'negociador')">
+
+                    <img th:if="${msg.cdUsuarioRemetente != usuarioLogado.cdUsuario}"
+                         th:src="${usuarioNegociante.foto}" alt="Negociante">
+
+                    <p th:text="${msg.conteudo}"></p>
                 </div>
             </div>
 
             <form id="chatForm" class="message-input">
-                <input type="text" placeholder="Mensagem">
-                <button type="submit">
-                    <img src="/img/aviao.png" alt="Enviar">
-                </button>
+                <input type="hidden" id="cdUsuarioLivro" th:value="${mensagemDTO.cdUsuarioLivro}">
+                <input type="hidden" id="cdUsuarioRemetente" th:value="${mensagemDTO.cdUsuarioRemetente}">
+                <input type="hidden" id="cdUsuarioDestinatario" th:value="${mensagemDTO.cdUsuarioDestinatario}">
+                <input type="text" id="conteudo" placeholder="Mensagem">
+                <button type="submit"><img src="/img/aviao.png" alt="Enviar"></button>
             </form>
         </section>
 
@@ -94,21 +96,69 @@
     </main>
 
     <script>
-        document.querySelector('#chatForm').addEventListener('submit', function(event) {
+        const cdUsuarioLivro = parseInt(document.getElementById('cdUsuarioLivro').value);
+        const cdUsuarioRemetente = parseInt(document.getElementById('cdUsuarioRemetente').value);
+        const cdUsuarioDestinatario = parseInt(document.getElementById('cdUsuarioDestinatario').value);
+        const container = document.getElementById('messagesContainer');
+        let ultimaQuantidade = container.children.length;
+
+        // Função para renderizar uma mensagem
+        function adicionarMensagemNoContainer(msg) {
+            const classe = msg.cdUsuarioRemetente === cdUsuarioRemetente ? 'user' : 'negociador';
+
+            const img = msg.cdUsuarioRemetente === cdUsuarioRemetente
+                ? ''
+                : `<img src="${document.querySelector('.chat-list img')?.src || '/img/user.png'}" alt="Negociante">`;
+
+            const div = document.createElement('div');
+            div.className = `message ${classe}`;
+            div.innerHTML = `${img}<p>${msg.conteudo}</p>`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            ultimaQuantidade++;
+        }
+
+        // Envio de mensagem
+        document.querySelector('#chatForm').addEventListener('submit', async function(event) {
             event.preventDefault();
+            const conteudo = document.getElementById('conteudo').value.trim();
+            if (!conteudo) return;
 
-            const input = document.querySelector('.message-input input');
-            const texto = input.value.trim();
-            if (!texto) return;
+            const mensagem = {
+                cdUsuarioLivro,
+                cdUsuarioRemetente,
+                cdUsuarioDestinatario,
+                conteudo
+            };
 
-            const container = document.querySelector('.messages');
-            container.innerHTML += `<div class="message user"><p>${texto}</p></div>`;
-            input.value = '';
+            const resposta = await fetch('/chat/mensagens', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(mensagem)
+            });
 
-            setTimeout(() => {
-                container.innerHTML += `<div class="message negociador"><img src=[[${usuarioNegociante.foto}]]><p>Obrigado pela mensagem! Vou ver e meia noite eu te aviso.</p></div>`;
-            }, 1000);
+            const data = await resposta.json();
+            if (data.status === 'success') {
+                adicionarMensagemNoContainer(data.data);
+                document.getElementById('conteudo').value = '';
+            }
         });
+
+        // Atualização automática de mensagens (polling)
+        async function atualizarMensagens() {
+            const resp = await fetch(`/chat/mensagens/atualizar?usuarioLivro=${cdUsuarioLivro}&remetente=${cdUsuarioRemetente}&destinatario=${cdUsuarioDestinatario}`);
+            const data = await resp.json();
+
+            if (data.status === 'success') {
+                if (data.data.length > ultimaQuantidade) {
+                    const novas = data.data.slice(ultimaQuantidade);
+                    novas.forEach(adicionarMensagemNoContainer);
+                }
+            }
+        }
+
+        // Atualiza a cada 4 segundos
+        setInterval(atualizarMensagens, 4000);
     </script>
 
     <footer>

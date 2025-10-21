@@ -85,7 +85,10 @@
                     <p th:text="${vetorUsuarioLivro[3]}"></p>
                     </a>
                 </div>
-                <a th:href="@{'/chat/' + ${vetorUsuarioLivro[4]}}"><button type="submit">Negociar</button></a>
+                <a th:href="@{'/chat/conversar?usuarioLivro=' + ${vetorUsuarioLivro[4]} + '&remetente=' + ${#authentication.principal.usuario.cdUsuario}}">
+                    <button type="button">Negociar</button>
+                </a>
+
             </div>
         </section>
     </div>

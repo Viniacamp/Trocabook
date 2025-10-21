@@ -28,6 +28,7 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers(
                                 "/dados/**",
+                                "/chat/**",
                                 "/pesquisar"
                         )
                 )
@@ -66,7 +67,7 @@ public class WebSecurityConfig {
                                                 "font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +
                                                 "frame-src 'self' https://www.google.com; " +
                                                 "img-src 'self' data: https://vlibras.gov.br https://cdn.jsdelivr.net; " +
-                                                "connect-src 'self' http://localhost:8181 https://vlibras.gov.br;" +
+                                                "connect-src 'self' http://localhost:8181 http://localhost:8282 https://vlibras.gov.br;" +
                                                 "form-action 'self'; " +
                                                 "frame-ancestors 'self';"
                                 )
