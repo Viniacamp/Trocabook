@@ -15,4 +15,5 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     Usuario findByCPF(String cpf);
     List<Usuario> findTop6ByOrderByAvaliacaoDesc();
     Iterable<Usuario> findAllByStatus(char status);
+    Optional<Usuario> findByResetPasswordToken(String token);
 }

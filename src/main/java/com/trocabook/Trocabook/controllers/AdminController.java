@@ -16,34 +16,34 @@ public class AdminController {
         this.dadosService = dadosService;
     }
 
-    @GetMapping("/dashboard-pagina")
+    @GetMapping("/admin/dashboard-pagina")
     public String dashboard() {
-        return "dashboard";
+        return "/admin/dashboard";
     }
 
-    @GetMapping("/listaUsuarios-pagina")
+    @GetMapping("listaUsuarios-pagina")
     public String listaUsuarios() {
-        return "listaUsuarios";
+        return "/admin/listaUsuarios";
     }
 
-    @GetMapping("/cadastroAdmin")
+    @GetMapping("cadastroAdmin")
     public String cadastroAdmin() {
-        return "cadastroAdmin";
+        return "/admin/cadastroAdmin";
     }
 
-    @GetMapping("/loginAdmin")
+    @GetMapping("loginAdmin")
     public String loginAdmin() {
-        return "loginAdmin";
+        return "/admin/loginAdmin";
     }
 
-    @GetMapping("/adminHome")
+    @GetMapping("adminHome")
     public String adminHome() {
-        return "indexAdmin";
+        return "/admin/indexAdmin";
     }
 
     @GetMapping("/alterarUsuario/{id}")
     public String alterarPagina(@PathVariable int id, Model model) {
         model.addAttribute("usuario", dadosService.obterUsuario(id));
-        return "alterarUsuario";
+        return "/admin/alterarUsuario";
     }
 }

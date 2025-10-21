@@ -644,6 +644,8 @@ table th, td {
 .main-container {
     display: flex;
     height: calc(100vh - 60px);
+    padding-top: 5px;
+    padding-bottom: 7px;
 }
 
 /*proproedades do menu lateral*/
@@ -970,4 +972,3 @@ table th, td {
 #remove-photo-btn:hover {
     background-color: rgba(220, 53, 69, 0.8); /* Vermelho ao passar o mouse */
 }
-
