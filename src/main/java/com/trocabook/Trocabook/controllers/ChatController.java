@@ -26,7 +26,7 @@ import java.util.List;
 
 
 @Controller
- 
+@RequestMapping("/chat")
 public class ChatController {
 
     private final UsuarioLivroRepository usuarioLivroRepository;
