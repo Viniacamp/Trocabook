@@ -5,7 +5,8 @@ import com.trocabook.Trocabook.controllers.response.ChatResponse;
 import com.trocabook.Trocabook.model.Usuario;
 
 import com.trocabook.Trocabook.model.UsuarioLivro;
- 
+
+import com.trocabook.Trocabook.model.dto.MensagemDTO;
 import com.trocabook.Trocabook.repository.UsuarioLivroRepository;
 import com.trocabook.Trocabook.repository.UsuarioRepository;
 import com.trocabook.Trocabook.service.IChatService;
@@ -20,9 +21,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
- 
- 
- 
+
+import java.util.List;
+
+
 @Controller
  
 public class ChatController {
