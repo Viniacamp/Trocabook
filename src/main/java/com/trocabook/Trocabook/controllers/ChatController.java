@@ -6,6 +6,7 @@ import com.trocabook.Trocabook.model.Usuario;
 
 import com.trocabook.Trocabook.model.UsuarioLivro;
 
+import com.trocabook.Trocabook.model.dto.ConversaDTO;
 import com.trocabook.Trocabook.model.dto.MensagemDTO;
 import com.trocabook.Trocabook.repository.UsuarioLivroRepository;
 import com.trocabook.Trocabook.repository.UsuarioRepository;
@@ -16,12 +17,10 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
-import org.springframework.web.bind.annotation.PathVariable;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -93,7 +92,7 @@ public class ChatController {
         model.addAttribute("livro", usuarioLivro.getLivro());
         model.addAttribute("mensagens", mensagens.getData());
 
-        return "chat";
+        return "/chat/chat";
     }
 
     @GetMapping("/list-mensagens")
@@ -104,12 +103,14 @@ public class ChatController {
         if (mensagens == null || mensagens.getData().isEmpty()) {
             model.addAttribute("mensagemVazia", "Nenhuma conversa iniciada");
         } else {
+
             model.addAttribute("usuarioLogado", usuarioLogado);
-            model.addAttribute("mensagens", mensagens.getData());
+            model.addAttribute("conversas", chatService.listarMensagensPorUsuarioConverter(mensagens.getData(), usuarioLogado.getCdUsuario()));
         }
 
-        return "list-mensagens";
+        return "/chat/list-mensagens";
     }
+
 
     // 🔹 Envio de mensagem (via fetch)
     @PostMapping("/mensagens")

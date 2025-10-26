@@ -1,7 +1,10 @@
 package com.trocabook.Trocabook.service;
 
 import com.trocabook.Trocabook.controllers.response.ChatResponse;
+import com.trocabook.Trocabook.model.dto.ConversaDTO;
 import com.trocabook.Trocabook.model.dto.MensagemDTO;
+import com.trocabook.Trocabook.repository.UsuarioRepository;
+import com.trocabook.Trocabook.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -10,7 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
+
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -19,9 +23,12 @@ public class ChatService implements IChatService {
 
     private RestTemplate restTemplate;
 
+    private UsuarioRepository usuarioRepository;
+
     @Autowired
-    public ChatService(RestTemplate restTemplate) {
+    public ChatService(RestTemplate restTemplate, UsuarioRepository usuarioRepository) {
         this.restTemplate = restTemplate;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -61,4 +68,41 @@ public class ChatService implements IChatService {
         );
         return response.getBody();
     }
+
+    @Override
+    public List<ConversaDTO> listarMensagensPorUsuarioConverter(List<MensagemDTO> listaMensagensEntreUsuarios, int cdUsuarioLogado) {
+        List<ConversaDTO> conversas = new LinkedList<>();
+
+        for (MensagemDTO mensagemDTO : listaMensagensEntreUsuarios) {
+
+
+            boolean enviadaPeloUsuarioLogado = true;
+
+            if (mensagemDTO.getCdUsuarioRemetente() != cdUsuarioLogado) {
+                mensagemDTO.setCdUsuarioDestinatario(mensagemDTO.getCdUsuarioRemetente());
+                mensagemDTO.setCdUsuarioRemetente(cdUsuarioLogado);
+                enviadaPeloUsuarioLogado = false;
+            }
+
+
+            Usuario destinatario = usuarioRepository
+                    .findById(mensagemDTO.getCdUsuarioDestinatario())
+                    .orElse(null);
+
+            if (destinatario != null) {
+                ConversaDTO conversa = new ConversaDTO();
+                conversa.setCdUsuarioLivro(mensagemDTO.getCdUsuarioLivro());
+                conversa.setCdUsuarioDestinatario(destinatario.getCdUsuario());
+                conversa.setNomeDestinatario(destinatario.getNmUsuario());
+                conversa.setFotoDestinatario(destinatario.getFoto());
+                conversa.setUltimaMensagem(mensagemDTO.getConteudo());
+                conversa.setEnviadaPeloUsuarioLogado(enviadaPeloUsuarioLogado);
+
+                conversas.add(conversa);
+            }
+        }
+
+        return conversas;
+    }
+
 }
