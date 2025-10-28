@@ -6,6 +6,7 @@ import com.trocabook.Trocabook.model.Usuario;
 
 import com.trocabook.Trocabook.model.UsuarioLivro;
 
+import com.trocabook.Trocabook.model.dto.ConteudoDTO;
 import com.trocabook.Trocabook.model.dto.ConversaDTO;
 import com.trocabook.Trocabook.model.dto.MensagemDTO;
 import com.trocabook.Trocabook.repository.UsuarioLivroRepository;
@@ -113,8 +114,8 @@ public class ChatController {
 
     @PutMapping("/mensagens/{id}")
     @ResponseBody
-    public ChatResponse<MensagemDTO> alterarMensagem(@PathVariable String id, @RequestBody String conteudo){
-        return chatService.alterarMensagem(id, conteudo);
+    public ChatResponse<MensagemDTO> alterarMensagem(@PathVariable String id, @RequestBody ConteudoDTO conteudo){
+        return chatService.alterarMensagem(id, conteudo.getConteudo());
     }
 
     @DeleteMapping("/mensagens/{id}")

@@ -16,7 +16,7 @@
             <table class="cabecalho">
                 <tr>
                     <th id="cabecalhoelementos">
-                        <a href="/static"><img src="/img/Design%20sem%20nome%20(7).svg"></a>
+                        <a href="/"><img src="/img/Design%20sem%20nome%20(7).svg"></a>
                         <div class="autocomplete-wrapper">
                             <input type="text" style="width: 100%; height: 35px;" id="pesquisa" placeholder="Pesquisar">
                             <div id="resultadosPesquisa" class="sugestoes-autocomplete"></div>
@@ -116,19 +116,42 @@
 
         // Função para renderizar uma mensagem
         function adicionarMensagemNoContainer(msg) {
-            const classe = msg.cdUsuarioRemetente === cdUsuarioRemetente ? 'user' : 'negociador';
+                const classe = msg.cdUsuarioRemetente === cdUsuarioRemetente ? 'user' : 'negociador';
+                const div = document.createElement('div');
+                div.className = `message ${classe}`;
+                div.setAttribute('data-id', msg.id || ''); // adiciona o ID para edição/exclusão
 
-            const img = msg.cdUsuarioRemetente === cdUsuarioRemetente
-                ? ''
-                : `<img src="${document.querySelector('.chat-list img')?.src || '/img/user.png'}" alt="Negociante">`;
+                // Se for mensagem do outro usuário, mostra a imagem dele
+                const img = msg.cdUsuarioRemetente === cdUsuarioRemetente
+                    ? ''
+                    : `<img src="${document.querySelector('.chat-list img')?.src || '/img/user.png'}" alt="Negociante">`;
 
-            const div = document.createElement('div');
-            div.className = `message ${classe}`;
-            div.innerHTML = `${img}<p>${msg.conteudo}</p>`;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-            ultimaQuantidade++;
-        }
+                // Se for mensagem do usuário logado, adiciona o menu de opções
+                const menu = msg.cdUsuarioRemetente === cdUsuarioRemetente
+                    ? `
+                        <div class="menu-opcoes">
+                            <i class="fa-solid fa-ellipsis-vertical" onclick="abrirMenu(this)"></i>
+                            <div class="menu-dropdown">
+                                <button onclick="editarMensagem(this)">Editar</button>
+                                <button onclick="excluirMensagem(this)">Excluir</button>
+                            </div>
+                        </div>
+                      `
+                    : '';
+
+                // Monta o HTML da mensagem
+                div.innerHTML = `
+                    ${menu}
+                    ${img}
+                    <p>${msg.conteudo}</p>
+                `;
+
+                // Adiciona ao container
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+                ultimaQuantidade++;
+            }
+
 
         // Envio de mensagem
         document.querySelector('#chatForm').addEventListener('submit', async function(event) {
@@ -189,7 +212,7 @@
             const resposta = await fetch(`/chat/mensagens/${idMensagem}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(novoConteudo)
+                body: JSON.stringify({conteudo: novoConteudo})
             });
 
             const data = await resposta.json();
