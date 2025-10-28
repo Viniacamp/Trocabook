@@ -1,12 +1,19 @@
 package com.trocabook.Trocabook.model.dto;
 
 public class MensagemDTO {
+    private String id;
     private int cdUsuarioRemetente;
     private int cdUsuarioDestinatario;
     private int cdUsuarioLivro;
     private String conteudo;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getCdUsuarioRemetente() {
         return cdUsuarioRemetente;

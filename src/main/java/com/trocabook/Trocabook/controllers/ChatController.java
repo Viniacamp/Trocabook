@@ -111,6 +111,18 @@ public class ChatController {
         return "/chat/list-mensagens";
     }
 
+    @PutMapping("/mensagens/{id}")
+    @ResponseBody
+    public ChatResponse<MensagemDTO> alterarMensagem(@PathVariable String id, @RequestBody String conteudo){
+        return chatService.alterarMensagem(id, conteudo);
+    }
+
+    @DeleteMapping("/mensagens/{id}")
+    @ResponseBody
+    public ChatResponse<Void> excluirMensagem(@PathVariable String id){
+        return chatService.excluirMensagem(id);
+    }
+
 
     // 🔹 Envio de mensagem (via fetch)
     @PostMapping("/mensagens")

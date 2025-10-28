@@ -105,4 +105,28 @@ public class ChatService implements IChatService {
         return conversas;
     }
 
+    @Override
+    public ChatResponse<MensagemDTO> alterarMensagem(String id, String conteudo) {
+        HttpEntity<String> entidade = new HttpEntity<>(conteudo);
+        ResponseEntity<ChatResponse<MensagemDTO>> response = restTemplate.exchange(
+                url + "/mensagens/" + id,
+                HttpMethod.PUT,
+                entidade,
+                new ParameterizedTypeReference<ChatResponse<MensagemDTO>>() {}
+        );
+        return response.getBody();
+    }
+
+    @Override
+    public ChatResponse<Void> excluirMensagem(String id){
+        ResponseEntity<ChatResponse<Void>> response = restTemplate.exchange(
+                url + "/mensagens/" + id,
+                HttpMethod.DELETE,
+                null,
+                new ParameterizedTypeReference<ChatResponse<Void>>() {
+                }
+        );
+        return response.getBody();
+    }
+
 }

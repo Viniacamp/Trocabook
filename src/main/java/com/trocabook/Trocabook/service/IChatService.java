@@ -15,4 +15,8 @@ public interface IChatService {
     ChatResponse<List<MensagemDTO>> listarMensagensPorUsuarioDataEnvioDecrescente(int cdUsuarioRemetente);
 
     List<ConversaDTO> listarMensagensPorUsuarioConverter(List<MensagemDTO> listaMensagensEntreUsuarios, int cdUsuarioLogado);
+
+    ChatResponse<MensagemDTO> alterarMensagem(String id, String conteudo);
+
+    ChatResponse<Void> excluirMensagem(String id);
 }

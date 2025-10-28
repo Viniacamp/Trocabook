@@ -726,6 +726,7 @@ table th, td {
     max-width: 60%;
     border-radius: 10px;
     background-color: white;
+    position: relative;
 }
 
 .message p {
@@ -809,6 +810,42 @@ table th, td {
     margin: 0;
     font-size: 14px;
     color: #333;
+}
+
+.menu-opcoes {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.menu-opcoes i {
+    cursor: pointer;
+    color: #666;
+}
+
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.menu-dropdown button {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.menu-dropdown button:hover {
+    background-color: #f0f0f0;
 }
 
 
