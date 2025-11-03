@@ -66,8 +66,8 @@ public class WebSecurityConfig {
                                                 "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://vlibras.gov.br https://fonts.googleapis.com; " +
                                                 "font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +
                                                 "frame-src 'self' https://www.google.com; " +
-                                                "img-src 'self' data: https://vlibras.gov.br https://cdn.jsdelivr.net; " +
-                                                "connect-src 'self' http://localhost:8181 http://localhost:8282 https://vlibras.gov.br;" +
+                                                "img-src 'self' data: https://vlibras.gov.br https://cdn.jsdelivr.net https://books.google.com https://books.googleusercontent.com http://books.google.com/books/content; " +
+                                                "connect-src 'self' http://localhost:8181 http://localhost:8282 https://cdn.jsdelivr.net https://www.googleapis.com https://vlibras.gov.br;" +
                                                 "form-action 'self'; " +
                                                 "frame-ancestors 'self';"
                                 )
