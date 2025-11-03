@@ -10,9 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -57,5 +55,19 @@ public class AnunciarLivroController {
         livroService.anunciarNovoLivro(livro, capa, usuarioLogado, tipoNegociacao);
 
         return "anuncioSucesso";
+    }
+
+    @PostMapping("/buscar")
+    @ResponseBody
+    public Livro buscar(@RequestBody Livro livro) {
+        System.out.println("Buscando livro");
+        System.out.println(livro);
+        return livroService.anunciarLivroApi(livro.getNmLivro());
+    }
+
+    @GetMapping("/anunciarLivroApi")
+    public String anunciarLivroApi(Model model) {
+        model.addAttribute("livro", new Livro());
+        return "anunciarApi";
     }
 }

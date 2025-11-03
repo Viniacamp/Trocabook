@@ -1,8 +1,10 @@
 package com.trocabook.Trocabook.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,6 +35,15 @@ public class Livro {
     @Column(nullable = false)
     private String capa;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataPublicacao;
+
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+    private List<LivroAutor> livroAutor;
+
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+    private List<LivroCategoria> livroCategoria;
+
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
     private List<UsuarioLivro> usuarioLivros;
 
@@ -55,6 +66,22 @@ public class Livro {
 
     public void setNegociacoes(List<Negociacao> negociacoes) {
         this.negociacoes = negociacoes == null ? null : new ArrayList<>(negociacoes);
+    }
+
+    public List<LivroCategoria> getLivroCategoria() {
+        return this.livroCategoria == null ? null : new ArrayList<>(this.livroCategoria);
+    }
+
+    public void setLivroCategoria(List<LivroCategoria> livroCategoria) {
+        this.livroCategoria = livroCategoria == null ? null : new ArrayList<>(livroCategoria);
+    }
+
+    public List<LivroAutor> getLivroAutor() {
+        return this.livroAutor == null ? null : new ArrayList<>(this.livroAutor);
+    }
+
+    public void setLivroAutor(List<LivroAutor> livroAutor) {
+        this.livroAutor = livroAutor == null ? null : new ArrayList<>(livroAutor);
     }
 
     // --- Outros Getters e Setters ---
@@ -83,5 +110,15 @@ public class Livro {
     public void setCapa(String capa) {
         this.capa = capa;
     }
+
+    public LocalDate getDataPublicacao() {
+        return dataPublicacao;
+    }
+
+    public void setDataPublicacao(LocalDate dataPublicacao) {
+        this.dataPublicacao = dataPublicacao;
+    }
     // O método setCapa(MultipartFile capa) foi removido.
+
+
 }
