@@ -3,6 +3,7 @@ package com.trocabook.Trocabook.controllers;
 import com.trocabook.Trocabook.config.UserDetailsImpl;
 import com.trocabook.Trocabook.model.Livro;
 import com.trocabook.Trocabook.model.Usuario;
+import com.trocabook.Trocabook.model.dto.LivroDTO;
 import com.trocabook.Trocabook.service.LivroService; // Importar o LivroService
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class AnunciarLivroController {
@@ -59,10 +61,10 @@ public class AnunciarLivroController {
 
     @PostMapping("/buscar")
     @ResponseBody
-    public Livro buscar(@RequestBody Livro livro) {
+    public List<LivroDTO> buscar(@RequestBody LivroDTO livro) {
         System.out.println("Buscando livro");
         System.out.println(livro);
-        return livroService.anunciarLivroApi(livro.getNmLivro());
+        return livroService.listarLivrosApi(livro.getTitulo());
     }
 
     @GetMapping("/anunciarLivroApi")

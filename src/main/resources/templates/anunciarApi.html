@@ -87,6 +87,11 @@
             <button id="buscarLivro" onclick="buscarLivro()" type="button">Buscar</button>
             <img id="capaLivro">
             <input type="text" id="data-publicacao" readonly>
+            <div id="resultadosApi" style="margin-top: 20px;">
+                <h3>Resultados encontrados</h3>
+                <div id="livrosApiLista" class="livros-grid"></div>
+            </div>
+
         </div>
     </div>
 
@@ -103,27 +108,54 @@
 <script>
     function buscarLivro(){
         const titulo = document.getElementById("titulo").value;
-
-        const csrfToken = document.querySelector('input[name="_csrf"]').value; // ✅ pega token
+        const csrfToken = document.querySelector('input[name="_csrf"]').value;
 
         fetch("/buscar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRF-TOKEN": csrfToken  // ✅ envia token
+                "X-CSRF-TOKEN": csrfToken
             },
-            body: JSON.stringify({ nmLivro: titulo })
+            body: JSON.stringify({ titulo: titulo })
         })
             .then(res => {
                 if (!res.ok) throw new Error("Erro ao buscar livro");
                 return res.json();
             })
-            .then(livro => {
-                document.getElementById("capaLivro").src = livro.capa;
-                document.getElementById("data-publicacao").value = livro.dataPublicacao;
+            .then(lista => {
+                const div = document.getElementById("livrosApiLista");
+                div.innerHTML = ""; // limpa
+
+                if (!lista || lista.length === 0) {
+                    div.innerHTML = "<p>Nenhum livro encontrado 😥</p>";
+                    return;
+                }
+
+                lista.forEach(livro => {
+                    const card = document.createElement("div");
+                    card.className = "livro-card";
+                    card.style.cursor = "pointer";
+
+                    card.innerHTML = `
+                <img src="${livro.thumbnailUrl ?? '/img/default-capa.png'}"
+                     alt="Capa" class="capaLivros">
+                <p>${livro.titulo}</p>
+                <small>${livro.dataPublicacao ?? "Sem data"}</small>
+            `;
+
+                    // ✅ Quando clicar no livro, preenche os campos
+                    card.addEventListener("click", () => {
+                        document.getElementById("titulo").value = livro.titulo;
+                        document.getElementById("capaLivro").src = livro.thumbnailUrl ?? "/img/default-capa.png";
+                        document.getElementById("data-publicacao").value = livro.dataPublicacao ?? "";
+                    });
+
+                    div.appendChild(card);
+                });
             })
             .catch(err => alert(err.message));
     }
+
 
 
 </script>

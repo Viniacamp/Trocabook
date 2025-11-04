@@ -2,6 +2,7 @@ package com.trocabook.Trocabook.service;
 
 import com.trocabook.Trocabook.model.*;
 import com.trocabook.Trocabook.model.dto.GoogleBooksResponse;
+import com.trocabook.Trocabook.model.dto.LivroDTO;
 import com.trocabook.Trocabook.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -210,6 +212,93 @@ public class LivroService {
 
         return livro;
     }
+
+    public List<LivroDTO> listarLivrosApi(String titulo) {
+        GoogleBooksResponse respApi = this.buscarLivro(titulo);
+        System.out.println(respApi);
+        if (respApi == null || respApi.getItens() == null || respApi.getItens().isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<LivroDTO> livros = new ArrayList<>();
+        for (GoogleBooksResponse.Item item : respApi.getItens()) {
+            GoogleBooksResponse.VolumeInfo v = item.getVolumeInfo();
+            if (v == null){
+                continue;
+            }
+            if (livros.stream().anyMatch(lDto -> lDto.getTitulo().equalsIgnoreCase(v.getTitulo()))) {
+                continue;
+            }
+            Livro livroExistente = livroRepository.findByNmLivroIgnoreCase(v.getTitulo()).orElse(null);
+            if (livroExistente != null) {
+                LivroDTO livroDTO = new LivroDTO(livroExistente);
+                livros.add(livroDTO);
+                continue;
+            }
+            LivroDTO livro = new LivroDTO();
+            livro.setTitulo(v.getTitulo());
+            livro.setAutores((v.getAutores() == null || v.getAutores().isEmpty()) ? null : v.getAutores());
+            livro.setCategorias((v.getCategorias() == null || v.getCategorias().isEmpty()) ? null : v.getCategorias());
+            livro.setThumbnailUrl((v.getLinksImages() == null || v.getLinksImages().getThumbnail() == null)? null : v.getLinksImages().getThumbnail());
+            String data = v.getDataPublicacao();
+            try {
+                if (data.length() == 4) livro.setDataPublicacao(LocalDate.parse(data + "-01-01"));
+                else if (data.length() == 7) livro.setDataPublicacao(LocalDate.parse(data + "-01"));
+                else livro.setDataPublicacao(LocalDate.parse(data));
+            } catch (Exception e) {
+                livro.setDataPublicacao(LocalDate.now());
+            }
+            if (livro.getAutores() == null || livro.getCategorias() == null || livro.getThumbnailUrl() == null) {
+                livro = buscarDadosFaltantes(livro);
+            }
+
+            livros.add(livro);
+
+        }
+        return livros;
+    }
+
+    private LivroDTO buscarDadosFaltantes(LivroDTO dto) {
+        // Apenas 1 chamada extra à API
+        GoogleBooksResponse resp = this.buscarLivro(dto.getTitulo());
+
+        if (resp == null || resp.getItens() == null) return dto;
+
+        for (GoogleBooksResponse.Item item : resp.getItens()) {
+            GoogleBooksResponse.VolumeInfo v = item.getVolumeInfo();
+            if (v == null) continue;
+
+            // Preencher capa se vazia
+            if (dto.getThumbnailUrl() == null) {
+                if (v.getLinksImages() != null && v.getLinksImages().getThumbnail() != null) {
+                    dto.setThumbnailUrl(v.getLinksImages().getThumbnail());
+                }
+            }
+
+            // Preencher autores se vazio
+            if (dto.getAutores() == null || dto.getAutores().isEmpty()) {
+                if (v.getAutores() != null && !v.getAutores().isEmpty()) {
+                    dto.setAutores(v.getAutores());
+                }
+            }
+
+            // Preencher categorias se vazio
+            if (dto.getCategorias() == null || dto.getCategorias().isEmpty()) {
+                if (v.getCategorias() != null && !v.getCategorias().isEmpty()) {
+                    dto.setCategorias(v.getCategorias());
+                }
+            }
+
+            // Se tudo foi encontrado, pode parar
+            if (dto.getThumbnailUrl() != null &&
+                    dto.getAutores() != null && !dto.getAutores().isEmpty() &&
+                    dto.getCategorias() != null && !dto.getCategorias().isEmpty())
+            {
+                return dto;
+            }
+        }
+        return dto;
+    }
+
 
 
     public GoogleBooksResponse buscarLivro(String titulo){
