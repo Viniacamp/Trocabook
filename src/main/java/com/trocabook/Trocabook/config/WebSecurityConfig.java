@@ -8,6 +8,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
+import org.springframework.security.web.WebAttributes;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler; // Importante
+import java.io.IOException;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -41,11 +48,30 @@ public class WebSecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
+                // CÓDIGO MODIFICADO
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/", true)
-                        .failureUrl("/login?error=true")
+                        // .failureUrl("/login?error=true") // REMOVA (ou comente) ESTA LINHA
+
+                        // ADICIONE ESTE BLOCO .failureHandler()
+                        .failureHandler(new SimpleUrlAuthenticationFailureHandler("/login?error=true") {
+                            @Override
+                            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                                                AuthenticationException exception) throws IOException, ServletException {
+
+                                // 1. Pega o email (username) do formulário
+                                String username = request.getParameter("username");
+
+                                // 2. Salva o email na sessão
+                                // 2. Salva o email na sessão
+                                request.getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME", username);
+
+                                // 3. Chama o comportamento padrão (redirecionar para /login?error=true)
+                                super.onAuthenticationFailure(request, response, exception);
+                            }
+                        })
                         .permitAll()
                 )
                 .logout(logout -> logout

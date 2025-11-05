@@ -34,18 +34,22 @@
     </div>
       <form class="login" id="loginForm" method="post" th:action="@{/login}">
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
           <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-      <h1><b>Login</b></h1>
-      <div class="row mb-3">
-        <label for="email" class="col-sm-2 col-form-label">Email:</label>
-        <div class="col-sm-10">
-            <input type="email" class="form-control" id="email" name="username">
-        </div>
-      </div>
-        <div class="row mb-3">
-          <label for="senha" class="col-sm-2 col-form-label">Senha:</label>
-          <div class="col-sm-10">
+
+          <h1><b>Login</b></h1>
+
+          <div th:if="${param.error}" class="alert alert-danger" role="alert">
+              Usuário ou senha inválidos.
+          </div>
+          <div class="row mb-3">
+              <label for="email" class="col-sm-2 col-form-label">Email:</label>
+              <div class="col-sm-10">
+                  <input type="email" class="form-control" id="email" name="username" th:value="${session.SPRING_SECURITY_LAST_USERNAME}">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="senha" class="col-sm-2 col-form-label">Senha:</label>
+              <div class="col-sm-10">
             <div class="input-group">
                 <input type="password" class="form-control" id="senha" name="password">
               <div class="input-group-append">
