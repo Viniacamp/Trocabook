@@ -186,6 +186,11 @@ table th, td {
 }
 
 /*estilo da pagina de cadastro*/
+.cadastro-container{
+    margin: 20px;
+    border-radius: 10px;
+}
+
 .cadastro h1{
     text-shadow: 1px 1px 1px #000000;
     text-align: right;
@@ -194,13 +199,121 @@ table th, td {
     size: 25px;
 }
 
-.cadastro table th, td {
-    border-radius: 12px ;
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid rgb(151, 150, 240) ;
+.cadastro-wrapper {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    min-height: 100vh;
+    flex-wrap: nowrap;
+    gap: 0;
+}
+
+.cadastro-form, .cadastro-banner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cadastro-form {
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+label{
+    margin-bottom: 5px;
+}
+
+.cadastro-banner {
     padding: 40px;
     text-align: center;
+    background: linear-gradient(132deg, rgb(255, 206, 236) 0%, rgb(151, 150, 240) 100%);
+    color: white;
+}
+
+.cadastro-banner img {
+    max-width: 350px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.cadastro-banner h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* aumenta o espaço entre os campos */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.senha-wrapper {
+    position: relative;
+}
+
+.senha-wrapper input {
+    width: 100%;
+    padding-right: 40px; /* espaço para o ícone */
+}
+
+.senha-wrapper i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #555;
+    font-size: 16px;
+}
+
+/* Responsividade da página*/
+@media (max-width: 992px) {
+    .cadastro-wrapper {
+        flex-direction: column;
+    }
+    .cadastro-form, .cadastro-banner {
+        flex: unset;
+        width: 100%;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cadastro-form, .cadastro-banner {
+        flex: 1 1 50%; /* cada lado reduz proporcionalmente */
+        padding: 20px;
+    }
+
+    .cadastro-banner img {
+        width: 70px; /* reduz a logo */
+        top: 10px;
+        left: 10px;
+    }
+
+    .cadastro-banner h1 {
+        font-size: 1.4rem;
+        margin-top: 50px;
+    }
+}
+
+/* Para telas muito pequenas (celular) */
+@media (max-width: 480px) {
+    .cadastro-form, .cadastro-banner {
+        flex: 1 1 50%; /* mantém horizontal */
+        font-size: 0.9rem;
+    }
+
+    .cadastro-banner img {
+        width: 50px;
+        top: 5px;
+        left: 5px;
+    }
+
+    .cadastro-banner h1 {
+        font-size: 1.1rem;
+        margin-top: 40px;
+    }
 }
 
 /*estilo da página de login*/
