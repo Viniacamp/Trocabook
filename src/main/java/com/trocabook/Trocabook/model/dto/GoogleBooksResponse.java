@@ -32,6 +32,8 @@ public class GoogleBooksResponse {
         private List<String> categorias;
         @JsonProperty("imageLinks")
         private LinksImage linksImages;
+        @JsonProperty("language")
+        private String lingua;
 
         public String getTitulo() {
             return titulo;
@@ -71,6 +73,14 @@ public class GoogleBooksResponse {
 
         public void setLinksImages(LinksImage linksImages) {
             this.linksImages = linksImages;
+        }
+
+        public String getLingua() {
+            return lingua;
+        }
+
+        public void setLingua(String lingua) {
+            this.lingua = lingua;
         }
     }
 

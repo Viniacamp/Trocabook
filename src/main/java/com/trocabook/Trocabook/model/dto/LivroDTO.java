@@ -11,9 +11,13 @@ import java.util.List;
 public class LivroDTO {
     private String titulo;
     private List<String> autores;
+    private String lingua;
     private List<String> categorias;
     private LocalDate dataPublicacao;
     private String thumbnailUrl;
+    private String tipoNegociacao;
+    private boolean tituloFoiTraduzido;
+
 
     public LivroDTO(){}
 
@@ -29,7 +33,7 @@ public class LivroDTO {
         }
         List<LivroCategoria> livroCategorias = livro.getLivroCategoria();
         for (LivroCategoria livroCategoria : livroCategorias) {
-            this.categorias.add(livroCategoria.getCategoria().getNmCategoria());
+            this.categorias.add(livroCategoria.getCategoria().getNmCategoriaOriginal());
         }
     }
 
@@ -42,19 +46,19 @@ public class LivroDTO {
     }
 
     public List<String> getAutores() {
-        return this.autores == null ? null : new ArrayList<>(this.autores);
+        return this.autores == null ? new ArrayList<>() : new ArrayList<>(this.autores);
     }
 
     public void setAutores(List<String> autores) {
-        this.autores = autores == null ? null : new ArrayList<>(autores);
+        this.autores = autores == null ? new ArrayList<>() : new ArrayList<>(autores);
     }
 
     public List<String> getCategorias() {
-        return categorias == null ? null : new ArrayList<>(this.categorias);
+        return categorias == null ? new ArrayList<>() : new ArrayList<>(this.categorias);
     }
 
     public void setCategorias(List<String> categorias) {
-        this.categorias = categorias == null ? null : new ArrayList<>(categorias);
+        this.categorias = categorias == null ? new ArrayList<>() : new ArrayList<>(categorias);
     }
 
     public LocalDate getDataPublicacao() {
@@ -71,5 +75,29 @@ public class LivroDTO {
 
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public String getLingua() {
+        return lingua;
+    }
+
+    public void setLingua(String lingua) {
+        this.lingua = lingua;
+    }
+
+    public boolean isTituloFoiTraduzido() {
+        return tituloFoiTraduzido;
+    }
+
+    public void setTituloFoiTraduzido(boolean tituloFoiTraduzido) {
+        this.tituloFoiTraduzido = tituloFoiTraduzido;
+    }
+
+    public String getTipoNegociacao() {
+        return tipoNegociacao;
+    }
+
+    public void setTipoNegociacao(String tipoNegociacao) {
+        this.tipoNegociacao = tipoNegociacao;
     }
 }

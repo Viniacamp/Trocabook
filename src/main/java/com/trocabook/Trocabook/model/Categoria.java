@@ -11,7 +11,11 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cdCategoria;
 
-    private String nmCategoria;
+    private String nmCategoriaOriginal;
+
+    private String nmCategoriaTraduzida;
+
+
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<LivroCategoria> livroCategoria;
@@ -20,8 +24,10 @@ public class Categoria {
 
     }
 
-    public Categoria(String nmCategoria) {
-        this.nmCategoria = nmCategoria;
+    public Categoria(String nmCategoriaOriginal, String nmCategoriaTraduzida) {
+
+        this.nmCategoriaOriginal = nmCategoriaOriginal;
+        this.nmCategoriaTraduzida = nmCategoriaTraduzida;
     }
 
     public int getCdCategoria() {
@@ -32,12 +38,12 @@ public class Categoria {
         this.cdCategoria = cdCategoria;
     }
 
-    public String getNmCategoria() {
-        return nmCategoria;
+    public String getNmCategoriaOriginal() {
+        return nmCategoriaOriginal;
     }
 
-    public void setNmCategoria(String nmCategoria) {
-        this.nmCategoria = nmCategoria;
+    public void setNmCategoriaOriginal(String nmCategoria) {
+        this.nmCategoriaOriginal = nmCategoria;
     }
 
     public List<LivroCategoria> getLivroCategoria() {
@@ -46,5 +52,13 @@ public class Categoria {
 
     public void setLivroCategoria(List<LivroCategoria> livroCategoria) {
         this.livroCategoria = livroCategoria == null ? null: new ArrayList<>(livroCategoria);
+    }
+
+    public String getNmCategoriaTraduzida() {
+        return nmCategoriaTraduzida;
+    }
+
+    public void setNmCategoriaTraduzida(String nmCategoriaTraduzida) {
+        this.nmCategoriaTraduzida = nmCategoriaTraduzida;
     }
 }

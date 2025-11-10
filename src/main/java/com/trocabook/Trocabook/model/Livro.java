@@ -28,6 +28,8 @@ public class Livro {
     @Column(nullable = false)
     private String nmLivro;
 
+    private String nmLivroOriginal;
+
     @NotNull(message = "Preencha o Ano de Publicação")
     @Column(nullable = false)
     private Integer anoPublicacao;
@@ -111,6 +113,14 @@ public class Livro {
         this.capa = capa;
     }
 
+    public String getNmLivroOriginal() {
+        return nmLivroOriginal;
+    }
+
+    public void setNmLivroOriginal(String nmLivroOriginal) {
+        this.nmLivroOriginal = nmLivroOriginal;
+    }
+
     public LocalDate getDataPublicacao() {
         return dataPublicacao;
     }
@@ -118,6 +128,8 @@ public class Livro {
     public void setDataPublicacao(LocalDate dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
     }
+
+
     // O método setCapa(MultipartFile capa) foi removido.
 
 

@@ -69,7 +69,18 @@ public class AnunciarLivroController {
 
     @GetMapping("/anunciarLivroApi")
     public String anunciarLivroApi(Model model) {
-        model.addAttribute("livro", new Livro());
+        model.addAttribute("livroDTO", new LivroDTO());
         return "anunciarApi";
     }
+
+    @PostMapping("/salvar")
+    public String salvarAnuncio(@ModelAttribute LivroDTO livroDTO) {
+        System.out.println("Título: " + livroDTO.getTitulo());
+        System.out.println("Data: " + livroDTO.getDataPublicacao());
+        System.out.println("Autores: " + livroDTO.getAutores());
+        System.out.println("Categorias: " + livroDTO.getCategorias());
+        System.out.println("Tipo negociação: " + livroDTO.getTipoNegociacao());
+        return "redirect://anunciarLivroApi";
+    }
+
 }
