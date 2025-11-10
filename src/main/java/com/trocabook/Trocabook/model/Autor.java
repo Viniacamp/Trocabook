@@ -24,6 +24,18 @@ public class Autor {
         this.nmAutor = nmAutor;
     }
 
+    public Autor(Autor outroAutor) {
+        if (outroAutor == null) {
+            return;
+        }
+        this.cdAutor = outroAutor.cdAutor;
+        this.nmAutor = outroAutor.nmAutor;
+
+        // Usa a mesma lógica segura que você já criou nos seus setters/getters
+        // para copiar a lista
+        this.livroAutor = outroAutor.livroAutor == null ? null : new ArrayList<>(outroAutor.livroAutor);
+    }
+
     public int getCdAutor() {
         return cdAutor;
     }

@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList; // Importação adicionada
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,7 +38,7 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
-    private String foto; // O campo foto agora é apenas uma String
+    private String foto;
 
     @NotNull
     @Column(nullable = false)
@@ -63,14 +63,51 @@ public class Usuario {
     @OneToMany(mappedBy = "usuarioInteressado", cascade = CascadeType.ALL)
     private List<Negociacao> negociacoesInteressado;
 
-    // --- Getters e Setters Corrigidos ---
+    // --- CONSTRUTORES ADICIONADOS ---
+
+    /**
+     * Construtor padrão (vazio).
+     * Necessário para o funcionamento do JPA/Hibernate.
+     */
+    public Usuario() {
+    }
+
+    /**
+     * CONSTRUTOR DE CÓPIA (A SOLUÇÃO)
+     * Cria uma cópia defensiva de outro objeto Usuario.
+     * Isso permite que a classe Negociacao armazene cópias seguras.
+     */
+    public Usuario(Usuario outroUsuario) {
+        if (outroUsuario == null) {
+            return;
+        }
+
+        // 1. Copia de campos primitivos e imutáveis
+        // (int, String, char, double, LocalDateTime são todos seguros)
+        this.cdUsuario = outroUsuario.cdUsuario;
+        this.nmUsuario = outroUsuario.nmUsuario;
+        this.CPF = outroUsuario.CPF;
+        this.email = outroUsuario.email;
+        this.senha = outroUsuario.senha; // A senha também é copiada
+        this.foto = outroUsuario.foto;
+        this.status = outroUsuario.status;
+        this.avaliacao = outroUsuario.avaliacao;
+        this.resetPasswordToken = outroUsuario.resetPasswordToken;
+        this.resetPasswordTokenExpiryDate = outroUsuario.resetPasswordTokenExpiryDate;
+
+        // 2. Cópia defensiva de campos mutáveis (as Listas)
+        // (Usando a mesma lógica segura que você já aplicou nos getters/setters)
+        this.usuarioLivros = (outroUsuario.usuarioLivros == null) ? null : new ArrayList<>(outroUsuario.usuarioLivros);
+        this.negociacoesAnunciante = (outroUsuario.negociacoesAnunciante == null) ? null : new ArrayList<>(outroUsuario.negociacoesAnunciante);
+        this.negociacoesInteressado = (outroUsuario.negociacoesInteressado == null) ? null : new ArrayList<>(outroUsuario.negociacoesInteressado);
+    }
+
+    // --- Getters e Setters (Seu código original, que já estava correto) ---
 
     public List<Negociacao> getNegociacoesAnunciante() {
-        // Retorna uma cópia para proteger a lista original
         return this.negociacoesAnunciante == null ? null : new ArrayList<>(this.negociacoesAnunciante);
     }
     public void setNegociacoesAnunciante(List<Negociacao> negociacoesAnunciante) {
-        // Armazena uma cópia para que alterações externas não afetem a entidade
         this.negociacoesAnunciante = negociacoesAnunciante == null ? null : new ArrayList<>(negociacoesAnunciante);
     }
     public List<Negociacao> getNegociacoesInteressado() {
@@ -86,7 +123,7 @@ public class Usuario {
         this.usuarioLivros = usuarioLivros == null ? null : new ArrayList<>(usuarioLivros);
     }
 
-    // --- Getters e Setters que permanecem os mesmos ---
+    // --- Outros Getters e Setters (imutáveis) ---
 
     public String getNmUsuario() { return nmUsuario; }
     public void setNmUsuario(String nmUsuario) { this.nmUsuario = nmUsuario; }
@@ -97,10 +134,7 @@ public class Usuario {
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
     public String getFoto() { return foto; }
-
-    // O setFoto agora apenas aceita a String com o caminho do arquivo
     public void setFoto(String foto) { this.foto = foto; }
-
     public char getStatus() { return status; }
     public void setStatus(char status) { this.status = status; }
     public int getCdUsuario() { return cdUsuario; }
@@ -111,16 +145,13 @@ public class Usuario {
     public String getResetPasswordToken() {
         return resetPasswordToken;
     }
-
     public void setResetPasswordToken(String resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
     }
-
     public LocalDateTime getResetPasswordTokenExpiryDate() {
-        return resetPasswordTokenExpiryDate;
+        return resetPasswordTokenExpiryDate; // Seguro, LocalDateTime é IMUTÁVEL
     }
-
     public void setResetPasswordTokenExpiryDate(LocalDateTime resetPasswordTokenExpiryDate) {
-        this.resetPasswordTokenExpiryDate = resetPasswordTokenExpiryDate;
+        this.resetPasswordTokenExpiryDate = resetPasswordTokenExpiryDate; // Seguro
     }
 }
