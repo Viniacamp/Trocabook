@@ -4,7 +4,7 @@ import com.trocabook.Trocabook.config.UserDetailsImpl;
 import com.trocabook.Trocabook.model.Livro;
 import com.trocabook.Trocabook.model.Usuario;
 import com.trocabook.Trocabook.model.dto.LivroDTO;
-import com.trocabook.Trocabook.service.LivroService; // Importar o LivroService
+import com.trocabook.Trocabook.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,36 +25,52 @@ public class AnunciarLivroController {
     private LivroService livroService;
 
     @GetMapping("/AnunciarLivro")
-    public String anunciarLivro(Model model) {
-        model.addAttribute("livro", new Livro());
+    public String anunciarLivroApi(Model model) {
+        model.addAttribute("livroDTO", new LivroDTO());
         return "anunciar";
     }
 
     @PostMapping("/AnunciarLivro")
-    public String anunciar(@RequestParam("capaLivro") MultipartFile capa,
-                           @Valid Livro livro,
-                           BindingResult result,
-                           @RequestParam("tipoNegociacao") String tipoNegociacao,
-                           @AuthenticationPrincipal UserDetailsImpl userDetails,
-                           Model model) throws IOException {
+    public String anunciar(@AuthenticationPrincipal UserDetailsImpl userDetails, @ModelAttribute("livroDTO") LivroDTO livroDTO, Model model) throws IOException {
 
         Usuario usuarioLogado = userDetails.getUsuario();
 
-        if (capa.isEmpty()) {
-            model.addAttribute("capaErro", "Coloque a capa do livro");
-            result.reject("capa");
+        boolean temErro = false;
+
+        // --- Validações ---
+        if (livroDTO.getTitulo() == null || livroDTO.getTitulo().isBlank()) {
+            model.addAttribute("erroTitulo", "O título do livro é obrigatório.");
+            temErro = true;
         }
-        if (tipoNegociacao == null || tipoNegociacao.isBlank()) {
-            model.addAttribute("tipoErro", "Selecione o tipo de anúncio");
-            result.reject("tipoNegociacao");
+
+        if (livroDTO.getTipoNegociacao() == null || livroDTO.getTipoNegociacao().isBlank()) {
+            model.addAttribute("erroTipo", "Selecione o tipo de negociação.");
+            temErro = true;
         }
-        if (result.hasErrors()) {
-            model.addAttribute("livro", livro);
+
+        if (livroDTO.getAutores() == null || livroDTO.getAutores().isEmpty()) {
+            model.addAttribute("erroAutor", "O livro precisa ter pelo menos um autor.");
+            temErro = true;
+        }
+
+        if (livroDTO.getCategorias() == null || livroDTO.getCategorias().isEmpty()) {
+            model.addAttribute("erroCategoria", "Selecione pelo menos uma categoria.");
+            temErro = true;
+        }
+        System.out.println(livroDTO.getThumbnailUrl());
+        // Define uma capa padrão caso o thumbnail esteja ausente
+        if (livroDTO.getThumbnailUrl() == null || livroDTO.getThumbnailUrl().isBlank()) {
+            livroDTO.setThumbnailUrl("/img/default-capa.png");
+        }
+
+        // Se houver erros, volta pra página e mantém os dados digitados
+        if (temErro) {
+            model.addAttribute("livroDTO", livroDTO);
             return "anunciar";
         }
 
         // AGORA A LÓGICA É UMA ÚNICA CHAMADA PARA O SERVIÇO
-        livroService.anunciarNovoLivro(livro, capa, usuarioLogado, tipoNegociacao);
+        livroService.anunciarNovoLivro(livroDTO, usuarioLogado);
 
         return "anuncioSucesso";
     }
@@ -67,20 +83,7 @@ public class AnunciarLivroController {
         return livroService.listarLivrosApi(livro.getTitulo());
     }
 
-    @GetMapping("/anunciarLivroApi")
-    public String anunciarLivroApi(Model model) {
-        model.addAttribute("livroDTO", new LivroDTO());
-        return "anunciarApi";
-    }
 
-    @PostMapping("/salvar")
-    public String salvarAnuncio(@ModelAttribute LivroDTO livroDTO) {
-        System.out.println("Título: " + livroDTO.getTitulo());
-        System.out.println("Data: " + livroDTO.getDataPublicacao());
-        System.out.println("Autores: " + livroDTO.getAutores());
-        System.out.println("Categorias: " + livroDTO.getCategorias());
-        System.out.println("Tipo negociação: " + livroDTO.getTipoNegociacao());
-        return "redirect://anunciarLivroApi";
-    }
+
 
 }

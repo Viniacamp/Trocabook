@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.trocabook.Trocabook.model.dto.LivroDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,9 +29,6 @@ public class Livro {
     @Column(nullable = false)
     private String nmLivro;
 
-    private String nmLivroOriginal;
-
-    @NotNull(message = "Preencha o Ano de Publicação")
     @Column(nullable = false)
     private Integer anoPublicacao;
 
@@ -51,6 +49,16 @@ public class Livro {
 
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
     private List<Negociacao> negociacoes;
+
+    public Livro(){}
+
+    public Livro(LivroDTO livroDTO){
+        this.nmLivro = livroDTO.getTitulo();
+        this.capa = livroDTO.getThumbnailUrl();
+        this.anoPublicacao = 1980;
+        this.dataPublicacao = livroDTO.getDataPublicacao();
+
+    }
 
     // --- Getters e Setters Corrigidos para as Listas ---
 
@@ -113,13 +121,6 @@ public class Livro {
         this.capa = capa;
     }
 
-    public String getNmLivroOriginal() {
-        return nmLivroOriginal;
-    }
-
-    public void setNmLivroOriginal(String nmLivroOriginal) {
-        this.nmLivroOriginal = nmLivroOriginal;
-    }
 
     public LocalDate getDataPublicacao() {
         return dataPublicacao;

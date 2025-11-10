@@ -5,6 +5,7 @@ import com.trocabook.Trocabook.model.dto.GoogleBooksResponse;
 import com.trocabook.Trocabook.model.dto.LivroDTO;
 import com.trocabook.Trocabook.repository.*;
 import com.trocabook.Trocabook.utils.TextoUtils;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -69,35 +70,33 @@ public class LivroService {
 
 
 
-    public Livro cadastrarNovoLivro(String nmLivro, Integer anoPublicacao, MultipartFile capaArquivo) throws IOException {
-        String caminhoDaCapa = fileStorageService.armazenarArquivoLivro(capaArquivo);
-
-        Livro novoLivro = new Livro();
-        novoLivro.setNmLivro(nmLivro);
-        novoLivro.setAnoPublicacao(anoPublicacao);
-        novoLivro.setCapa(caminhoDaCapa);
-
-        return livroRepository.save(novoLivro);
-    }
-
-    public void anunciarNovoLivro(Livro livro, MultipartFile capaArquivo, Usuario usuario, String tipoNegociacao) throws IOException {
-        // 1. Salva o arquivo da capa e obtém o caminho (String)
-        String caminhoDaCapa = fileStorageService.armazenarArquivoLivro(capaArquivo);
-        livro.setCapa(caminhoDaCapa);
-
-        // 2. Salva a entidade Livro no banco de dados
+    @Transactional
+    public void anunciarNovoLivro(LivroDTO livroDTO, Usuario Usuario) {
+        Livro livro = new Livro(livroDTO);
         livroRepository.save(livro);
+        for (String autor : livroDTO.getAutores()) {
+            LivroAutor livroAutor = new LivroAutor();
+            livroAutor.setLivro(livro);
+            livroAutor.setAutor(autorRepository.findByNmAutor(autor).get());
+            livroAutorRepository.save(livroAutor);
+        }
 
-        // 3. Cria a relação entre o usuário e o livro
+        for (String categoria : livroDTO.getCategorias()) {
+            LivroCategoria livroCategoria = new LivroCategoria();
+            livroCategoria.setLivro(livro);
+            livroCategoria.setCategoria(categoriaRepository.findByNmCategoriaTraduzida(categoria).get());
+            livroCategoriaRepository.save(livroCategoria);
+        }
+
         UsuarioLivro usuarioLivro = new UsuarioLivro();
-        usuarioLivro.setUsuario(usuario);
         usuarioLivro.setLivro(livro);
-        usuarioLivro.setTipoNegociacao(UsuarioLivro.TipoNegociacao.valueOf(tipoNegociacao));
-
-        // 4. Salva a relação no banco de dados
+        usuarioLivro.setUsuario(Usuario);
+        usuarioLivro.setTipoNegociacao(UsuarioLivro.TipoNegociacao.valueOf(livroDTO.getTipoNegociacao()));
         usuarioLivroRepository.save(usuarioLivro);
+
     }
 
+    @Transactional
     public List<LivroDTO> listarLivrosApi(String titulo) {
         GoogleBooksResponse respApi = this.buscarLivro(titulo);
         if (respApi == null || respApi.getItens() == null || respApi.getItens().isEmpty()) {
@@ -109,7 +108,8 @@ public class LivroService {
             if (v == null){
                 continue;
             }
-            if (livros.stream().anyMatch(lDto -> lDto.getTitulo().equalsIgnoreCase(v.getTitulo()))) {
+            String tituloLivro = TextoUtils.normalizar(v.getTitulo());
+            if (livros.stream().anyMatch(lDto -> lDto.getTitulo().equalsIgnoreCase(TextoUtils.normalizar(tituloLivro)))) {
                 continue;
             }
             Livro livroExistente = livroRepository.findByNmLivroIgnoreCase(v.getTitulo()).orElse(null);
@@ -135,8 +135,8 @@ public class LivroService {
             if ((livro.getAutores() == null || livro.getAutores().isEmpty()) || (livro.getCategorias() == null || livro.getCategorias().isEmpty()) || (livro.getThumbnailUrl() == null || livro.getThumbnailUrl().isBlank()) || livro.getLingua() == null) {
                 livro = buscarDadosFaltantes(livro);
             }
-            String linguaOriginal = livro.getLingua();
-            String tituloLivro = TextoUtils.normalizar(v.getTitulo());
+            String linguaOriginal = livro.getLingua() == null ? "en": livro.getLingua();
+
             boolean ehPortugues = linguaOriginal != null &&
                     (linguaOriginal.equalsIgnoreCase("pt") || linguaOriginal.equalsIgnoreCase("pt-br"));
 
@@ -150,42 +150,35 @@ public class LivroService {
                 linguaOriginal = "en";
             }
 
-            livro.setTituloFoiTraduzido(!ehPortugues);
-
-            List<String> categorias = livro.getCategorias() != null ? livro.getCategorias() : new ArrayList<>();
-            List<String> autores = livro.getAutores() != null ? livro.getAutores() : new ArrayList<>();
-
-
-            List<String> categoriasTraduzidas = new ArrayList<>();
-
-            for (String cat : categorias) {
-                String categoria = TextoUtils.normalizar(cat);
-                String traducao = traducaoService.buscarCategoriaTraduzida(categoria, linguaOriginal, "pt-BR");
-                categoriasTraduzidas.add(traducao);
+            if (livro.getCategorias() == null || livro.getCategorias().isEmpty()) {
+                livro.setCategorias(List.of("Categoria Não definida"));
             }
 
-            livro.setCategorias(categoriasTraduzidas);
+            if (livro.getAutores() == null || livro.getAutores().isEmpty()) {
+                livro.setAutores(List.of("Autor Desconhecido"));
+            }
+
+            livro.setTituloFoiTraduzido(!ehPortugues);
+
+            for (int i = 0; i < livro.getCategorias().size(); i++) {
+                livro.getCategorias().set(i, traducaoService.buscarCategoriaTraduzida(TextoUtils.normalizar(livro.getCategorias().get(i)), linguaOriginal, "pt-BR"));
+            }
 
 
-            for (int i = 0; i < autores.size(); i++) {
-                String autor = TextoUtils.normalizar(autores.get(i));
-                autores.set(i, autor);
+            for (int i = 0; i < livro.getAutores().size(); i++) {
+                livro.getAutores().set(i, TextoUtils.normalizar(livro.getAutores().get(i)));
             }
 
             for (String nmAutor : livro.getAutores()) {
                 autorRepository.findByNmAutor(nmAutor).orElseGet(() -> autorRepository.save(new Autor(nmAutor)));
             }
 
-            for (String categoria : livro.getCategorias()) {
-                System.out.println(categoria);
-            }
-
-
             livros.add(livro);
 
         }
         return livros;
     }
+
 
     private LivroDTO buscarDadosFaltantes(LivroDTO dto) {
         // Apenas 1 chamada extra à API
@@ -238,6 +231,7 @@ public class LivroService {
 
 
 
+    @Transactional
     public GoogleBooksResponse buscarLivro(String titulo){
         System.out.println(url + titulo);
         ResponseEntity<GoogleBooksResponse> resposta = restTemplate.exchange(

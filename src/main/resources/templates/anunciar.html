@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/anunciarLivroApi.css"/>
     <title>Criar novo anuncio | Trocabook</title>
 </head>
 <body>
@@ -59,31 +60,69 @@
     </script>
     <div class="paganunciar">
         <div class="anuncio">
-            <h1>Crie o seu anuncio</h1>
-            <form method="post" enctype="multipart/form-data" th:action="@{/AnunciarLivro}" th:object="${livro}">
+            <h1>Crie o seu anúncio</h1>
 
+            <div class="busca-livro-container">
+                <input type="text" id="tituloBuscado" placeholder="Digite o título do livro a ser anunciado">
+                <button id="buscarLivro" onclick="buscarLivro()" type="button">Buscar</button>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-                <input type="text" th:field="*{nmLivro}" style="width: 45%; height: 33px;" id="titulo" name="nmLivro" placeholder="Titulo do livro"><br>
-                <div th:if="${#fields.hasErrors('nmLivro')}" th:errors="*{nmLivro}"></div>
-                <input type="text" th:field="*{anoPublicacao}" style="width: 45%; height: 33px;" id="ano" name="anoPublicacao" placeholder="Ano de publicação"><br>
-                <div th:if="${#fields.hasErrors('anoPublicacao')}" th:errors="*{anoPublicacao}"></div>
-                <input type="text" style="width: 45%; height: 200px;" placeholder="Descreva o livro, estado de conservação e outros detalhes que queira incluir"><br><br>
-                <p>Selecione o tipo de anúncio:</p><br>
-                <select name="tipoNegociacao" class="categoriaNegociacao">
-                    <option value="">-- Selecione --</option>
-                    <option value="TROCA">Troca</option>
-                    <option value="VENDA">Venda</option>
-                    <option value="AMBOS">Ambos</option>
-                </select>
-                <div th:if="${tipoErro != null}" th:text="${tipoErro}"></div>
-                <p>Carregue a capa do seu livro aqui:</p>
-                <input type="file" id="capaLivro" name="capaLivro" accept="image/*" style="width: 470px; height: 140px; border-style: dotted; padding-top: 10px;"><br>
-                <div th:if="${capaErro != null}" th:text="${capaErro}"></div>
-                <button type="submit">Anunciar</button>
+                <!-- Resultados da API -->
+                <div id="resultadosLivros" class="sugestoes-autocomplete"></div>
+            </div>
+            <form th:object="${livroDTO}" th:action="@{/AnunciarLivro}" enctype="multipart/form-data" method="post" class="form-anuncio">
+                <div class="livro-detalhes">
+
+                    <label for="capaLivro" class="label-principal">Capa do Livro:</label>
+                    <img id="capaLivro" class="capaLivro" th:src="${livroDTO.thumbnailUrl != null ? livroDTO.thumbnailUrl : ''}" style="display:none;">
+                    <input type="hidden" th:field="*{thumbnailUrl}" id="thumbnailUrl">
+                    <label for="titulo">Título:</label>
+                    <!-- Agora é editável -->
+                    <input type="text" id="titulo" th:field="*{titulo}" placeholder="Título do livro" readonly>
+                    <p class="text-danger" th:if="${erroTitulo}" th:text="${erroTitulo}"></p>
+                    <label for="dataPublicacao">Data de Publicação:</label>
+                    <input type="date" id="dataPublicacao" th:field="*{dataPublicacao}" readonly>
+                    <label>Autores:</label>
+                    <div id="autores" class="tags-container">
+                        <div th:each="autor, i : *{autores}">
+                            <input type="hidden" th:field="*{autores[__${i.index}__]}" th:value="${autor}" readonly>
+                            <span th:text="${autor}"></span>
+                        </div>
+                    </div>
+                    <p class="text-danger" th:if="${erroAutor}" th:text="${erroAutor}"></p>
+
+                    <label>Categorias:</label>
+                    <div id="categorias" class="tags-container">
+                        <div th:each="categoria, i : *{categorias}">
+                            <input type="hidden" th:field="*{categorias[__${i.index}__]}" th:value="${categoria}" readonly>
+                            <span th:text="${categoria}"></span>
+                        </div>
+                    </div>
+                    <p class="text-danger" th:if="${erroCategoria}" th:text="${erroCategoria}"></p>
+
+                    <label for="descricao">Descrição:</label>
+                    <textarea id="descricao" name="descricao" placeholder="Descreva o livro, estado de conservação e outros detalhes que queira incluir"></textarea>
+
+                    <label for="tipoNegociacao">Tipo de negociação:</label>
+                    <select id="tipoNegociacao" th:field="*{tipoNegociacao}" required>
+                        <option value="">Selecione...</option>
+                        <option value="TROCA">Troca</option>
+                        <option value="VENDA">Venda</option>
+                        <option value="AMBOS">Ambos</option>
+                    </select>
+                    <p class="text-danger" th:if="${erroTipo}" th:text="${erroTipo}"></p>
+
+                    <button type="submit" class="btn-criar">Criar Anúncio</button>
+                </div>
             </form>
+
+
+
         </div>
     </div>
+
+
+
 
     <footer>
         <div class="rodapenovo">
@@ -95,5 +134,134 @@
     </footer>
 </div>
 </body>
-<script src="/js/fetch.js"></script>
+<script>
+    const inputBusca = document.getElementById("tituloBuscado");
+    const resultados = document.getElementById("resultadosLivros");
+    const container = document.querySelector(".busca-livro-container");
+    const botaoBuscar = document.getElementById("buscarLivro");
+
+
+    document.addEventListener("click", function (event) {
+        if (
+            container &&
+            resultados &&
+            !container.contains(event.target) &&
+            event.target !== botaoBuscar
+        ) {
+            resultados.style.display = "none";
+        }
+    });
+
+
+    inputBusca.addEventListener("focus", function () {
+        if (resultados && resultados.innerHTML.trim() !== "") {
+            resultados.style.display = "block";
+        }
+    });
+
+
+    botaoBuscar.addEventListener("click", function (event) {
+        event.stopPropagation(); // 🔥 impede o clique de propagar
+    });
+
+    function buscarLivro() {
+        const titulo = document.getElementById("tituloBuscado").value;
+        const csrfToken = document.querySelector('input[name="_csrf"]').value;
+        const divResultados = document.getElementById("resultadosLivros");
+
+        divResultados.innerHTML = "";
+        divResultados.style.display = "block";
+
+        if (titulo.trim().length === 0) {
+            window.alert("Insira um titulo")
+            return
+        }
+        window.alert("Iniciando Busca, isso pode demorar um pouco aguarde...")
+        fetch("/buscar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken
+            },
+            body: JSON.stringify({ titulo })
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Erro ao buscar livro");
+                return res.json();
+            })
+            .then(livros => {
+                if (!livros || livros.length === 0) {
+                    divResultados.innerHTML = "<p>Nenhum livro encontrado 😥</p>";
+                    return;
+                }
+
+                livros.forEach(livro => {
+                    const link = document.createElement("a");
+                    link.href = "#";
+                    link.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        preencherCampos(livro);
+                        divResultados.innerHTML = ""; // limpa lista após seleção
+                    });
+
+                    const capa = document.createElement("img");
+                    capa.src = livro.thumbnailUrl || "/img/default-capa.png";
+                    capa.className = "livro-capa";
+
+                    const texto = document.createElement("p");
+                    texto.innerText = livro.titulo;
+
+                    link.appendChild(capa);
+                    link.appendChild(texto);
+                    divResultados.appendChild(link);
+                });
+            })
+            .catch(err => {
+                divResultados.innerHTML = `<p>Erro: ${err.message}</p>`;
+            });
+    }
+
+    function preencherCampos(livro) {
+        console.log(livro)
+        document.getElementById("titulo").value = livro.titulo || "";
+        document.getElementById("capaLivro").src = livro.thumbnailUrl || "";
+        document.getElementById("thumbnailUrl").value = livro.thumbnailUrl || "";
+        document.getElementById("capaLivro").style.display = "block";
+        document.getElementById("dataPublicacao").value = livro.dataPublicacao || "";
+
+
+        const autoresDiv = document.getElementById("autores");
+        autoresDiv.innerHTML = "";
+        livro.autores.forEach((autor, i) => {
+            const span = document.createElement("span");
+            span.innerText = autor;
+
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = `autores[${i}]`;
+            hiddenInput.value = autor;
+
+            autoresDiv.appendChild(span);
+            autoresDiv.appendChild(hiddenInput);
+        });
+
+
+        const categoriasDiv = document.getElementById("categorias");
+        categoriasDiv.innerHTML = "";
+        livro.categorias.forEach((categoria, i) => {
+            const span = document.createElement("span");
+            span.innerText = categoria;
+
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = `categorias[${i}]`;
+            hiddenInput.value = categoria;
+
+            categoriasDiv.appendChild(span);
+            categoriasDiv.appendChild(hiddenInput);
+        });
+    }
+
+</script>
+
 </html>

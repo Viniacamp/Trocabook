@@ -7,6 +7,7 @@ import com.trocabook.Trocabook.model.dto.TraducaoResponse;
 import com.trocabook.Trocabook.repository.CategoriaRepository;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -59,6 +60,7 @@ public class TraducaoService {
     }
 
 
+    @Transactional
     public String buscarCategoriaTraduzida(String texto, String origem, String destino) {
         if (cacheCategorias.containsKey(texto)) {
             return cacheCategorias.get(texto);
@@ -80,11 +82,13 @@ public class TraducaoService {
         return texto;
     }
 
+    @Transactional
     public void salvarBancoCategoria(String categoriaOriginal, String categoriaTraduzida){
         categoriaRepository.findByNmCategoriaOriginal(categoriaOriginal).orElseGet(() ->
                 categoriaRepository.save(new Categoria(categoriaOriginal, categoriaTraduzida)));
     }
 
+    @Transactional
     @RateLimiter(name = "traducaoService", fallbackMethod = "traducaoOffline")
     public String traduzirAPI(String texto, String origem, String destino) {
         try {

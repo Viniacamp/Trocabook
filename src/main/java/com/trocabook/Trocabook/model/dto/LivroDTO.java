@@ -46,19 +46,19 @@ public class LivroDTO {
     }
 
     public List<String> getAutores() {
-        return this.autores == null ? new ArrayList<>() : new ArrayList<>(this.autores);
+        return this.autores;
     }
 
     public void setAutores(List<String> autores) {
-        this.autores = autores == null ? new ArrayList<>() : new ArrayList<>(autores);
+        this.autores = autores;
     }
 
     public List<String> getCategorias() {
-        return categorias == null ? new ArrayList<>() : new ArrayList<>(this.categorias);
+        return categorias;
     }
 
     public void setCategorias(List<String> categorias) {
-        this.categorias = categorias == null ? new ArrayList<>() : new ArrayList<>(categorias);
+        this.categorias = categorias;
     }
 
     public LocalDate getDataPublicacao() {

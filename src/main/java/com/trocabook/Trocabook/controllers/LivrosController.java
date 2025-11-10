@@ -60,7 +60,7 @@ public class LivrosController {
         return "livros";
     }
 
-    // 3. NOVO MÉTODO PARA CADASTRAR O LIVRO
+    /*// 3. NOVO MÉTODO PARA CADASTRAR O LIVRO
     @PostMapping("/livros/cadastrar")
     public String cadastrarLivro(@RequestParam("nmLivro") String nmLivro,
                                  @RequestParam("anoPublicacao") Integer anoPublicacao,
@@ -78,4 +78,6 @@ public class LivrosController {
             return "redirect:/pagina-de-cadastro-de-livro";
         }
     }
+
+     */
 }
