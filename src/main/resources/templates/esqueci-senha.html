@@ -16,6 +16,16 @@
         <div class="loginlogo">
             <a href="/"><img src="/img/Design sem nome (4).svg"></a>
         </div>
+        <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
         <form class="login" method="post" th:action="@{/esqueci-senha}">
             <h1><b>Redefinir Senha</b></h1>
             <p>Por favor, insira o seu e-mail de cadastro. Enviaremos um link para você poder criar uma nova senha.</p>
@@ -35,6 +45,15 @@
             </div>
         </form>
     </div>
+    <br><br><br>
+    <footer>
+        <div class="rodapenovo">
+            <a href="/"><img src="/img/Design sem nome.svg"></a>
+            <a href="/sobreNos"><p>Conheça nosso incrível projeto <br>de incentivo a reutilização</p></a>
+            <a href="/ajuda"><p>Central de ajuda</p></a>
+            <small>© 2025 Sistema Trocabook<br>Todos os direitos reservados</small>
+        </div>
+    </footer>
 </div>
 </body>
 </html>
