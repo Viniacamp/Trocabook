@@ -60,6 +60,39 @@ public class Livro {
 
     }
 
+    // --- CONSTRUTORES ---
+
+    /**
+     * Construtor padrão (vazio).
+     * Bom para JPA, Jackson e outras bibliotecas.
+     */
+    public Livro() {
+    }
+
+    /**
+     * CONSTRUTOR DE CÓPIA (A SOLUÇÃO)
+     * Cria uma cópia defensiva de outro objeto Livro.
+     */
+    public Livro(Livro outroLivro) {
+        if (outroLivro == null) {
+            return;
+        }
+
+        // Copia de campos imutáveis/primitivos
+        this.cdLivro = outroLivro.cdLivro;
+        this.nmLivro = outroLivro.nmLivro;
+        this.anoPublicacao = outroLivro.anoPublicacao;
+        this.capa = outroLivro.capa;
+        this.dataPublicacao = outroLivro.dataPublicacao;
+
+        // Copia defensiva das listas (objetos mutáveis)
+        this.livroAutor = (outroLivro.livroAutor == null) ? null : new ArrayList<>(outroLivro.livroAutor);
+        this.livroCategoria = (outroLivro.livroCategoria == null) ? null : new ArrayList<>(outroLivro.livroCategoria);
+        this.usuarioLivros = (outroLivro.usuarioLivros == null) ? null : new ArrayList<>(outroLivro.usuarioLivros);
+        this.negociacoes = (outroLivro.negociacoes == null) ? null : new ArrayList<>(outroLivro.negociacoes);
+    }
+
+
     // --- Getters e Setters Corrigidos para as Listas ---
 
     public List<UsuarioLivro> getUsuarioLivros() {
@@ -123,11 +156,11 @@ public class Livro {
 
 
     public LocalDate getDataPublicacao() {
-        return dataPublicacao;
+        return dataPublicacao; // Seguro, LocalDate é IMUTÁVEL
     }
 
     public void setDataPublicacao(LocalDate dataPublicacao) {
-        this.dataPublicacao = dataPublicacao;
+        this.dataPublicacao = dataPublicacao; // Seguro, LocalDate é IMUTÁVEL
     }
 
 

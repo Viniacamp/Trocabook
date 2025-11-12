@@ -45,44 +45,56 @@ public class Negociacao {
         this.cdNegociacao = cd_negociacao;
     }
 
+    // --- CORRIGIDO ---
     public Usuario getUsuarioAnunciante() {
-        return usuarioAnunciante;
+        // Retorna uma CÓPIA, não a referência interna
+        return (this.usuarioAnunciante == null) ? null : new Usuario(this.usuarioAnunciante);
     }
 
+    // --- CORRIGIDO ---
     public void setUsuarioAnunciante(Usuario usuarioAnunciante) {
-        this.usuarioAnunciante = usuarioAnunciante;
+        // Armazena uma CÓPIA, não a referência externa
+        this.usuarioAnunciante = (usuarioAnunciante == null) ? null : new Usuario(usuarioAnunciante);
     }
 
+    // --- CORRIGIDO ---
     public Usuario getUsuarioInteressado() {
-        return usuarioInteressado;
+        // Retorna uma CÓPIA, não a referência interna
+        return (this.usuarioInteressado == null) ? null : new Usuario(this.usuarioInteressado);
     }
 
+    // --- CORRIGIDO ---
     public void setUsuarioInteressado(Usuario usuarioInteressado) {
-        this.usuarioInteressado = usuarioInteressado;
+        // Armazena uma CÓPIA, não a referência externa
+        this.usuarioInteressado = (usuarioInteressado == null) ? null : new Usuario(usuarioInteressado);
     }
 
     public LocalDateTime getDtNegociacao() {
-        return dtNegociacao;
+        return dtNegociacao; // Seguro, LocalDateTime é IMUTÁVEL
     }
 
     public void setDtNegociacao(LocalDateTime dtNegociacao) {
-        this.dtNegociacao = dtNegociacao;
+        this.dtNegociacao = dtNegociacao; // Seguro, LocalDateTime é IMUTÁVEL
     }
 
+    // --- CORRIGIDO ---
     public Livro getLivro() {
-        return livro;
+        // Retorna uma CÓPIA, não a referência interna
+        return (this.livro == null) ? null : new Livro(this.livro);
     }
 
+    // --- CORRIGIDO ---
     public void setLivro(Livro livro) {
-        this.livro = livro;
+        // Armazena uma CÓPIA, não a referência externa
+        this.livro = (livro == null) ? null : new Livro(livro);
     }
 
     public Tipo getTipo() {
-        return tipo;
+        return tipo; // Seguro, Enum é IMUTÁVEL
     }
 
     public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
+        this.tipo = tipo; // Seguro, Enum é IMUTÁVEL
     }
 
     public enum Tipo{

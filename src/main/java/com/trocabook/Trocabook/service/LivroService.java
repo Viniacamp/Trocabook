@@ -7,10 +7,12 @@ import com.trocabook.Trocabook.repository.*;
 import com.trocabook.Trocabook.utils.TextoUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Importação adicionada
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,21 +25,19 @@ import java.util.List;
 @Service
 public class LivroService {
 
+    // --- Logger (Boa Prática) ---
+    private static final Logger logger = LoggerFactory.getLogger(LivroService.class);
 
+    // --- Constante (Boa Prática) ---
+    private static final String GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+
+    // --- Repositórios e Serviços ---
     private final LivroRepository livroRepository;
-
-
     private final UsuarioLivroRepository usuarioLivroRepository;
-
-
     private final FileStorageServiceUsuario fileStorageService;
-
     private final AutorRepository autorRepository;
-
     private final CategoriaRepository categoriaRepository;
-
     private final LivroAutorRepository livroAutorRepository;
-
     private final LivroCategoriaRepository livroCategoriaRepository;
 
     private final TraducaoService traducaoService;
@@ -46,9 +46,7 @@ public class LivroService {
 
     private final RestTemplate restTemplate;
 
-
-
-    @Autowired
+    // @Autowired é opcional em construtores no Spring moderno
     public LivroService(LivroRepository livroRepository, UsuarioLivroRepository usuarioLivroRepository,
                         FileStorageServiceUsuario fileStorageService,
                         RestTemplate restTemplate,
@@ -57,6 +55,8 @@ public class LivroService {
                         CategoriaRepository categoriaRepository,
                         LivroAutorRepository livroAutorRepository,
                         TraducaoService traducaoService) {
+                        AutorRepository autorRepository, LivroCategoriaRepository livroCategoriaRepository,
+                        CategoriaRepository categoriaRepository, LivroAutorRepository livroAutorRepository) {
         this.livroRepository = livroRepository;
         this.usuarioLivroRepository = usuarioLivroRepository;
         this.fileStorageService = fileStorageService;
@@ -102,22 +102,27 @@ public class LivroService {
         if (respApi == null || respApi.getItens() == null || respApi.getItens().isEmpty()) {
             return Collections.emptyList();
         }
+
         List<LivroDTO> livros = new ArrayList<>();
         for (GoogleBooksResponse.Item item : respApi.getItens()) {
             GoogleBooksResponse.VolumeInfo v = item.getVolumeInfo();
-            if (v == null){
+            if (v == null || v.getTitulo() == null){
                 continue;
             }
             String tituloLivro = TextoUtils.normalizar(v.getTitulo());
             if (livros.stream().anyMatch(lDto -> lDto.getTitulo().equalsIgnoreCase(TextoUtils.normalizar(tituloLivro)))) {
                 continue;
             }
+
+            // Verifica se o livro já existe localmente
             Livro livroExistente = livroRepository.findByNmLivroIgnoreCase(v.getTitulo()).orElse(null);
             if (livroExistente != null) {
                 LivroDTO livroDTO = new LivroDTO(livroExistente);
                 livros.add(livroDTO);
                 continue;
             }
+
+            // Cria DTO a partir da API
             LivroDTO livro = new LivroDTO();
             livro.setTitulo(v.getTitulo());
             livro.setAutores((v.getAutores() == null || v.getAutores().isEmpty()) ? null : v.getAutores());
@@ -126,14 +131,18 @@ public class LivroService {
             livro.setLingua((v.getLingua() == null || v.getLingua().isEmpty()) ? null : v.getLingua());
             String data = v.getDataPublicacao();
             try {
-                if (data.length() == 4) livro.setDataPublicacao(LocalDate.parse(data + "-01-01"));
+                if (data == null || data.isEmpty()) livro.setDataPublicacao(LocalDate.now());
+                else if (data.length() == 4) livro.setDataPublicacao(LocalDate.parse(data + "-01-01"));
                 else if (data.length() == 7) livro.setDataPublicacao(LocalDate.parse(data + "-01"));
                 else livro.setDataPublicacao(LocalDate.parse(data));
             } catch (Exception e) {
                 livro.setDataPublicacao(LocalDate.now());
             }
-            if ((livro.getAutores() == null || livro.getAutores().isEmpty()) || (livro.getCategorias() == null || livro.getCategorias().isEmpty()) || (livro.getThumbnailUrl() == null || livro.getThumbnailUrl().isBlank()) || livro.getLingua() == null) {
-                livro = buscarDadosFaltantes(livro);
+
+            // --- OTIMIZAÇÃO APLICADA ---
+            // Tenta buscar dados faltantes usando a resposta que JÁ TEMOS, sem nova chamada de rede
+            if (livro.getAutores() == null || livro.getCategorias() == null || livro.getThumbnailUrl() == null) {
+                livro = buscarDadosFaltantes(livro, respApi);
             }
             String linguaOriginal = livro.getLingua() == null ? "en": livro.getLingua();
 
@@ -174,16 +183,13 @@ public class LivroService {
             }
 
             livros.add(livro);
-
         }
         return livros;
     }
 
-
-    private LivroDTO buscarDadosFaltantes(LivroDTO dto) {
-        // Apenas 1 chamada extra à API
-        GoogleBooksResponse resp = this.buscarLivro(dto.getTitulo());
-
+    // --- ASSINATURA ALTERADA (Otimização) ---
+    private LivroDTO buscarDadosFaltantes(LivroDTO dto, GoogleBooksResponse resp) {
+        // Não faz nova chamada de rede, apenas re-varre a resposta original
         if (resp == null || resp.getItens() == null) return dto;
 
         for (GoogleBooksResponse.Item item : resp.getItens()) {
@@ -226,26 +232,34 @@ public class LivroService {
                 return dto;
             }
         }
+
+        // Se ainda assim faltar capa, define a padrão
+        if (dto.getThumbnailUrl() == null) {
+            dto.setThumbnailUrl("/img/default-capa.png");
+        }
+
         return dto;
     }
 
 
-
-    @Transactional
     public GoogleBooksResponse buscarLivro(String titulo){
-        System.out.println(url + titulo);
+        // Usa a constante estática
+        String urlCompleta = GOOGLE_BOOKS_API_URL + titulo;
+        logger.info("Buscando livros na API: {}", urlCompleta);
+
         ResponseEntity<GoogleBooksResponse> resposta = restTemplate.exchange(
-                url + titulo,
+                urlCompleta,
                 HttpMethod.GET,
                 null,
                 GoogleBooksResponse.class
-
         );
-        if (resposta.getBody().getItens() != null){
-            System.out.println("Itens retornados: " + resposta.getBody().getItens().size());
+
+        if (resposta.getBody() != null && resposta.getBody().getItens() != null){
+            logger.debug("Itens retornados da API: {}", resposta.getBody().getItens().size());
         } else {
-            System.out.println("Deu ruim");
+            logger.warn("Chamada à API não retornou itens.");
         }
+
         return resposta.getBody();
     }
 }

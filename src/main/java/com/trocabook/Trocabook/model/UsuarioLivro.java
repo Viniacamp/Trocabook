@@ -1,15 +1,12 @@
-package com.trocabook.Trocabook.model;
+package com.trocabook.Trocabook.model; // (O seu package)
 
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
+import jakarta.persistence.*; // (Seus imports)
 import jakarta.validation.constraints.NotNull;
 
-@Entity
+@Entity // (Assumindo que esta é uma entidade)
 public class UsuarioLivro {
-    @Valid
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // (Assumindo a ID)
     private int cdUsuarioLivro;
 
     @Enumerated(EnumType.STRING)
@@ -25,32 +22,48 @@ public class UsuarioLivro {
     @JoinColumn(name = "cd_livro", nullable = false)
     private Livro livro;
 
+    // --- Métodos Corrigidos ---
+
+    public Usuario getUsuario() {
+        // Retorna uma CÓPIA, não a referência interna
+        return (this.usuario == null) ? null : new Usuario(this.usuario);
+    }
+
+    public void setUsuario(Usuario usuario) {
+        // Armazena uma CÓPIA, não a referência externa
+        this.usuario = (usuario == null) ? null : new Usuario(usuario);
+    }
+
+    public Livro getLivro() {
+        // Retorna uma CÓPIA, não a referência interna
+        return (this.livro == null) ? null : new Livro(this.livro);
+    }
+
+    public void setLivro(Livro livro) {
+        // Armazena uma CÓPIA, não a referência externa
+        this.livro = (livro == null) ? null : new Livro(livro);
+    }
+
+    // --- Métodos Seguros (Tipos Primitivos e Enums) ---
+
     public int getCdUsuarioLivro() {
         return cdUsuarioLivro;
     }
-    public Usuario getUsuario() {
-        return usuario;
-    }
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-    public Livro getLivro() {
-        return livro;
-    }
-    public void setLivro(Livro livro) {
-        this.livro = livro;
-    }
+
     public void setCdUsuarioLivro(int cdUsuarioLivro) {
         this.cdUsuarioLivro = cdUsuarioLivro;
     }
-    public enum TipoNegociacao {
-        TROCA, VENDA, AMBOS
-    }
+
     public TipoNegociacao getTipoNegociacao() {
         return tipoNegociacao;
     }
 
     public void setTipoNegociacao(TipoNegociacao tipoNegociacao) {
         this.tipoNegociacao = tipoNegociacao;
+    }
+
+    // Enum (é imutável e seguro)
+    public enum TipoNegociacao {
+        TROCA, VENDA, AMBOS
     }
 }

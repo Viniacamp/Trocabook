@@ -24,19 +24,25 @@ public class LivroAutor {
         this.cdLivroAutor = cdLivroAutor;
     }
 
+    // Em LivroAutor.java
+
     public Livro getLivro() {
-        return livro;
+        // CORREÇÃO: Retorna uma CÓPIA, não a referência interna
+        return (this.livro == null) ? null : new Livro(this.livro);
     }
 
     public void setLivro(Livro livro) {
-        this.livro = livro;
+        // CORREÇÃO: Armazena uma CÓPIA, não a referência externa
+        this.livro = (livro == null) ? null : new Livro(livro);
     }
 
     public Autor getAutor() {
-        return autor;
+        // CORREÇÃO: Retorna uma cópia, não a referência interna
+        return (this.autor == null) ? null : new Autor(this.autor);
     }
 
     public void setAutor(Autor autor) {
-        this.autor = autor;
+        // CORREÇÃO: Armazena uma cópia, não a referência externa
+        this.autor = (autor == null) ? null : new Autor(autor);
     }
 }
