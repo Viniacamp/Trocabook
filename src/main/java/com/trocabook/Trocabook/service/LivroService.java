@@ -5,14 +5,14 @@ import com.trocabook.Trocabook.model.dto.GoogleBooksResponse;
 import com.trocabook.Trocabook.model.dto.LivroDTO;
 import com.trocabook.Trocabook.repository.*;
 import com.trocabook.Trocabook.utils.TextoUtils;
-import jakarta.transaction.Transactional;
+// import jakarta.transaction.Transactional; // REMOVIDO
 import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // Importação adicionada
+import org.springframework.transaction.annotation.Transactional; // MANTIDO
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +46,7 @@ public class LivroService {
 
     private final RestTemplate restTemplate;
 
-    // @Autowired é opcional em construtores no Spring moderno
+    @Autowired // Opcional, mas boa prática
     public LivroService(LivroRepository livroRepository, UsuarioLivroRepository usuarioLivroRepository,
                         FileStorageServiceUsuario fileStorageService,
                         RestTemplate restTemplate,
@@ -55,8 +55,7 @@ public class LivroService {
                         CategoriaRepository categoriaRepository,
                         LivroAutorRepository livroAutorRepository,
                         TraducaoService traducaoService) {
-                        AutorRepository autorRepository, LivroCategoriaRepository livroCategoriaRepository,
-                        CategoriaRepository categoriaRepository, LivroAutorRepository livroAutorRepository) {
+        // Construtor corrigido
         this.livroRepository = livroRepository;
         this.usuarioLivroRepository = usuarioLivroRepository;
         this.fileStorageService = fileStorageService;
@@ -67,7 +66,6 @@ public class LivroService {
         this.livroAutorRepository = livroAutorRepository;
         this.traducaoService = traducaoService;
     }
-
 
 
     @Transactional

@@ -41,10 +41,11 @@ public class Categoria {
 
         // 1. Copia de campos primitivos e imutáveis
         this.cdCategoria = outraCategoria.cdCategoria;
-        this.nmCategoria = outraCategoria.nmCategoria;
+        // CORREÇÃO:
+        this.nmCategoriaOriginal = outraCategoria.nmCategoriaOriginal;
+        this.nmCategoriaTraduzida = outraCategoria.nmCategoriaTraduzida;
 
-        // 2. Cópia defensiva da lista (usando a mesma lógica segura
-        //    que você já tinha nos seus getters/setters)
+        // 2. Cópia defensiva da lista
         this.livroCategoria = (outraCategoria.livroCategoria == null)
                 ? null
                 : new ArrayList<>(outraCategoria.livroCategoria);

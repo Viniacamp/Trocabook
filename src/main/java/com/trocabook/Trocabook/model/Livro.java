@@ -50,7 +50,7 @@ public class Livro {
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
     private List<Negociacao> negociacoes;
 
-    public Livro(){}
+
 
     public Livro(LivroDTO livroDTO){
         this.nmLivro = livroDTO.getTitulo();
