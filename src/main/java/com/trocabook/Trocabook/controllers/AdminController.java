@@ -16,7 +16,7 @@ public class AdminController {
         this.dadosService = dadosService;
     }
 
-    @GetMapping("/admin/dashboard-pagina")
+    @GetMapping("dashboard-pagina")
     public String dashboard() {
         return "/admin/dashboard";
     }

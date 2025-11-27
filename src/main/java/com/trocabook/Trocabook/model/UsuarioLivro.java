@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 public class UsuarioLivro {
 
     @Id // (Assumindo a ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cdUsuarioLivro;
 
     @Enumerated(EnumType.STRING)
