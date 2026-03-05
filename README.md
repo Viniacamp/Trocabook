@@ -19,12 +19,14 @@ O desperdício de livros ainda é uma realidade no Brasil. Acreditamos que, por 
 - **Front-end:** HTML, CSS e JavaScript  
 
 ## Equipe  
-- Maria Clara Cavalcante
 - Pedro Amaral Machado  
-- Pedro Lucas de Faria Cardoso  
 - Rafaela Lima Rodrigues
 - Thyago de Sousa Gonçalves
-- Vinicius Soares de Almeida  
+- Vinicius Soares de Almeida
+
+## Membros anteriores
+- Maria Clara Cavalcante
+- Pedro Lucas de Faria Cardoso (idealizador do Design System e logotipo da plataforma)
 
 ## Auxiliadores  
 - Edson Saraiva de Almeida 
